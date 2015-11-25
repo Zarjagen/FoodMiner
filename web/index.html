@@ -11,13 +11,16 @@ License URL: http://creativecommons.org/licenses/by/3.0/
 	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 
+	<link rel="stylesheet" href="css/login-signup/reset.css"> <!-- CSS reset -->
+	<link rel="stylesheet" href="css/login-signup/style.css"> <!-- Gem style -->
   	<link href="css/style.css" rel="stylesheet" type="text/css"  media="all" />
   	<link href='http://fonts.googleapis.com/css?family=Open+Sans' rel='stylesheet' type='text/css'>
   	<link href="css/slider.css" rel="stylesheet" type="text/css"  media="all" />
-
   	<link rel="stylesheet" href="css/jquery.modal.css" type="text/css" media="screen" />
 
   	<script src="http://code.jquery.com/jquery-1.11.3.min.js"></script>
+  	<script src="js/login-signup/modernizr.js"></script> <!-- Modernizr -->
+  	<script src="js/login-signup/main.js"></script> <!-- Gem jQuery -->
   	<script type="text/javascript" src="js/jquery.modal.min.js" charset="utf-8"></script>
   	<script type="text/javascript" src="js/jquery.min.js"></script> 
   	<script type="text/javascript" src="js/jquery.easing.1.3.js"></script> 
@@ -46,61 +49,147 @@ License URL: http://creativecommons.org/licenses/by/3.0/
 	<!----start-header---->
 	<div class="header">
 		<!---- start of signup ---->
-		<form id="signup-form" class="modal" style="display:none;">
-			<div>
-				<span>
-					<label>Username</label>
-				</span>
-				<span>
-					<input type="text" id="usernameBox" placeholder="Username" class="textbox">
-				</span>
-			</div>
-						<label>Nickname</label>
-						<input type="text" id="nicknameBox" placeholder="Nickname" class="form-control">
-						<br>
-						<label>Password</label>
-						<input type="password" id="passwordBox" placeholder="Password" class="form-control">
-						<br>
-						<label>Re-Password</label>
-						<input type="password" id="repasswordBox" placeholder="Re-Password" class="form-control">
-						<br>
-						<label>Email Address</label>
-						<input type="text" id="emailBox" placeholder="Email" class="form-control">
-						<br>
-						<label>Age</label>
-						<input type="text" id="ageBox" placeholder="Age" class="form-control">
-						<br>
-						<label>Gender</label>
-						<div class="btn-group" data-toggle="buttons">
-            				<label class="btn btn-default">
-                				<input type="radio" id="gender" name="sex" value="male" checked/> Male
-            				</label> 
-            				<label class="btn btn-default">
-                				<input type="radio" id="gender" name="sex" value="female"/> Female
-            				</label>
-        				</div>
-				<div style="vertical-align:middle;text-align:center;">
-					<button id="submit" class="button" type="submit">Submit</button>
-					<button id="reset" class="button" type="reset">Reset</button>
-					<button id="back" class="button" type="button">Back</button>
-				</div>
-		</form> 
+		<div class="cd-user-modal"> <!-- this is the entire modal form, including the background -->
+		<div class="cd-user-modal-container"> <!-- this is the container wrapper -->
+			<ul class="cd-switcher">
+				<li><a href="#0">Sign in</a></li>
+				<li><a href="#0">New account</a></li>
+			</ul>
+
+			<div id="cd-login"> <!-- log in form -->
+				<form class="cd-form">
+					<p class="fieldset">
+						<label class="image-replace cd-email" for="signin-email">E-mail</label>
+						<input class="full-width has-padding has-border" id="signin-email" type="email" placeholder="E-mail">
+						<span class="cd-error-message">Error message here!</span>
+					</p>
+
+					<p class="fieldset">
+						<label class="image-replace cd-password" for="signin-password">Password</label>
+						<input class="full-width has-padding has-border" id="signin-password" type="text"  placeholder="Password">
+						<a href="#0" class="hide-password">Hide</a>
+						<span class="cd-error-message">Error message here!</span>
+					</p>
+
+					<p class="fieldset">
+						<input type="checkbox" id="remember-me" checked>
+						<label for="remember-me">Remember me</label>
+					</p>
+
+					<p class="fieldset">
+						<input class="full-width" type="submit" value="Login">
+					</p>
+				</form>
+				
+				<p class="cd-form-bottom-message"><a href="#0">Forgot your password?</a></p>
+				<!-- <a href="#0" class="cd-close-form">Close</a> -->
+			</div> <!-- cd-login -->
+
+			<div id="cd-signup"> <!-- sign up form -->
+				<form class="cd-form">
+					<p class="fieldset">
+						<label class="image-replace cd-username" for="signup-username">Username</label>
+						<input class="full-width has-padding has-border" id="signup-username" type="text" placeholder="Username">
+						<span class="cd-error-message">Error message here!</span>
+					</p>
+
+					<p class="fieldset">
+						<label class="image-replace cd-username" for="signup-username">Username</label>
+						<input class="full-width has-padding has-border" id="signup-nickname" type="text" placeholder="Nickname">
+						<span class="cd-error-message">Error message here!</span>
+					</p>
+
+					<p class="fieldset">
+						<label class="image-replace cd-username" for="signup-username">Username</label>
+						<input class="full-width has-padding has-border" id="signup-age" type="text" placeholder="Age">
+						<span class="cd-error-message">Error message here!</span>
+					</p>
+
+					<p class="fieldset">
+						<label class="image-replace cd-email" for="signup-email">E-mail</label>
+						<input class="full-width has-padding has-border" id="signup-email" type="email" placeholder="E-mail">
+						<span class="cd-error-message">Error message here!</span>
+					</p>
+
+					<p class="fieldset">
+						<label class="image-replace cd-password" for="signup-password">Password</label>
+						<input class="full-width has-padding has-border" id="signup-password" type="text"  placeholder="Password">
+						<a href="#0" class="hide-password">Hide</a>
+						<span class="cd-error-message">Error message here!</span>
+					</p>
+
+					<p class="fieldset">
+						<label class="image-replace cd-password" for="signup-password">Password</label>
+						<input class="full-width has-padding has-border" id="signup-repassword" type="text"  placeholder="Re-Password">
+						<a href="#0" class="hide-password">Hide</a>
+						<span class="cd-error-message">Error message here!</span>
+					</p>
+										
+					<p class="fieldset">
+						<label class="image-replace cd-username" for="signup-username">Username</label>
+						<input class="full-width has-padding has-border" id="signup-gender" type="text" placeholder="Gender">
+						<span class="cd-error-message">Error message here!</span>
+					</p>
+
+					<p class="fieldset">
+						<input type="checkbox" id="accept-terms">
+						<label for="accept-terms">I agree to the <a href="#0">Terms</a></label>
+					</p>
+
+					<p class="fieldset">
+						<input class="full-width has-padding" type="submit" value="Create account">
+					</p>
+
+				</form>
+
+				<!-- <a href="#0" class="cd-close-form">Close</a> -->
+			</div> <!-- cd-signup -->
+
+			<div id="cd-reset-password"> <!-- reset password form -->
+				<p class="cd-form-message">Lost your password? Please enter your email address. You will receive a link to create a new password.</p>
+
+				<form class="cd-form">
+					<p class="fieldset">
+						<label class="image-replace cd-email" for="reset-email">E-mail</label>
+						<input class="full-width has-padding has-border" id="reset-email" type="email" placeholder="E-mail">
+						<span class="cd-error-message">Error message here!</span>
+					</p>
+
+					<p class="fieldset">
+						<input class="full-width has-padding" type="submit" value="Reset password">
+					</p>
+				</form>
+
+				<p class="cd-form-bottom-message"><a href="#0">Back to log-in</a></p>
+			</div> <!-- cd-reset-password -->
+			<a href="#0" class="cd-close-form">Close</a>
+		</div> <!-- cd-user-modal-container -->
+	</div> <!-- cd-user-modal -->
 		<!---- end of Signup ---->
 
 	    <div class="wrap">
-			<div class="top-header">
+			<div class="top-header" style="display: block;">
 				<div class="logo">
 					<a href="index.html"><img src="images/logo.png" title="logo" /></a>
 				</div>
+				<nav class="main-nav">
+					<ul>
+						<!-- inser more links here -->
+						<li><a class="cd-signin" href="#0">Sign in</a></li>
+						<li><a class="cd-signup" href="#0">Sign up</a></li>
+					</ul>
+				</nav>
+				<!-- social-icons
 				<div class="social-icons">
 					<ul>
-						<a class="button" href="#signup-form" rel="modal:open">Signup</a>
+						<a class="cd-signin" href="#0">Signup</a>
 
 						<li><a href="#"><img src="images/facebook.png" title="facebook" /></a></li>
 						<li><a href="#"><img src="images/twitter.png" title="twitter" /></a></li>
 						<li><a href="#"><img src="images/google.png" title="google pluse" /></a></li>
 					</ul>
 				</div>
+				-->
 
 				<div class="clear"> </div>
 			</div>

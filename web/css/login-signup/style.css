@@ -165,7 +165,7 @@ header[role=banner]::after {
     border-radius: 50em;
   }
   .main-nav a.cd-signup {
-    background: #2f889a;
+    background: #BD7F1C;
     border: none;
   }
 }
@@ -343,7 +343,7 @@ xsigin/signup popup
 .cd-form input[type=submit] {
   padding: 16px 0;
   cursor: pointer;
-  background: #2f889a;
+  background: #BD7F1C;
   color: #FFF;
   font-weight: bold;
   border: none;

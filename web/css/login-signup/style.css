@@ -303,11 +303,17 @@ xsigin/signup popup
 .cd-form label.cd-username {
   background-image: url("../../images/login-signup/cd-icon-username.svg");
 }
+.cd-form label.cd-nickname {
+  background-image: url("../../images/login-signup/cd-icon-username.svg");
+}
 .cd-form label.cd-email {
   background-image: url("../../images/login-signup/cd-icon-email.svg");
 }
 .cd-form label.cd-password {
   background-image: url("../../images/login-signup/cd-icon-password.svg");
+}
+.cd-form label.cd-age {
+  background-image: url("../../images/login-signup/cd-icon-username.svg");
 }
 .cd-form input {
   margin: 0;
@@ -316,6 +322,9 @@ xsigin/signup popup
 }
 .cd-form input.full-width {
   width: 100%;
+}
+.cd-form input.halt-width {
+  width: 50%;
 }
 .cd-form input.has-padding {
   padding: 12px 20px 12px 50px;

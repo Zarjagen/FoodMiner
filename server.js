@@ -106,17 +106,17 @@ app.get('/profile' , function (req,res) {
 
 //selector.html
 app.get('/prefer' , function (req,res) {
-	res.sendFile(__dirname + '/static/select.html');
+	res.sendFile(__dirname + '/web/select.html');
 });
 
 //open up the sign up page
 app.get('/signup', function (req, res) {
-	res.sendFile(__dirname + '/static/signup.html');
+	res.sendFile(__dirname + '/web/signup.html');
 });
 
 //open up the sign in page
 app.get('/signin', function (req, res) {
-	res.sendFile(__dirname + '/static/signin.html');
+	res.sendFile(__dirname + '/web/signin.html');
 });
 
 //send welcome pages

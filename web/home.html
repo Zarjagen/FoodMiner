@@ -33,15 +33,29 @@ License URL: http://creativecommons.org/licenses/by/3.0/
 	 	});
   	</script>
  	<script type="text/javascript">
-		   	jQuery(function(){
+	   	jQuery(function(){
 			jQuery('#camera_wrap_1').camera({
 				pagination: false,
 			});
 		});
  	</script>
  	<script type="text/javascript">
+ 		$(document).ready(function(){
+
+	        $(document).ajaxError(function() {
+	          alert("Sorry, there was a problem!");
+	        });
+
+	        $("a[name=\"preventDefault\"]").click(function(e) {
+	        	e.preventDefault();
+	        });
+	    });
+ 	</script>
+ 	<!-- Doesn't work properly
+ 	<script type="text/javascript">
  		$.modal.close();
  	</script>
+ 	-->
 
 	</head>
   	<body>
@@ -51,8 +65,8 @@ License URL: http://creativecommons.org/licenses/by/3.0/
 		<div class="cd-user-modal"> <!-- this is the entire modal form, including the background -->
 		<div class="cd-user-modal-container"> <!-- this is the container wrapper -->
 			<ul class="cd-switcher">
-				<li><a href="#0">Sign in</a></li>
-				<li><a href="#0">New account</a></li>
+				<li><a href="#login">Login</a></li>
+				<li><a href="#new">New account</a></li>
 			</ul>
 
 			<div id="cd-login"> <!-- log in form -->
@@ -66,7 +80,7 @@ License URL: http://creativecommons.org/licenses/by/3.0/
 					<p class="fieldset">
 						<label class="image-replace cd-password" for="signin-password">Password</label>
 						<input class="full-width has-padding has-border" id="signin-password" type="text"  placeholder="Password">
-						<a href="#0" class="hide-password">Hide</a>
+						<a href="#" class="hide-password" name="preventDefault">Hide</a>
 						<span class="cd-error-message">Error message here!</span>
 					</p>
 
@@ -80,7 +94,7 @@ License URL: http://creativecommons.org/licenses/by/3.0/
 					</p>
 				</form>
 				
-				<p class="cd-form-bottom-message"><a href="#0">Forgot your password?</a></p>
+				<p class="cd-form-bottom-message"><a href="#" name="preventDefault">Forgot your password?</a></p>
 				<!-- <a href="#0" class="cd-close-form">Close</a> -->
 			</div> <!-- cd-login -->
 
@@ -113,14 +127,14 @@ License URL: http://creativecommons.org/licenses/by/3.0/
 					<p class="fieldset">
 						<label class="image-replace cd-password" for="signup-password">Password</label>
 						<input class="full-width has-padding has-border" id="signup-password" type="text"  placeholder="Password">
-						<a href="#0" class="hide-password">Hide</a>
+						<a href="#" class="hide-password" name="preventDefault">Hide</a>
 						<span class="cd-error-message">Error message here!</span>
 					</p>
 
 					<p class="fieldset">
 						<label class="image-replace cd-password" for="signup-password">Password</label>
 						<input class="full-width has-padding has-border" id="signup-repassword" type="text"  placeholder="Re-Password">
-						<a href="#0" class="hide-password">Hide</a>
+						<a href="#" class="hide-password" name="preventDefault">Hide</a>
 						<span class="cd-error-message">Error message here!</span>
 					</p>
 
@@ -132,7 +146,7 @@ License URL: http://creativecommons.org/licenses/by/3.0/
 
 					<p class="fieldset">
 						<input type="checkbox" id="accept-terms">
-						<label for="accept-terms">I agree to the <a href="#0">Terms</a></label>
+						<label for="accept-terms">I agree to the <a href="#Terms">Terms</a></label>
 					</p>
 
 					<p class="fieldset">
@@ -159,9 +173,9 @@ License URL: http://creativecommons.org/licenses/by/3.0/
 					</p>
 				</form>
 
-				<p class="cd-form-bottom-message"><a href="#0">Back to log-in</a></p>
+				<p class="cd-form-bottom-message"><a href="#back">Back to log-in</a></p>
 			</div> <!-- cd-reset-password -->
-			<a href="#0" class="cd-close-form">Close</a>
+			<a href="#" class="cd-close-form" name="preventDefault">Close</a>
 		</div> <!-- cd-user-modal-container -->
 	</div> <!-- cd-user-modal -->
 		<!---- end of Signup ---->
@@ -169,13 +183,13 @@ License URL: http://creativecommons.org/licenses/by/3.0/
 	    <div class="wrap">
 			<div class="top-header" style="display: block;">
 				<div class="logo">
-					<a href="home.html"><img src="images/fmlogo1.png" title="logo" /></a>
+					<a href="http://localhost:3000/"><img src="images/fmlogo1.png" title="logo" /></a>
 				</div>
 				<nav class="main-nav">
 					<ul>
 						<!-- inser more links here -->
-						<li><a class="cd-signin" href="#0">Sign in</a></li>
-						<li><a class="cd-signup" href="#0">Sign up</a></li>
+						<li><a class="cd-signin" href="#login" id="login">Sign in</a></li>
+						<li><a class="cd-signup" href="#signup" id="signup">Sign up</a></li>
 					</ul>
 				</nav>
 				<!-- social-icons
@@ -196,11 +210,11 @@ License URL: http://creativecommons.org/licenses/by/3.0/
 			<div class="top-nav">
 				<div class="top-nav-left">
 					<ul>
-						<li class="active"><a href="home.html">Home</a></li>
-						<li><a href="about.html">About</a></li>
-						<li><a href="services.html">Services</a></li>
-						<li><a href="gallery.html">Gallery</a></li>
-						<li><a href="contact.html">Contact</a></li>
+						<li class="active"><a href="http://localhost:3000/">Home</a></li>
+						<li><a href="http://localhost:3000/about">About</a></li>
+						<li><a href="http://localhost:3000/services">Services</a></li>
+						<li><a href="http://localhost:3000/discovery">Discovery</a></li>
+						<li><a href="http://localhost:3000/contact">Contact</a></li>
 						<div class="clear"> </div>
 					</ul>
 				</div>
@@ -231,19 +245,19 @@ License URL: http://creativecommons.org/licenses/by/3.0/
 		 	<div class="top-grids">
 		 		<div class="wrap">
 			 		<div class="top-grid">
-			 			<a href="#"><img src="images/icon1.png" title="icon-name"></a>
+			 			<a href="#" name="preventDefault"><img src="images/icon1.png" title="icon-name"></a>
 			 			<h3>Sucess Story</h3>
 			 			<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. </p>
 			 			<a class="button" href="about.html">Read More</a>
 			 		</div>
 			 		<div class="top-grid">
-			 			<a href="#"><img src="images/icon2.png" title="icon-name"></a>
+			 			<a href="#" name="preventDefault"><img src="images/icon2.png" title="icon-name"></a>
 			 			<h3>Our Services</h3>
 			 			<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.  </p>
 			 			<a class="button" href="services.html">Read More</a>
 			 		</div>
 			 		<div class="top-grid last-topgrid">
-			 			<a href="#"><img src="images/icon3.png" title="icon-name"></a>
+			 			<a href="#" name="preventDefault"><img src="images/icon3.png" title="icon-name"></a>
 			 			<h3>Location</h3>
 			 			<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. </p>
 			 			<a class="button" href="contact.html">Read More</a>
@@ -275,7 +289,7 @@ License URL: http://creativecommons.org/licenses/by/3.0/
 										<li><a href="#">Dolore magna aliqua</a></li>
 										<li><a href="#">Adipisicing elit, sed do eiusmod</a></li>
 									</ul>
-									<a class="button" href="contact.html">Read More</a>
+									<a class="button" href="http://localhost:3000/contact">Read More</a>
 								</div>
 								<div class="bottom-grid2 bottom-mid">
 									<h3>Today Special</h3>
@@ -292,7 +306,7 @@ License URL: http://creativecommons.org/licenses/by/3.0/
 											<div class="clear"> </div>
 										</ul>										
 								 </div>
-								 <a class="button" href="gallery.html">Read More</a>
+								 <a class="button" href="http://localhost:3000/discovery">Read More</a>
 							</div>
 							<div class="bottom-grid1 bottom-last">
 									<h3>Latest INFO</h3>

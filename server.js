@@ -100,30 +100,32 @@ app.get('/login/*',function (req,res){
 	return;
 });
 
-//profile page
-app.get('/profile' , function (req,res) {
-	res.sendFile(__dirname + '/web/services.html');
-});
 
-//selector.html
-app.get('/prefer' , function (req,res) {
-	res.sendFile(__dirname + '/web/select.html');
-});
-
-//open up the sign up page
-app.get('/signup', function (req, res) {
-	res.sendFile(__dirname + '/web/signup.html');
-});
-
-//open up the sign in page
-app.get('/signin', function (req, res) {
-	res.sendFile(__dirname + '/web/signin.html');
-});
-
-//send welcome pages
+//send home page
 app.get('/', function (req, res) {
 	res.sendFile(__dirname + '/web/home.html');
 });
+
+//send services page
+app.get('/services' , function (req,res) {
+	res.sendFile(__dirname + '/web/services.html');
+});
+
+//send about page
+app.get('/about' , function (req,res) {
+	res.sendFile(__dirname + '/web/about.html');
+});
+
+//send discovery page
+app.get('/discovery', function (req, res) {
+	res.sendFile(__dirname + '/web/discovery.html');
+});
+
+//send contact page
+app.get('/contact', function (req, res) {
+	res.sendFile(__dirname + '/web/contact.html');
+});
+
 
 
 // start the server on http://localhost:3000/

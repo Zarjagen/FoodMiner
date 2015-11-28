@@ -117,8 +117,8 @@ app.get('/about' , function (req,res) {
 });
 
 //send discovery page
-app.get('/discovery', function (req, res) {
-	res.sendFile(__dirname + '/web/discovery.html');
+app.get('/discover', function (req, res) {
+	res.sendFile(__dirname + '/web/discover.html');
 });
 
 //send contact page

@@ -13,6 +13,7 @@ String.prototype.hashCode = function(){
 	}
 	return hash;
 }
+
 //use body parser
 var bodyParser = require('body-parser');
 app.use(bodyParser.json()); // support json encoded bodies
@@ -121,7 +122,7 @@ app.get('/signin', function (req, res) {
 
 //send welcome pages
 app.get('/', function (req, res) {
-	res.sendFile(__dirname + '/web/index.html');
+	res.sendFile(__dirname + '/web/home.html');
 });
 
 

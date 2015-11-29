@@ -24,126 +24,166 @@ License URL: http://creativecommons.org/licenses/by/3.0/
  	<script type="text/javascript">
 		$.modal.close();
  	</script>
+
+ <script type = "text/javascript"> 
+	$(document).ready(function() {
+	$("#submit").click(function(e) {
+			//e.preventDefault();
+			if ($("#signup-password").val() != $("#signup-repassword").val()){
+				alert("Password Not matching!");
+				var x = document.getElementById("signup-password");
+				var y = document.getElementById("signup-repassword");
+				x.value = "";
+				y.value = "";
+			}
+			else{
+				$.ajax({
+					url: "users/",
+					type: "POST",
+					dataType : "text", // this URL returns a plain text string, not JSON
+					data : { 
+	  	 				password: $("#signup-password").val(),
+	   					nickname: $("#signup-nickname").val(),
+	   					age: $("#signup-age").val(),
+	   					gender: $("#signup-gender").val(),
+	   					email: $("#signup-email").val()
+     				},
+					success: function( data ) {
+					if (data == 'OK') {
+						console.log("Success!!!");
+					} else {
+						console.log("LOSER");	
+					}
+					setTimeout("location.href = \"http://localhost:3000/\"",5000);
+					},
+				});
+			}
+		});
+	});
+</script>
+
+
+ 	
 </head>
 	<body>
 	<!----start-header---->
 	 <div class="header">
 	 	<!---- start of signup ---->
 		<div class="cd-user-modal"> <!-- this is the entire modal form, including the background -->
-		<div class="cd-user-modal-container"> <!-- this is the container wrapper -->
-			<ul class="cd-switcher">
-				<li><a href="#0">Sign in</a></li>
-				<li><a href="#0">New account</a></li>
-			</ul>
+<div class="cd-user-modal-container"> <!-- this is the container wrapper -->
+	<ul class="cd-switcher">
+		<li><a href="#login" id="tag-login">Login</a></li>
+		<li><a href="#new" id="tag-signup">New account</a></li>
+	</ul>
 
-			<div id="cd-login"> <!-- log in form -->
-				<form class="cd-form">
-					<p class="fieldset">
-						<label class="image-replace cd-email" for="signin-email">E-mail</label>
-						<input class="full-width has-padding has-border" id="signin-email" type="email" placeholder="E-mail">
-						<span class="cd-error-message">Error message here!</span>
-					</p>
+	<div id="cd-login"> <!-- log in form -->
+		<form class="cd-form">
+			<p class="fieldset">
+				<label class="image-replace cd-email" for="signin-email">E-mail</label>
+				<input class="full-width has-padding has-border" id="signin-email" type="email" placeholder="E-mail">
+				<span class="cd-error-message">Error message here!</span>
+			</p>
 
-					<p class="fieldset">
-						<label class="image-replace cd-password" for="signin-password">Password</label>
-						<input class="full-width has-padding has-border" id="signin-password" type="text"  placeholder="Password">
-						<a href="#0" class="hide-password">Hide</a>
-						<span class="cd-error-message">Error message here!</span>
-					</p>
+			<p class="fieldset">
+				<label class="image-replace cd-password" for="signin-password">Password</label>
+				<input class="full-width has-padding has-border" id="signin-password" type="text"  placeholder="Password">
+				<a href="#" class="hide-password" name="preventDefault">Hide</a>
+				<span class="cd-error-message">Error message here!</span>
+			</p>
 
-					<p class="fieldset">
-						<input type="checkbox" id="remember-me" checked>
-						<label for="remember-me">Remember me</label>
-					</p>
+			<p class="fieldset">
+				<input type="checkbox" id="remember-me" checked>
+				<label for="remember-me">Remember me</label>
+			</p>
 
-					<p class="fieldset">
-						<input class="full-width" type="submit" value="Login">
-					</p>
-				</form>
-				
-				<p class="cd-form-bottom-message"><a href="#0">Forgot your password?</a></p>
-				<!-- <a href="#0" class="cd-close-form">Close</a> -->
-			</div> <!-- cd-login -->
+			<p class="fieldset">
+				<input class="full-width" type="submit" value="Login">
+			</p>
+		</form>
+		
+		<p class="cd-form-bottom-message"><a href="#" name="preventDefault">Forgot your password?</a></p>
+		<!-- <a href="#0" class="cd-close-form">Close</a> -->
+	</div> <!-- cd-login -->
 
-			<div id="cd-signup"> <!-- sign up form -->
-				<form class="cd-form">
-					<p class="fieldset">
-						<label class="image-replace cd-username" for="signup-username">Username</label>
-						<input class="full-width has-padding has-border" id="signup-username" type="text" placeholder="Username">
-						<span class="cd-error-message">Error message here!</span>
-					</p>
+	<div id="cd-signup"> <!-- sign up form -->
+		<form id="form" class="cd-form">
+			<p class="fieldset">
+				<label class="image-replace cd-username" for="signup-username">Username</label>
+				<input class="full-width has-padding has-border" id="signup-username" type="text" placeholder="Username">
+				<span class="cd-error-message">Error message here!</span>
+			</p>
 
-					<p class="fieldset">
-						<label class="image-replace cd-username" for="signup-username">Username</label>
-						<input class="full-width has-padding has-border" id="signup-nickname" type="text" placeholder="Nickname">
-						<span class="cd-error-message">Error message here!</span>
-					</p>
+			<p class="fieldset">
+				<label class="image-replace cd-username" for="signup-username">Username</label>
+				<input class="full-width has-padding has-border" id="signup-nickname" type="text" placeholder="Nickname">
+				<span class="cd-error-message">Error message here!</span>
+			</p>
 
-					<p class="fieldset">
-						<label class="image-replace cd-username" for="signup-username">Username</label>
-						<input class="full-width has-padding has-border" id="signup-age" type="text" placeholder="Age">
-						<span class="cd-error-message">Error message here!</span>
-					</p>
+			<p class="fieldset">
+				<label class="image-replace cd-username" for="signup-username">Username</label>
+				<input class="full-width has-padding has-border" id="signup-age" type="text" placeholder="Age">
+				<span class="cd-error-message">Error message here!</span>
+			</p>
 
-					<p class="fieldset">
-						<label class="image-replace cd-email" for="signup-email">E-mail</label>
-						<input class="full-width has-padding has-border" id="signup-email" type="email" placeholder="E-mail">
-						<span class="cd-error-message">Error message here!</span>
-					</p>
+			<p class="fieldset">
+				<label class="image-replace cd-email" for="signup-email">E-mail</label>
+				<input class="full-width has-padding has-border" id="signup-email" type="text" placeholder="E-mail">
+				<span class="cd-error-message">Error message here!</span>
+			</p>
 
-					<p class="fieldset">
-						<label class="image-replace cd-password" for="signup-password">Password</label>
-						<input class="full-width has-padding has-border" id="signup-password" type="text"  placeholder="Password">
-						<a href="#0" class="hide-password">Hide</a>
-						<span class="cd-error-message">Error message here!</span>
-					</p>
+			<p class="fieldset">
+				<label class="image-replace cd-password" for="signup-password">Password</label>
+				<input class="full-width has-padding has-border" id="signup-password" type="text"  placeholder="Password">
+				<a href="#" class="hide-password" name="preventDefault">Hide</a>
+				<span class="cd-error-message">Error message here!</span>
+			</p>
 
-					<p class="fieldset">
-						<label class="image-replace cd-password" for="signup-password">Password</label>
-						<input class="full-width has-padding has-border" id="signup-repassword" type="text"  placeholder="Re-Password">
-						<a href="#0" class="hide-password">Hide</a>
-						<span class="cd-error-message">Error message here!</span>
-					</p>
+			<p class="fieldset">
+				<label class="image-replace cd-password" for="signup-password">Password</label>
+				<input class="full-width has-padding has-border" id="signup-repassword" type="text"  placeholder="Re-Password">
+				<a href="#" class="hide-password" name="preventDefault">Hide</a>
+				<span class="cd-error-message">Error message here!</span>
+			</p>
 
-					<p class="fieldset">
-						<label class="image-replace cd-username" for="signup-username">Username</label>
-						<input class="full-width has-padding has-border" id="signup-gender" type="text" placeholder="Gender">
-						<span class="cd-error-message">Error message here!</span>
-					</p>
+			<p class="fieldset">
+				<label class="image-replace cd-username" for="signup-username">Username</label>
+				<input class="full-width has-padding has-border" id="signup-gender" type="text" placeholder="Gender">
+				<span class="cd-error-message">Error message here!</span>
+			</p>
 
-					<p class="fieldset">
-						<input type="checkbox" id="accept-terms">
-						<label for="accept-terms">I agree to the <a href="#0">Terms</a></label>
-					</p>
+			<p class="fieldset">
+				<input type="checkbox" id="accept-terms">
+				<label for="accept-terms">I agree to the <a href="#Terms">Terms</a></label>
+			</p>
 
-					<p class="fieldset">
-						<input class="full-width has-padding" type="submit" value="Create account">
-					</p>
+			<p class="fieldset">
+				<input id="submit" class="full-width has-padding" type="submit" value="Create account">
+			</p>
 
-				</form>
+		</form>
 
-				<!-- <a href="#0" class="cd-close-form">Close</a> -->
-			</div> <!-- cd-signup -->
+		<!-- <a href="#0" class="cd-close-form">Close</a> -->
+	</div> <!-- cd-signup -->
 
-			<div id="cd-reset-password"> <!-- reset password form -->
-				<p class="cd-form-message">Lost your password? Please enter your email address. You will receive a link to create a new password.</p>
+	<div id="cd-reset-password"> <!-- reset password form -->
+		<p class="cd-form-message">Lost your password? Please enter your email address. You will receive a link to create a new password.</p>
 
-				<form class="cd-form">
-					<p class="fieldset">
-						<label class="image-replace cd-email" for="reset-email">E-mail</label>
-						<input class="full-width has-padding has-border" id="reset-email" type="email" placeholder="E-mail">
-						<span class="cd-error-message">Error message here!</span>
-					</p>
+		<form class="cd-form">
+			<p class="fieldset">
+				<label class="image-replace cd-email" for="reset-email">E-mail</label>
+				<input class="full-width has-padding has-border" id="reset-email" type="email" placeholder="E-mail">
+				<span class="cd-error-message">Error message here!</span>
+			</p>
 
-					<p class="fieldset">
-						<input class="full-width has-padding" type="submit" value="Reset password">
-					</p>
-				</form>
+			<p class="fieldset">
+				<input class="full-width has-padding" type="submit" value="Reset password">
+			</p>
+		</form>
 
-				<p class="cd-form-bottom-message"><a href="#0">Back to log-in</a></p>
-			</div> <!-- cd-reset-password -->
-			<a href="#0" class="cd-close-form">Close</a>
-		</div> <!-- cd-user-modal-container -->
+		<p class="cd-form-bottom-message"><a href="#back">Back to log-in</a></p>
+	</div> <!-- cd-reset-password -->
+	<a href="#" class="cd-close-form" name="preventDefault">Close</a>
+</div> <!-- cd-user-modal-container -->
 		</div> <!-- cd-user-modal -->
 		<!---- end of Signup ---->
 

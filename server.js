@@ -39,7 +39,7 @@ app.post('/prefer/*', function (req, res) {
 		+ 'WHERE username = ' + '\'' + String(username) +'\'');
 	var data = db.export();
 	var buffer = new Buffer(data);
-	fs.writeFileSync('User.db', buffer);
+	fs.writeFileSync('foodminer.db', buffer);
 	db.close();
 	res.send('OK');
 });
@@ -47,36 +47,32 @@ app.post('/prefer/*', function (req, res) {
 app.post('/users/', function (req, res) {
     var postBody = req.body;
     console.log(postBody);
-	var username = postBody.username;
 	var nickname = postBody.nickname;
 	var password = postBody.password;
 	var age = postBody.age;
 	var gender = postBody.gender;
-	var userid = username.hashCode();
 	var email = postBody.email;
+	var userid = email.hashCode();
 
 	//database part
 	var fs = require('fs');
 	var sql = require('sql.js');
 
-	var filebuffer = fs.readFileSync('User.db');
+	var filebuffer = fs.readFileSync('foodminer.db');
 	var db = new sql.Database(filebuffer);
 
 	db.run('INSERT INTO Users VALUES (\'' + 
-		String(userid)   + '\',\'' + String(username) + '\',\'' + 
-  		String(password) + '\',\'' + String(nickname) + '\',\'' + 
-  		String(age)      + '\',\'' + String(gender)   + '\',\'' +
-  		String(email)    + '\',\'' + 
-		'None' + '\')');
+		String(userid)   + '\',\'' + String(email) + '\',\'' + 
+  		String(nickname) + '\',\'' + String(password) + '\',\'' + 
+  		String(age)      + '\',\'' + String(gender) + '\')');
 
-	var stmt = db.prepare("SELECT * FROM Users WHERE username=:user");
-	var result = stmt.getAsObject({':user' : username});
-	console.log(result);
-
+	//var stmt = db.prepare("SELECT * FROM Users WHERE Email=:email-adress");
+	//var result = stmt.getAsObject({':email-adress' : email});
+	//console.log(result);
+	
 	var data = db.export();
 	var buffer = new Buffer(data);
-	fs.writeFileSync('User.db', buffer);
-
+	fs.writeFileSync('foodminer.db', buffer);
 	db.close();
 	res.send('OK');
 });
@@ -87,7 +83,7 @@ app.get('/login/*',function (req,res){
 	var fs = require('fs');
 	var sql = require('sql.js');
 
-	var filebuffer = fs.readFileSync('User.db');
+	var filebuffer = fs.readFileSync('foodminer.db');
 	var db = new sql.Database(filebuffer);
 
 	var stmt = db.prepare("SELECT * FROM Users WHERE username=:user");

@@ -19,28 +19,27 @@ $(document).ready(function() {
 					type: "POST",
 					dataType : "text", // this URL returns a plain text string, not JSON
 					data : { 
-						username: $("#usernameBox").val(),
-	  	 				password: $("#passwordBox").val(),
-	   					nickname: $("#nicknameBox").val(),
-	   					age: $("#ageBox").val(),
-	   					gender: $("#gender").val(),
-	   					email: $("#emailBox").val()
+	  	 				password: $("#signup-password").val(),
+	   					nickname: $("#signup-nickname").val(),
+	   					age: $("#signup-age").val(),
+	   					gender: $("#signup-gender").val(),
+	   					email: $("#signup-email").val()
      				},
 					success: function( data ) {
 					if (data == 'OK') {
 						console.log("Success!!!");
-							$("#head").html("Successfully created a new user!\nPlease wait 5 seconds!");
+
 					} else {
-							$("#head").html(data);
+						console.log("LOSER");	
 					}
-					setTimeout("location.href = \"http://localhost:3000/signin\"",5000);
+					setTimeout("location.href = \"http://localhost:3000/\"",5000);
 					},
 				});
 			}
 		});
 	});
 });
-}
+});
 </script>
 <div class="cd-user-modal-container"> <!-- this is the container wrapper -->
 	<ul class="cd-switcher">

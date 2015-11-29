@@ -7,7 +7,9 @@ License URL: http://creativecommons.org/licenses/by/3.0/
 <!DOCTYPE HTML>
 <html>
 <head>
-	<title>Find Miner!</title>
+
+	<title>Food Miner!</title>
+	<title>Food Miner--Service</title>
 	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 
@@ -16,23 +18,22 @@ License URL: http://creativecommons.org/licenses/by/3.0/
 	<link href="css/style.css" rel="stylesheet" type="text/css"  media="all" />
 	<link href='http://fonts.googleapis.com/css?family=Open+Sans' rel='stylesheet' type='text/css'>
 
-  	<script src="http://code.jquery.com/jquery-1.11.3.min.js"></script>
+	<script src="http://code.jquery.com/jquery-1.11.3.min.js"></script>
   	<script src="js/login-signup/modernizr.js"></script> <!-- Modernizr -->
   	<script src="js/login-signup/main.js"></script> <!-- Gem jQuery -->
  	<script type="text/javascript">
-	$.modal.close();
+		$.modal.close();
  	</script>
-
 </head>
-  <body>
+	<body>
 	<!----start-header---->
 	 <div class="header">
 	 	<!---- start of signup ---->
 		<div class="cd-user-modal"> <!-- this is the entire modal form, including the background -->
 		<div class="cd-user-modal-container"> <!-- this is the container wrapper -->
 			<ul class="cd-switcher">
-				<li><a href="#login">Login</a></li>
-				<li><a href="#new">New account</a></li>
+				<li><a href="#0">Sign in</a></li>
+				<li><a href="#0">New account</a></li>
 			</ul>
 
 			<div id="cd-login"> <!-- log in form -->
@@ -46,7 +47,7 @@ License URL: http://creativecommons.org/licenses/by/3.0/
 					<p class="fieldset">
 						<label class="image-replace cd-password" for="signin-password">Password</label>
 						<input class="full-width has-padding has-border" id="signin-password" type="text"  placeholder="Password">
-						<a href="#" class="hide-password">Hide</a>
+						<a href="#0" class="hide-password">Hide</a>
 						<span class="cd-error-message">Error message here!</span>
 					</p>
 
@@ -60,7 +61,7 @@ License URL: http://creativecommons.org/licenses/by/3.0/
 					</p>
 				</form>
 				
-				<p class="cd-form-bottom-message"><a href="#">Forgot your password?</a></p>
+				<p class="cd-form-bottom-message"><a href="#0">Forgot your password?</a></p>
 				<!-- <a href="#0" class="cd-close-form">Close</a> -->
 			</div> <!-- cd-login -->
 
@@ -93,14 +94,14 @@ License URL: http://creativecommons.org/licenses/by/3.0/
 					<p class="fieldset">
 						<label class="image-replace cd-password" for="signup-password">Password</label>
 						<input class="full-width has-padding has-border" id="signup-password" type="text"  placeholder="Password">
-						<a href="#" class="hide-password">Hide</a>
+						<a href="#0" class="hide-password">Hide</a>
 						<span class="cd-error-message">Error message here!</span>
 					</p>
 
 					<p class="fieldset">
 						<label class="image-replace cd-password" for="signup-password">Password</label>
 						<input class="full-width has-padding has-border" id="signup-repassword" type="text"  placeholder="Re-Password">
-						<a href="#" class="hide-password">Hide</a>
+						<a href="#0" class="hide-password">Hide</a>
 						<span class="cd-error-message">Error message here!</span>
 					</p>
 
@@ -112,7 +113,7 @@ License URL: http://creativecommons.org/licenses/by/3.0/
 
 					<p class="fieldset">
 						<input type="checkbox" id="accept-terms">
-						<label for="accept-terms">I agree to the <a href="#Terms">Terms</a></label>
+						<label for="accept-terms">I agree to the <a href="#0">Terms</a></label>
 					</p>
 
 					<p class="fieldset">
@@ -139,9 +140,9 @@ License URL: http://creativecommons.org/licenses/by/3.0/
 					</p>
 				</form>
 
-				<p class="cd-form-bottom-message"><a href="#">Back to log-in</a></p>
+				<p class="cd-form-bottom-message"><a href="#0">Back to log-in</a></p>
 			</div> <!-- cd-reset-password -->
-			<a href="#" class="cd-close-form">Close</a>
+			<a href="#0" class="cd-close-form">Close</a>
 		</div> <!-- cd-user-modal-container -->
 		</div> <!-- cd-user-modal -->
 		<!---- end of Signup ---->
@@ -154,8 +155,8 @@ License URL: http://creativecommons.org/licenses/by/3.0/
 				<nav class="main-nav">
 					<ul>
 						<!-- inser more links here -->
-						<li><a class="cd-signin" href="#login">Sign in</a></li>
-						<li><a class="cd-signup" href="#signup">Sign up</a></li>
+						<li><a class="cd-signin" href="#0">Sign in</a></li>
+						<li><a class="cd-signup" href="#0">Sign up</a></li>
 					</ul>
 				</nav>
 				<!-- social-icons
@@ -180,6 +181,7 @@ License URL: http://creativecommons.org/licenses/by/3.0/
 						<li class="active"><a href="http://localhost:3000/services">Services</a></li>
 						<li><a href="http://localhost:3000/discover">Discover</a></li>
 						<li><a href="http://localhost:3000/contact">Contact</a></li>
+						<div class="clear"> </div>
 					</ul>
 				</div>
 				<div class="top-nav-right">
@@ -195,80 +197,64 @@ License URL: http://creativecommons.org/licenses/by/3.0/
    <!----End-header----->
 		 <!---start-content---->
 		 <div class="content">
-		 	<!---start-services---->
-		 	<div class="services">
+		 	<!---start-gallery---->
+		 	<div class="gallerys">
 		 		<div class="wrap">
-					<div class="services-header">
-						<h3>Services</h3>
-						<div class="clear"> </div>
-					</div>
-					<div class="services-grids">
-						<div class="services-grid">
-							<a href="#">consectetur adiing</a>
-							<p>Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Praesent vestibulum molestie lacus. Aenean nonummy hendrerit mauris. Phasellus porta. Fusce suscipit varius mi.</p>
+					<h3>discover rochester cuisine</h3>
+					<div class="gallery-grids">
+						<div class="gallery-grid">
+							<a href="#"><img src="images/redl.jpg" alt=""><span>$33</span></a>
+							<h4>Red Lobster</h4>
+							<p>Crab leg and shrimp with potato only at Red Lobster!</p>
+							<div class="gallery-button"><a href="#">Add To Favorite</a></div>
 						</div>
-						<div class="services-grid">
-							<a href="#">consectetur adiing</a>
-							<p>Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Praesent vestibulum molestie lacus. Aenean nonummy hendrerit mauris. Phasellus porta. Fusce suscipit varius mi.</p>
+						<div class="gallery-grid grid2">
+							<a href="#"><img src="images/yummy.jpg" alt=""><span>$43</span></a>
+							<h4>Yummy Garden Hot Pot</h4>
+							<p>Spicy soup with rice noodles, beef rolls, vegetable combo,and dumplings</p>
+							<div class="gallery-button"><a href="#">Add To Favorite</a></div>
 						</div>
-						<div class="services-grid">
-							<a href="#">consectetur adiing</a>
-							<p>Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Praesent vestibulum molestie lacus. Aenean nonummy hendrerit mauris. Phasellus porta. Fusce suscipit varius mi.</p>
-						</div>
-						<div class="services-grid">
-							<a href="#">consectetur adiing</a>
-							<p>Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Praesent vestibulum molestie lacus. Aenean nonummy hendrerit mauris. Phasellus porta. Fusce suscipit varius mi.</p>
-						</div>
-						<div class="services-grid">
-							<a href="#">consectetur adiing</a>
-							<p>Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Praesent vestibulum molestie lacus. Aenean nonummy hendrerit mauris. Phasellus porta. Fusce suscipit varius mi.</p>
-						</div>
-						<div class="services-grid">
-							<a href="#">consectetur adiing</a>
-							<p>Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Praesent vestibulum molestie lacus. Aenean nonummy hendrerit mauris. Phasellus porta. Fusce suscipit varius mi.</p>
-						</div>
-						<div class="services-grid">
-							<a href="#">consectetur adiing</a>
-							<p>Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Praesent vestibulum molestie lacus. Aenean nonummy hendrerit mauris. Phasellus porta. Fusce suscipit varius mi.</p>
-						</div>
-						<div class="services-grid">
-							<a href="#">consectetur adiing</a>
-							<p>Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Praesent vestibulum molestie lacus. Aenean nonummy hendrerit mauris. Phasellus porta. Fusce suscipit varius mi.</p>
-						</div>
-						 <div class="clear"> </div>
-					</div>
-				
-				<div class="specials">
-					<div class="specials-heading">
-						<h3>Special Dishes</h3>
-						<div class="clear"> </div>
-					</div>
-					<div class="clear"> </div>
-					<div class="specials-grids">
-						<div class="special-grid">
-							<img src="images/slider2.jpg" title="image-name">
-							<a href="#">Lorem ipsum dolor</a>
-							<p>Lorem ipsum dolor sit amet consectetur adiing elit. In volutpat luctus eros ac placerat. Quisque erat metus facilisis non feu,aliquam hendrerit quam. Donec ut lectus vel dolor adipiscing tincnt.</p>
-						</div>
-						<div class="special-grid">
-							<img src="images/slider1.jpg" title="image-name">
-							<a href="#">volutpat luctus</a>
-							<p>Lorem ipsum dolor sit amet consectetur adiing elit. In volutpat luctus eros ac placerat. Quisque erat metus facilisis non feu,aliquam hendrerit quam. Donec ut lectus vel dolor adipiscing tincnt.</p>
-						</div>
-						<div class="special-grid spe-grid">
-							<img src="images/slider4.jpg" title="image-name">
-							<a href="#">Quisque erat metus</a>
-							<p>Lorem ipsum dolor sit amet consectetur adiing elit. In volutpat luctus eros ac placerat. Quisque erat metus facilisis non feu,aliquam hendrerit quam. Donec ut lectus vel dolor adipiscing tincnt.</p>
+						<div class="gallery-grid">
+							<a href="#"><img src="images/dibbq.jpg" alt=""><span>$18.99</span></a>
+							<h4>Dinosaur Bar-B-Que</h4>
+							<p>1/2 chicken with brisket and a double side of mac and cheese</p>
+							<div class="gallery-button"><a href="#">Add To Favorite</a></div>
 						</div>
 						<div class="clear"> </div>
 					</div>
-					<div class="clear"> </div>
+					<div class="gallery-grids">
+						<div class="gallery-grid">
+							<a href="#"><img src="images/shiki.jpg" alt=""><span>$16</span></a>
+							<h4>Shiki Japanese Restaurant</h4>
+							<p>Sushi and Sashimi lunch combo sell for $16 at Shiki</p>
+							<div class="gallery-button"><a href="#">Add To Favorite</a></div>
+						</div>
+						<div class="gallery-grid grid2">
+							<a href="#"><img src="images/ramen.jpg" alt=""><span>$10.35</span></a>
+							<h4>Shiki Japanese Restaurant</h4>
+							<p>Miso Ramen noodle Soup! Only at Shiki Japanese Restaurant</p>
+							<div class="gallery-button"><a href="#">Add To Favorite</a></div>
+						</div>
+						<div class="gallery-grid">
+							<a href="#"><img src="images/slider2.jpg" alt=""><span>$42</span></a>
+							<h4>hendrerit mauris. Phasellus</h4>
+							<p>Praesent vestibulum molestie lacus. Aenean nonummy hendrerit mauris. Phasellus porta.</p>
+							<div class="gallery-button"><a href="#">Add To Favorite</a></div>
+						</div>
+					</div>					
+				    <div class="clear"> </div>
+				    </div>
+				    <div class="projects-bottom-paination">
+						<ul>
+							<li class="active" id = "region"><a href="#">REGION</a></li>
+							<li id = "region"><a class="button" href="#">Types</a></li>
+						</ul>
+					</div>
 					</div>
 				</div>
-				</div>
-		 	<!---End-services---->
+		 	<!---End-gallery---->
 		 <!---End-content---->
-		 <!---start-footer---->
+		 <!---start-footer
 		 <div class="footer">
 		<div class="wrap">
 			<div class="footer-grid">
@@ -307,9 +293,9 @@ License URL: http://creativecommons.org/licenses/by/3.0/
 						<a href="#top" class="scroll"> </a>
 						<div class="clear"> </div>
 					</div>
-		<p>Design by <a href="http://courses.pgbovine.net/csc210/"> Jiageng Zhang, Yiheng Zhou and Jingyao Zhan</a></p>
+		<p>Design by <a href="http://w3layouts.com/"> W3layouts</a></p>
 	</div>
-		 <!---End-footer---->
+		 End-footer---->
 	</body>
 </html>
 

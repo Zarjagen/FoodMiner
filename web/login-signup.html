@@ -1,3 +1,47 @@
+<script src="http://code.jquery.com/jquery-1.11.3.min.js"></script>
+<script type = "text/javascript"> 
+$(document).ready(function() {
+	$(document).ajaxError(function() {
+		alert("Sorry, there was a problem!");
+	$("#form").submit(function() {
+			$("#signup-form").on("submit", function(e){
+			e.preventDefault();
+			if ($("#passwordBox").val() != $("#repasswordBox").val()){
+				alert("Password Not matching!");
+				var x = document.getElementById("signup-password");
+				var y = document.getElementById("signup-repassword");
+				x.value = "";
+				y.value = "";
+			}
+			else{
+				$.ajax({
+					url: "users/",
+					type: "POST",
+					dataType : "text", // this URL returns a plain text string, not JSON
+					data : { 
+						username: $("#usernameBox").val(),
+	  	 				password: $("#passwordBox").val(),
+	   					nickname: $("#nicknameBox").val(),
+	   					age: $("#ageBox").val(),
+	   					gender: $("#gender").val(),
+	   					email: $("#emailBox").val()
+     				},
+					success: function( data ) {
+					if (data == 'OK') {
+						console.log("Success!!!");
+							$("#head").html("Successfully created a new user!\nPlease wait 5 seconds!");
+					} else {
+							$("#head").html(data);
+					}
+					setTimeout("location.href = \"http://localhost:3000/signin\"",5000);
+					},
+				});
+			}
+		});
+	});
+});
+}
+</script>
 <div class="cd-user-modal-container"> <!-- this is the container wrapper -->
 	<ul class="cd-switcher">
 		<li><a href="#login" id="tag-login">Login</a></li>
@@ -34,7 +78,7 @@
 	</div> <!-- cd-login -->
 
 	<div id="cd-signup"> <!-- sign up form -->
-		<form class="cd-form">
+		<form id = "form" class="cd-form">
 			<p class="fieldset">
 				<label class="image-replace cd-username" for="signup-username">Username</label>
 				<input class="full-width has-padding has-border" id="signup-username" type="text" placeholder="Username">

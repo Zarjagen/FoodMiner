@@ -17,6 +17,7 @@ License URL: http://creativecommons.org/licenses/by/3.0/
   	<link href='http://fonts.googleapis.com/css?family=Open+Sans' rel='stylesheet' type='text/css'>
   	<link href="css/slider.css" rel="stylesheet" type="text/css"  media="all" />
   	<link rel="stylesheet" href="css/jquery.modal.css" type="text/css" media="screen" />
+  	<link rel="stylesheet" type="text/css" href="success.css">
 
   	<script src="http://code.jquery.com/jquery-1.11.3.min.js"></script>
   	<script src="js/login-signup/modernizr.js"></script> <!-- Modernizr -->
@@ -59,7 +60,7 @@ License URL: http://creativecommons.org/licenses/by/3.0/
 
  <script type = "text/javascript"> 
 	$(document).ready(function() {
-	$("#submit").click(function(e) {
+		$("#submit").click(function(e) {
 			//e.preventDefault();
 			if ($("#signup-password").val() != $("#signup-repassword").val()){
 				alert("Password Not matching!");
@@ -86,11 +87,18 @@ License URL: http://creativecommons.org/licenses/by/3.0/
 					} else {
 						console.log("LOSER");	
 					}
-					setTimeout("location.href = \"http://localhost:3000/\"",5000);
+					$("#tag-login").addClass("selected");
+					$("#tag-signup").toggleClass("selected");
+					$("#cd-login").addClass("is-selected");
+					$("#cd-signup").toggleClass("is-selected");
+					$("#login-form").append("<div class=\"a-box a-alert a-alert-success a-spacing-medium\"><div class=\"a-box-inner a-alert-container\"><h4 class=\"a-alert-heading\">Success!</h4><div class=\"a-alert-content\"><div class=\"a-row\">Welcome!<span class=\"a-text-bold\">Please wait for 5 seconds!</span></div> </div></div></div>");
+					// $("#login").replaceWith('<a class="cd-signin" href="#login" id="profile">Profile</a>')
+					// $("#signup").remove();
 					},
 				});
 			}
 		});
+
 	});
 </script>
 
@@ -108,7 +116,7 @@ License URL: http://creativecommons.org/licenses/by/3.0/
 	</ul>
 
 	<div id="cd-login"> <!-- log in form -->
-		<form class="cd-form">
+		<form id="login-form" class="cd-form">
 			<p class="fieldset">
 				<label class="image-replace cd-email" for="signin-email">E-mail</label>
 				<input class="full-width has-padding has-border" id="signin-email" type="email" placeholder="E-mail">

@@ -1,0 +1,89 @@
+.a-alert-success {
+    border-color: #7fc87f;
+
+    box-sizing: border-box;
+
+    font-size: 13px;
+    line-height: 19px;
+    color: #111;
+    font-family: Arial,sans-serif;
+}
+
+.a-box {
+    display: block;
+    border-radius: 4px;
+    border: 1px #ddd solid;
+    background-color: #fff;
+}
+
+.a-spacing-medium {
+    margin-bottom: 18px!important;
+}
+
+.a-alert-success .a-alert-container {
+    padding-left: 60px;
+    box-shadow: 0 0 0 4px #dff7df inset;
+}
+
+.a-box .a-box-inner {
+    border-radius: 4px;
+    position: relative;
+    padding: 14px 18px;
+}
+
+.a-alert-success .a-alert-container .a-alert-heading {
+    color: #007600;
+
+    font-weight: 400;
+    font-size: 17px;
+    line-height: 1.255;
+
+    font-family: Arial,sans-serif;
+    text-rendering: optimizeLegibility;
+    padding-bottom: 4px;
+
+    padding: 0;
+    margin: 0;
+
+    display: block;
+    -webkit-margin-before: 1.33em;
+    -webkit-margin-after: 1.33em;
+    -webkit-margin-start: 0px;
+    -webkit-margin-end: 0px;
+}
+
+.a-icon {
+    background-image: url(https://images-na.ssl-images-amazon.com/images/G/01/AUIClients/AmazonUIBaseCSS-sprite_1x-8fe8c701c7a6f38368f97a8a3f04d5f25875be4d._V2_.png);
+    background-repeat: no-repeat;
+    -webkit-background-size: 400px 650px;
+    background-size: 400px 650px;
+    display: inline-block;
+    vertical-align: top;
+
+    font-style: italic;
+}
+
+.a-hires .a-icon {
+    background-image: url(https://images-na.ssl-images-amazon.com/images/G/01/AUIClients/AmazonUIBaseCSS-sprite_2x-226eca6867acbf88de65f69383ea33c9a02ffc17._V2_.png);
+}
+
+.a-row {
+    width: 100%;
+    display: block;
+}
+
+.a-row:after, .a-row:before {
+    display: table;
+    content: "";
+    line-height: 0;
+    font-size: 0;
+}
+
+.a-row:after {
+    clear: both;
+}
+
+.a-text-bold {
+    font-weight: 700!important;
+}
+

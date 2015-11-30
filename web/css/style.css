@@ -677,7 +677,7 @@ body{
 .gallery-grid h4:hover{
 	color:#BD7F1C;
 }
-/*---contect----*/
+/*---contact----*/
 /*  Contact Form  ============================================================================= */
 .section {
 	clear: both;
@@ -734,17 +734,27 @@ body{
 	padding-bottom:5px;
 	font-family: 'Open Sans', sans-serif;
 }
-.contact-form input[type="text"],.contact-form textarea{
-		    padding:8px;
-			display:block;
-			width:98%;
-			border: none;
-			outline:none;
-			color:#363638;
-			font-size:1.2em;
-			font-family:Arial, Helvetica, sans-serif;
-			border: 1px solid rgba(192, 192, 192, 0.41);
-			-webkit-appearance:none;
+.contact-form input[type="text"]{
+	padding:8px;
+	border: none;
+	outline:none;
+	color:#363638;
+	font-size:1.2em;
+	font-family:Arial, Helvetica, sans-serif;
+	border: 1px solid rgba(192, 192, 192, 0.41);
+	-webkit-appearance:none;
+}
+.contact-form textarea{
+    padding:8px;
+	display:block;
+	width:78%;
+	border: none;
+	outline:none;
+	color:#363638;
+	font-size:1.2em;
+	font-family:Arial, Helvetica, sans-serif;
+	border: 1px solid rgba(192, 192, 192, 0.41);
+	-webkit-appearance:none;
 }
 .contact-form input[type="text"]:focus,.contact-form textarea:focus{
 	border:1px solid #F1DDBD;

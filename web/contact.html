@@ -20,7 +20,7 @@ License URL: http://creativecommons.org/licenses/by/3.0/
   	<script src="js/login-signup/modernizr.js"></script> <!-- Modernizr -->
   	<script src="js/login-signup/main.js"></script> <!-- Gem jQuery -->
  	<script type="text/javascript">
-	$.modal.close();
+
  	</script>
 
  <script type = "text/javascript"> 
@@ -59,8 +59,25 @@ License URL: http://creativecommons.org/licenses/by/3.0/
 		});
 	});
 </script>
+<script src="http://code.jquery.com/jquery-1.11.3.min.js"></script>
+<script type="text/javascript">
+$(document).ready(function() {
+ $("#localComment").click(function() {
+    console.log("clicked!");
+    var k = $("#keyInput").val();
+    var v = $("#valueInput").val();
+    localStorage[k] = v;
+  });
+ 	var text = "<ul>";
+ 	var i;
+	for (i = 0; i < localStorage.length; i++) {
+	    text += "<li>" + localStorage.key(i) + " says: " + localStorage.getItem(localStorage.key(i)) + "</li>";
+	}
+	text += "</ul>"
+	$("#allComments").replaceWith(text);
+});
 
- 	
+</script> 	
 </head>
 	<body>
 	<!----start-header---->
@@ -257,76 +274,31 @@ License URL: http://creativecommons.org/licenses/by/3.0/
 				</div>				
 				<div class="col span_2_of_3">
 				  <div class="contact-form">
-				  	<h3>Contact Us</h3>
-					    <form method="post" action="contact-post.html">
-					    	<div>
-						    	<span><label>NAME</label></span>
-						    	<span><input name="userName" type="text" class="textbox"></span>
-						    </div>
-						    <div>
-						    	<span><label>E-MAIL</label></span>
-						    	<span><input name="userEmail" type="text" class="textbox"></span>
-						    </div>
-						    <div>
-						     	<span><label>MOBILE</label></span>
-						    	<span><input name="userPhone" type="text" class="textbox"></span>
-						    </div>
-						    <div>
-						    	<span><label>SUBJECT</label></span>
-						    	<span><textarea name="userMsg"> </textarea></span>
-						    </div>
-						   <div>
-						   		<span><input type="submit" class="mybutton" value="Submit"></span>
-						  </div>
-					    </form>
+				  	<h3>Comment on us</h3>
+				  	<div id="allComments"></div>
+			  		<h2 style="font-family: 'Open Sans', sans-serif;font-size: 0.9em;color: #363638;text-transform: capitalize;padding:5px 0;margin-bottom:10px;">We value your voice! Please leave your comments below!</h2>
+				    <div style="font-family: 'Open Sans', sans-serif;font-size: 0.9em;color: #363638;">Name: <input type="text" id="keyInput"/></div>
+					<textarea name="comments" id="valueInput" style="font-family:sans-serif;font-size:1.2em;">
+					</textarea>
+					</div>
+				   	<span><button id="localComment" type="submit" class="mybutton">sumbit</span>
+				</div>
 
-				    </div>
+				</div>
   				</div>				
 			  </div>
 			</div>
 			</div>
+
 		 	<!---End-contact---->
 		 <!---End-content---->
-		 <!---start-footer---->
-		 <div class="footer">
-		<div class="wrap">
-			<div class="footer-grid">
-				<h3>About us</h3>
-				<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,  consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam</p>
-				<a href="#">ReadMore</a>
-			</div>
-			<div class="footer-grid center-grid">
-				<h3>Recent posts</h3>
-				<ul>
-					<li><a href="#">eiusmod tempor incididunt</a></li>
-					<li><a href="#">adipisicing elit, sed</a></li>
-					<li><a href="#">mod tempor incididunt ut</a></li>
-					<li><a href="#">dipisicing elit, sed do</a></li>
-					<li><a href="#">econsectetur adipisicing</a></li>
-				</ul>
-			</div>
-			<div class="footer-grid twitts">
-				<h3>Latest Tweets</h3>
-				<p><label>@Lorem ipsum</label>dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
-				<span>10 minutes ago</span>
-				<p><label>@consectetur</label>dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
-				<span>15 minutes ago</span>
-			</div>
-			<div class="footer-grid">
-				<h3>DID YOU KNOW?</h3>
-				<p>Lorem ipsum dolor sit amet consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam</p>
-				<a href="#">ReadMore</a>
-			</div>
-			<div class="clear"> </div>
-		</div>
-		<div class="clear"> </div>
-	</div>
+		
 	<div class="copy-right">
 		<div class="top-to-page">
 						<a href="#top" class="scroll"> </a>
 						<div class="clear"> </div>
 					</div>
-		<p>Design by <a href="http://w3layouts.com/"> W3layouts</a></p>
+		<p>Design by <a href="http://courses.pgbovine.net/csc210/"> Jiageng Zhang, Yiheng Zhou and Jingyao Zhan</a></p>
 	</div>
 		 <!---End-footer---->
 	</body>

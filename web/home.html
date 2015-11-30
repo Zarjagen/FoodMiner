@@ -49,7 +49,9 @@ License URL: http://creativecommons.org/licenses/by/3.0/
 
 	        $("a[name=\"preventDefault\"]").click(function(e) {
 	        	e.preventDefault();
-	        });	
+	        });
+
+	        $("#success").hide();
 	    });
  	</script>
  	<!-- Doesn't work properly
@@ -91,7 +93,7 @@ License URL: http://creativecommons.org/licenses/by/3.0/
 					$("#tag-signup").toggleClass("selected");
 					$("#cd-login").addClass("is-selected");
 					$("#cd-signup").toggleClass("is-selected");
-					$("#login-form").append("<div class=\"a-box a-alert a-alert-success a-spacing-medium\"><div class=\"a-box-inner a-alert-container\"><h4 class=\"a-alert-heading\">Success!</h4><div class=\"a-alert-content\"><div class=\"a-row\">Welcome!<span class=\"a-text-bold\">Please sign in!</span></div> </div></div></div>");
+					$("#success").show();
 					// $("#login").replaceWith('<a class="cd-signin" href="#login" id="profile">Profile</a>')
 					// $("#signup").remove();
 					},
@@ -116,6 +118,16 @@ License URL: http://creativecommons.org/licenses/by/3.0/
 	</ul>
 
 	<div id="cd-login"> <!-- log in form -->
+		<div id="success" class="a-box a-alert a-alert-success a-spacing-medium">
+			<div class="a-box-inner a-alert-container">
+				<h4 class="a-alert-heading">Success!</h4>
+				<div class="a-alert-content">
+					<div class="a-row">
+						Welcome! <span class="a-text-bold"> Please sign in!</span>
+		    		</div> 
+				</div>
+			</div>
+		</div>
 		<form id="login-form" class="cd-form">
 			<p class="fieldset">
 				<label class="image-replace cd-email" for="signin-email">E-mail</label>

@@ -65,6 +65,104 @@ License URL: http://creativecommons.org/licenses/by/3.0/
 				});
 			}
 		});
+	
+	//check local storage
+	var arrayR = localStorage['region'].split(",");
+	for(var i = 0; i < arrayR.length; i++){
+		if(arrayR[i] == "American"){
+			document.getElementById('a1').innerHTML = "SELECTED!";
+		}
+		else if(arrayR[i] == "Chinese"){
+			document.getElementById('a2').innerHTML = "SELECTED!";
+		}
+		else if(arrayR[i] == "French"){
+			document.getElementById('a3').innerHTML = "SELECTED!";				
+		}
+		else if(arrayR[i] == "Japanese"){
+			document.getElementById('a4').innerHTML = "SELECTED!";
+		}
+		else if(arrayR[i] == "Thai"){
+			document.getElementById('a5').innerHTML = "SELECTED!";
+		}
+		else if(arrayR[i] == "Vietnamese"){
+			document.getElementById('a6').innerHTML = "SELECTED!";
+
+		}
+	}
+
+	//add to favorite
+	$("#a1, #a2, #a3, #a4, #a5, #a6").click(function(e) {
+		e.preventDefault();
+		if(e.target.id == 'a1'){
+			var food = "American";
+			document.getElementById('a1').innerHTML = "SELECTED!";
+		}
+		else if(e.target.id == 'a2'){
+			var food = "Chinese";
+			document.getElementById('a2').innerHTML = "SELECTED!";
+		}
+		else if(e.target.id == 'a3'){
+			var food = "French";
+			document.getElementById('a3').innerHTML = "SELECTED!";				
+		}
+		else if(e.target.id == 'a4'){
+			var food = "Japanese";
+			document.getElementById('a4').innerHTML = "SELECTED!";
+		}
+		else if(e.target.id == 'a5'){
+			var food = "Thai";
+			document.getElementById('a5').innerHTML = "SELECTED!";
+		}
+		else if(e.target.id == 'a6'){
+			var food = "Vietnamese";
+			document.getElementById('a6').innerHTML = "SELECTED!";
+		}
+
+		if(e.target.text == 'SELECTED!'){
+			document.getElementById(e.target.id).innerHTML = "I want it!";
+			//delete from database
+			$.ajax({
+				url: "/region/" + localStorage['email'],
+				type: "DELETE",
+				dataType : "text", // this URL returns a plain text string, not JSON
+				data : { 
+					foodregion: food
+ 				},
+				success: function( data ) {
+				if (data) {
+					console.log("Success!!!");
+					localStorage['region'] = data;
+				} else {
+					console.log("LOSER");	
+				}
+				},
+			});
+		}
+		else if(localStorage.getItem('email') == undefined){
+			alert("Please Sign in First!");
+		}
+		else{
+			$.ajax({
+				url: "/region/" + localStorage['email'],
+				type: "POST",
+				dataType : "text", // this URL returns a plain text string, not JSON
+				data : { 
+					foodregion: food
+ 				},
+				success: function( data ) {
+				if (data) {
+					console.log("Success!!!");
+					localStorage['region'] = data;
+				} else {
+					console.log("LOSER");	
+				}
+				},
+			});
+		
+		}
+	});
+
+
 	});
 </script>
 
@@ -263,19 +361,19 @@ License URL: http://creativecommons.org/licenses/by/3.0/
 							<a href="#"><img src="images/redl.jpg" alt=""><span style="padding-right:3px; padding-top: 3px; display:inline-block;"><img src="images/us-t.gif"></img></span></a>
 							<h4>American Food</h4>
 							<p>Usually fastfood like burger but they have seafood cuisine too!</p>
-							<div class="gallery-button"><a href="#">I want it!</a></div>
+							<div class="gallery-button"><a id="a1" href="#">I want it!</a></div>
 						</div>
 						<div class="gallery-grid grid2">
 							<a href="#"><img src="images/yummy.jpg" alt=""><span style="padding-right:3px; padding-top: 3px; display:inline-block;"><img src="images/ch-t.gif"></img></span></a>
 							<h4>Chinese Food</h4>
 							<p>Noodles, Rice, and Hot Pot are the common Chinese Food!</p>
-							<div class="gallery-button"><a href="#">I want it!</a></div>
+							<div class="gallery-button"><a id="a2" href="#">I want it!</a></div>
 						</div>
 						<div class="gallery-grid">
 							<a href="#"><img src="images/dibbq.jpg" alt=""><span style="padding-right:3px; padding-top: 3px; display:inline-block;"><img src="images/fr.gif"></img></span></a>
 							<h4>French Food</h4>
 							<p>A meal often consists of three courses,introductory,main and dessert</p>
-							<div class="gallery-button"><a href="#">I want it!</a></div>
+							<div class="gallery-button"><a id="a3" href="#">I want it!</a></div>
 						</div>
 						<div class="clear"> </div>
 					</div>
@@ -284,19 +382,19 @@ License URL: http://creativecommons.org/licenses/by/3.0/
 							<a href="#"><img src="images/shiki.jpg" alt=""><span style="padding-right:3px; padding-top: 3px; display:inline-block;"><img src="images/japan-t.gif"></img></span></a>
 							<h4>Japanese Food</h4>
 							<p>Sushi and Sashimi along with Ramen are classic combination!</p>
-							<div class="gallery-button"><a href="#">I want it!</a></div>
+							<div class="gallery-button"><a id="a4" href="#">I want it!</a></div>
 						</div>
 						<div class="gallery-grid grid2">
 							<a href="#"><img src="images/thai.jpg" alt=""><span style="padding-right:3px; padding-top: 3px; display:inline-block;"><img src="images/thailand-t.gif"></img></span></a>
 							<h4>Thai Food</h4>
 							<p>Balance, detail, and variety are of paramount significance to Thai chefs</p>
-							<div class="gallery-button"><a href="#">I want it!</a></div>
+							<div class="gallery-button"><a id="a5" href="#">I want it!</a></div>
 						</div>
 						<div class="gallery-grid">
 							<a href="#"><img src="images/pho.jpg" alt=""><span style="padding-right:3px; padding-top: 3px; display:inline-block;"><img src="images/vm-t.gif"></img></span></a>
 							<h4> Vietnamese Food</h4>
 							<p>Vietnamese dish has a distinctive flavor which reflects one or more of these elements. </p>
-							<div class="gallery-button"><a href="#">I want it!</a></div>
+							<div class="gallery-button"><a id="a6" href="#">I want it!</a></div>
 						</div>
 					</div>					
 				    <div class="clear"> </div>

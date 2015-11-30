@@ -21,27 +21,71 @@ app.use(bodyParser.urlencoded({ extended: true }));
 
 app.use(express.static('web'));
 
-//update pereference
-app.post('/region/*', function (req, res) {
+//delete from database
+app.delete('/region/*', function (req, res) {
 	var postBody = req.body;
-	console.log(postBody);
 	var email = req.params[0];
-	console.log(username);
+	var userid = email.hashCode();
 
 	//database part
 	var fs = require('fs');
 	var sql = require('sql.js');
 
-	var filebuffer = fs.readFileSync('User.db');
+	var filebuffer = fs.readFileSync('foodminer.db');
 	var db = new sql.Database(filebuffer);
-	db.run('UPDATE Users SET preference=' 
-		+ '\'' + String(postBody.food) +'\'' 
-		+ 'WHERE email = ' + '\'' + String(email) +'\'');
+
+	//select user previous info
+	var stmt = db.prepare("SELECT * FROM Preference WHERE ID=:userid");
+	var result = stmt.getAsObject({':userid' : userid});
+
+	var arrayR = result['Region'].split(",");
+	var foodregion = "";
+	for(var i = 0; i < arrayR.length; i++){
+		if(postBody.foodregion !== arrayR[i])
+			foodregion = foodregion + arrayR[i] + ',';
+	}
+
+	db.run('UPDATE Preference SET Region=' 
+		+ '\'' + String(foodregion) +',\'' 
+		+ 'WHERE ID = ' + '\'' + String(userid) +'\'');
 	var data = db.export();
 	var buffer = new Buffer(data);
 	fs.writeFileSync('foodminer.db', buffer);
 	db.close();
-	res.send('OK');
+	res.send(foodregion);
+});
+
+//update pereference
+app.post('/region/*', function (req, res) {
+	var postBody = req.body;
+	var email = req.params[0];	
+	var userid = email.hashCode();
+
+
+	//database part
+	var fs = require('fs');
+	var sql = require('sql.js');
+
+	var filebuffer = fs.readFileSync('foodminer.db');
+	var db = new sql.Database(filebuffer);
+
+	//select user previous info
+	var stmt = db.prepare("SELECT * FROM Preference WHERE ID=:userid");
+	var result = stmt.getAsObject({':userid' : userid});
+
+	if(result['Region'] == "None")
+		var foodregion = postBody.foodregion;
+	else 
+		var foodregion = result['Region'] + postBody.foodregion;
+	//update
+	db.run('UPDATE Preference SET Region=' 
+		+ '\'' + String(foodregion) +',\'' 
+		+ 'WHERE ID = ' + '\'' + String(userid) +'\'');
+	var data = db.export();
+	var buffer = new Buffer(data);
+	fs.writeFileSync('foodminer.db', buffer);
+	db.close();
+	res.send(foodregion);
 });
 
 app.post('/users/', function (req, res) {
@@ -65,6 +109,9 @@ app.post('/users/', function (req, res) {
 		String(userid)   + '\',\'' + String(email) + '\',\'' + 
   		String(nickname) + '\',\'' + String(password) + '\',\'' + 
   		String(age)      + '\',\'' + String(gender) + '\')');
+
+	db.run('INSERT INTO Preference VALUES (\'' + 
+		String(userid) + '\',\'' + "None" + '\',\'' + "None" +'\')');
 
 	//var stmt = db.prepare("SELECT * FROM Users WHERE Email=:email-adress");
 	//var result = stmt.getAsObject({':email-adress' : email});

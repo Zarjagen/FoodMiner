@@ -40,20 +40,6 @@ License URL: http://creativecommons.org/licenses/by/3.0/
 			});
 		});
  	</script>
- 	<script type="text/javascript">
- 		$(document).ready(function(){
-
-	        $(document).ajaxError(function() {
-	          alert("Sorry, there was a problem!");
-	        });
-
-	        $("a[name=\"preventDefault\"]").click(function(e) {
-	        	e.preventDefault();
-	        });
-
-	        $("#success").hide();
-	    });
- 	</script>
  	<!-- Doesn't work properly
  	<script type="text/javascript">
  		$.modal.close();
@@ -62,6 +48,35 @@ License URL: http://creativecommons.org/licenses/by/3.0/
 
  <script type = "text/javascript"> 
 	$(document).ready(function() {
+		$(document).ajaxError(function() {
+	          alert("Sorry, there was a problem!");
+		});
+        $("a[name=\"preventDefault\"]").click(function(e) {
+        	e.preventDefault();
+        });
+        $("#success").hide();
+        $("#update-success").hide();
+
+		if(localStorage.getItem('email')){
+			$("#login").replaceWith('<a class="cd-signin" href="#profile" id="profile">Profile</a>');
+			$("#signup").replaceWith('<a class="cd-signup" href="#logout" id="logout">Logout</a>');
+
+			$(".cd-switcher").replaceWith('<ul class="cd-switcher"><li style="width:100%;"><a style="border-radius: 0 12em 0 0;" href="#profile" id="tag-login">Profile</a></li></ul>');
+			$("#cd-login").html($("#cd-signup").html());
+			$("#profile-detached-e").remove();
+			$("#profile-detached-p").remove();
+			$("#profile-detached-r").remove();
+			$("#profile-detached-t").remove();
+			$("#signup-nickname").val(localStorage.getItem('nickname'));
+			$("#signup-nickname").attr("readonly", "readonly");
+			$("#signup-age").val(localStorage.getItem('age'));
+			$("#signup-age").attr("readonly", "readonly");
+			$("#signup-gender").val(localStorage.getItem('gender'));
+			$("#signup-gender").attr("readonly", "readonly");
+			$("#edit-profile").html('<input id="update" class="full-width has-padding" type="submit" value="Update Profile">');
+			$("#cd-signup").remove();
+        };
+
 		$("#submit").click(function(e) {
 			//e.preventDefault();
 			if ($("#signup-password").val() != $("#signup-repassword").val()){
@@ -99,6 +114,23 @@ License URL: http://creativecommons.org/licenses/by/3.0/
 					},
 				});
 			}
+		});
+
+		$("#update").click(function(e) {
+			$("#signup-nickname").removeAttr("readonly");
+			$("#signup-age").removeAttr("readonly");
+			$("#signup-gender").removeAttr("readonly");
+			$("#edit-profile").html('<input id="edit-submit" class="full-width has-padding" type="submit" value="Submit Change">');
+			$("#edit-submit").click(function(e) {
+				$("#update-success").show();
+				console.log("123123");
+			});
+		});
+
+		$("#logout").click(function(e) {
+			e.preventDefault();
+			localStorage.clear();
+			location.reload();
 		});
 
 	});
@@ -158,12 +190,17 @@ License URL: http://creativecommons.org/licenses/by/3.0/
 	</div> <!-- cd-login -->
 
 	<div id="cd-signup"> <!-- sign up form -->
+		<div id="update-success" class="a-box a-alert a-alert-success a-spacing-medium"> <!-- success -->
+			<div class="a-box-inner a-alert-container">
+				<h4 class="a-alert-heading">Success!</h4>
+				<div class="a-alert-content">
+					<div class="a-row">
+						<span class="a-text-bold">Your information has already been updated!</span>
+		    		</div> 
+				</div>
+			</div>
+		</div>
 		<form id="form" class="cd-form">
-			<p class="fieldset">
-				<label class="image-replace cd-username" for="signup-username">Username</label>
-				<input class="full-width has-padding has-border" id="signup-username" type="text" placeholder="Username">
-				<span class="cd-error-message">Error message here!</span>
-			</p>
 
 			<p class="fieldset">
 				<label class="image-replace cd-username" for="signup-username">Username</label>
@@ -177,20 +214,20 @@ License URL: http://creativecommons.org/licenses/by/3.0/
 				<span class="cd-error-message">Error message here!</span>
 			</p>
 
-			<p class="fieldset">
+			<p class="fieldset" id="profile-detached-e">
 				<label class="image-replace cd-email" for="signup-email">E-mail</label>
 				<input class="full-width has-padding has-border" id="signup-email" type="text" placeholder="E-mail">
 				<span class="cd-error-message">Error message here!</span>
 			</p>
 
-			<p class="fieldset">
+			<p class="fieldset" id="profile-detached-p">
 				<label class="image-replace cd-password" for="signup-password">Password</label>
 				<input class="full-width has-padding has-border" id="signup-password" type="text"  placeholder="Password">
 				<a href="#" class="hide-password" name="preventDefault">Hide</a>
 				<span class="cd-error-message">Error message here!</span>
 			</p>
 
-			<p class="fieldset">
+			<p class="fieldset" id="profile-detached-r">
 				<label class="image-replace cd-password" for="signup-password">Password</label>
 				<input class="full-width has-padding has-border" id="signup-repassword" type="text"  placeholder="Re-Password">
 				<a href="#" class="hide-password" name="preventDefault">Hide</a>
@@ -203,12 +240,12 @@ License URL: http://creativecommons.org/licenses/by/3.0/
 				<span class="cd-error-message">Error message here!</span>
 			</p>
 
-			<p class="fieldset">
+			<p class="fieldset" id="profile-detached-t">
 				<input type="checkbox" id="accept-terms">
 				<label for="accept-terms">I agree to the <a href="#Terms">Terms</a></label>
 			</p>
 
-			<p class="fieldset">
+			<p class="fieldset" id="edit-profile">
 				<input id="submit" class="full-width has-padding" type="submit" value="Create account">
 			</p>
 

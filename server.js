@@ -22,10 +22,10 @@ app.use(bodyParser.urlencoded({ extended: true }));
 app.use(express.static('web'));
 
 //update pereference
-app.post('/prefer/*', function (req, res) {
+app.post('/region/*', function (req, res) {
 	var postBody = req.body;
 	console.log(postBody);
-	var username = req.params[0];
+	var email = req.params[0];
 	console.log(username);
 
 	//database part
@@ -35,8 +35,8 @@ app.post('/prefer/*', function (req, res) {
 	var filebuffer = fs.readFileSync('User.db');
 	var db = new sql.Database(filebuffer);
 	db.run('UPDATE Users SET preference=' 
-		+ '\'' + String(postBody.foodPreferList) +'\'' 
-		+ 'WHERE username = ' + '\'' + String(username) +'\'');
+		+ '\'' + String(postBody.food) +'\'' 
+		+ 'WHERE email = ' + '\'' + String(email) +'\'');
 	var data = db.export();
 	var buffer = new Buffer(data);
 	fs.writeFileSync('foodminer.db', buffer);
@@ -121,7 +121,6 @@ app.get('/discover', function (req, res) {
 app.get('/contact', function (req, res) {
 	res.sendFile(__dirname + '/web/contact.html');
 });
-
 
 
 // start the server on http://localhost:3000/

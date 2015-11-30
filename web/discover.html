@@ -54,7 +54,11 @@ License URL: http://creativecommons.org/licenses/by/3.0/
 					} else {
 						console.log("LOSER");	
 					}
-					setTimeout("location.href = \"http://localhost:3000/\"",5000);
+					$("#tag-login").addClass("selected");
+					$("#tag-signup").toggleClass("selected");
+					$("#cd-login").addClass("is-selected");
+					$("#cd-signup").toggleClass("is-selected");
+					$("#success").show();
 					},
 				});
 			}
@@ -76,6 +80,17 @@ License URL: http://creativecommons.org/licenses/by/3.0/
 	</ul>
 
 	<div id="cd-login"> <!-- log in form -->
+		<div id="success" class="a-box a-alert a-alert-success a-spacing-medium"> <!-- success -->
+			<div class="a-box-inner a-alert-container">
+				<h4 class="a-alert-heading">Success!</h4>
+				<div class="a-alert-content">
+					<div class="a-row">
+						Welcome!
+						<span class="a-text-bold"> Please sign in!</span>
+		    		</div> 
+				</div>
+			</div>
+		</div>
 		<form class="cd-form">
 			<p id="succ" class="wrap" style="background-color:rgba(0,255,0,0.1); font-size:200%">
 				<h1>Success</h1>

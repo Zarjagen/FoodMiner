@@ -15,6 +15,7 @@ License URL: http://creativecommons.org/licenses/by/3.0/
 	<link rel="stylesheet" href="css/login-signup/style.css"> <!-- Gem style -->
   	<link href="css/style.css" rel="stylesheet" type="text/css"  media="all" />
   	<link href='http://fonts.googleapis.com/css?family=Open+Sans' rel='stylesheet' type='text/css'>
+  	<link rel="stylesheet" type="text/css" href="success.css">
 
   	<script src="http://code.jquery.com/jquery-1.11.3.min.js"></script>
   	<script src="js/login-signup/modernizr.js"></script> <!-- Modernizr -->
@@ -25,7 +26,8 @@ License URL: http://creativecommons.org/licenses/by/3.0/
 
  <script type = "text/javascript"> 
 	$(document).ready(function() {
-	$("#submit").click(function(e) {
+		$("#success").hide();
+		$("#submit").click(function(e) {
 			//e.preventDefault();
 			if ($("#signup-password").val() != $("#signup-repassword").val()){
 				alert("Password Not matching!");

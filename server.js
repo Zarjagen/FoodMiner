@@ -123,7 +123,7 @@ app.post('/users/', function (req, res) {
 });
 
 app.get('/login/*',function (req,res){
-	var username = req.params[0];
+	var email = req.params[0];
 	//database part
 	var fs = require('fs');
 	var sql = require('sql.js');
@@ -131,8 +131,8 @@ app.get('/login/*',function (req,res){
 	var filebuffer = fs.readFileSync('foodminer.db');
 	var db = new sql.Database(filebuffer);
 
-	var stmt = db.prepare("SELECT * FROM Users WHERE username=:user");
-	var result = stmt.getAsObject({':user' : username});
+	var stmt = db.prepare("SELECT * FROM Users WHERE email=:user");
+	var result = stmt.getAsObject({':user' : email});
 
 	console.log(result); //Will print the user colomn
 

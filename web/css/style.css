@@ -603,6 +603,7 @@ body{
 }
 .gallery-grids {
 	margin-bottom: 30px;
+	text-align: center;
 }
 .gallery-grid a{
 	display:inline-block;

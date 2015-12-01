@@ -599,12 +599,10 @@ body{
 	color: #FFF;
 }
 .grid2{
-	margin: 0px 5%;
+	margin: 0px 35px;
 }
 .gallery-grids {
-	margin-bottom: 5%;
-	white-space: nowrap;
-	display: inline-block;
+	margin-bottom: 30px;
 }
 .gallery-grid a{
 	display:inline-block;
@@ -905,7 +903,7 @@ body{
 		width: 30%;
 	}
 }
-@media only screen and (max-width: 100%) {
+@media only screen and (max-width: 800px) {
 	.wrap{
 		width:95%;
 	}
@@ -916,7 +914,7 @@ body{
 		width: 30%;
    }
 }
-@media only screen and (max-width: 100%) {
+@media only screen and (max-width: 640px) {
 	.wrap{
 		width:95%;
 	}

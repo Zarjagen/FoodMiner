@@ -28,9 +28,36 @@ License URL: http://creativecommons.org/licenses/by/3.0/
 
  <script type = "text/javascript"> 
 	$(document).ready(function() {
-		$("#success").hide();
+		$(document).ajaxError(function() {
+	          alert("Sorry, there was a problem!");
+		});
+        $("a[name=\"preventDefault\"]").click(function(e) {
+        	e.preventDefault();
+        });
+        $("#success").hide();
+        $("#update-success").hide();
+
+		if(localStorage.getItem('email')){
+			$("#nav-info").html('<li style="color: white;">' + localStorage.getItem('nickname') + '</li><li><a class="cd-signin" href="#login" id="nav-profile">Profile</a></li><li><a class="cd-signup" href="#signup" id="nav-logout">Logout</a></li>');
+
+			$(".cd-switcher").replaceWith('<ul class="cd-switcher"><li style="width:100%;"><a style="border-radius: 0 12em 0 0;" href="#profile" id="tag-login">Profile</a></li></ul>');
+			$("#cd-login").html($("#cd-signup").html());
+			$("#profile-detached-e").remove();
+			$("#profile-detached-p").remove();
+			$("#profile-detached-r").remove();
+			$("#profile-detached-t").remove();
+			$("#signup-nickname").val('Nickname: ' + localStorage.getItem('nickname'));
+			$("#signup-nickname").attr("readonly", "readonly");
+			$("#signup-age").val('Age: ' + localStorage.getItem('age'));
+			$("#signup-age").attr("readonly", "readonly");
+			$("#signup-gender").val('Gender: ' + localStorage.getItem('gender'));
+			$("#signup-gender").attr("readonly", "readonly");
+			$("#edit-profile").html('<input id="update" class="full-width has-padding" type="submit" value="Update Profile">');
+			$("#cd-signup").remove();
+        };
+
 		$("#submit").click(function(e) {
-			//e.preventDefault();
+			e.preventDefault();
 			if ($("#signup-password").val() != $("#signup-repassword").val()){
 				alert("Password Not matching!");
 				var x = document.getElementById("signup-password");
@@ -51,50 +78,98 @@ License URL: http://creativecommons.org/licenses/by/3.0/
 	   					email: $("#signup-email").val()
      				},
 					success: function( data ) {
-					if (data == 'OK') {
-						console.log("Success!!!");
-					} else {
-						console.log("LOSER");	
-					}
-					$("#tag-login").addClass("selected");
-					$("#tag-signup").toggleClass("selected");
-					$("#cd-login").addClass("is-selected");
-					$("#cd-signup").toggleClass("is-selected");
-					$("#success").show();
+						if (data == 'OK') {
+							console.log("Success!!!");
+						} else {
+							console.log("LOSER");	
+						}
+						$("#tag-login").addClass("selected");
+						$("#tag-signup").toggleClass("selected");
+						$("#cd-login").addClass("is-selected");
+						$("#cd-signup").toggleClass("is-selected");
+						$("#success").show();
 					},
 				});
 			}
 		});
 
-	//submit sign in
-	$("#login").click(function(e) {
-		localStorage['password'] = $("#signin-password").val();
-		$.ajax({
-            url: "login/" + $("#signin-email").val(),
-            type: "GET",
-            dataType : "json", // this URL returns a plain text string, not JSON
-            success: function( data ) {
-                  console.log("success!!!!");
-                  console.log("DATA:email:" + data.email);
-                  if(localStorage['password'] == data.Password){
-                    localStorage['userid'] = data.ID;
-                    localStorage['age'] = data.Age;
-                    localStorage['gender'] = data.Gender;
-                    localStorage['nickname'] = data.Nickname;
-                    localStorage['email'] = data.Email;
-                    document.location.reload(true);
-                  }else{
-                    console.log("Password mismatch!!!!!!!!!!");
-                    localStorage.clear();
-                    alert("The username or password you entered is incorrect. Please try again.");
-                    document.location.reload(true);
-                  }
-              },
-            });
-	});
+		$("#update").click(function(e) {
+			e.preventDefault();
+			$("#signup-nickname").removeAttr("readonly");
+			$("#signup-nickname").val(localStorage.getItem('nickname'));
+			$("#signup-age").removeAttr("readonly");
+			$("#signup-age").val(localStorage.getItem('age'));
+			$("#signup-gender").removeAttr("readonly");
+			$("#signup-gender").val(localStorage.getItem('gender'));
+			$("#edit-profile").html('<input id="edit-submit" class="full-width has-padding" type="submit" value="Submit Change">');
 
-	});
-</script>
+			$("#edit-submit").click(function(e) {
+				e.preventDefault();
+				$("#update-success").show();
+			});
+		});
+
+		$("#logout").click(function(e) {
+			e.preventDefault();
+			localStorage.clear();
+			location.reload();
+		});
+
+		//submit sign in
+		$("#login").click(function(e) {
+			localStorage['password'] = $("#signin-password").val();
+			$.ajax({
+	            url: "login/" + $("#signin-email").val(),
+	            type: "GET",
+	            dataType : "json", // this URL returns a plain text string, not JSON
+	            success: function( data ) {
+	                  console.log("success!!!!");
+	                  console.log("DATA:email:" + data.email);
+	                  if(localStorage['password'] == data.Password){
+	                    localStorage['userid'] = data.ID;
+	                    localStorage['age'] = data.Age;
+	                    localStorage['gender'] = data.Gender;
+	                    localStorage['nickname'] = data.Nickname;
+	                    localStorage['email'] = data.Email;
+	                    document.location.reload(true);
+	                  }else{
+	                    console.log("Password mismatch!!!!!!!!!!");
+	                    localStorage.clear();
+	                    alert("The username or password you entered is incorrect. Please try again.");
+	                    document.location.reload(true);
+	                  }
+	              },
+	            });
+		});
+
+		//submit sign in
+		$("#login").click(function(e) {
+			localStorage['password'] = $("#signin-password").val();
+			$.ajax({
+	            url: "login/" + $("#signin-email").val(),
+	            type: "GET",
+	            dataType : "json", // this URL returns a plain text string, not JSON
+	            success: function( data ) {
+	                  	console.log("success!!!!");
+	                  	console.log("DATA:email:" + data.email);
+	                  	if(localStorage['password'] == data.Password){
+		                   	localStorage['userid'] = data.ID;
+		                    localStorage['age'] = data.Age;
+		                    localStorage['gender'] = data.Gender;
+		                    localStorage['nickname'] = data.Nickname;
+		                    localStorage['email'] = data.Email;
+	                    	document.location.reload(true);
+	                  	}else{
+		                    console.log("Password mismatch!!!!!!!!!!");
+		                    localStorage.clear();
+		                    alert("The username or password you entered is incorrect. Please try again.");
+		                    document.location.reload(true);
+	                  	}
+	              	},
+	            });
+			});
+		});
+	</script>
 
 
  	

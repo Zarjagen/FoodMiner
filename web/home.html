@@ -58,7 +58,7 @@ License URL: http://creativecommons.org/licenses/by/3.0/
         $("#update-success").hide();
 
 		if(localStorage.getItem('email')){
-			$("#nav-info").html('<li style="color: white;">' + localStorage.getItem('nickname') + '</li><li><a class="cd-signin" href="#login" id="profile">Profile</a></li><li><a class="cd-signup" href="#signup" id="logout">Logout</a></li>');
+			$("#nav-info").html('<li style="color: white;">' + localStorage.getItem('nickname') + '</li><li><a class="cd-signin" href="#login" id="nav-profile">Profile</a></li><li><a class="cd-signup" href="#signup" id="nav-logout">Logout</a></li>');
 
 			$(".cd-switcher").replaceWith('<ul class="cd-switcher"><li style="width:100%;"><a style="border-radius: 0 12em 0 0;" href="#profile" id="tag-login">Profile</a></li></ul>');
 			$("#cd-login").html($("#cd-signup").html());
@@ -98,18 +98,16 @@ License URL: http://creativecommons.org/licenses/by/3.0/
 	   					email: $("#signup-email").val()
      				},
 					success: function( data ) {
-					if (data == 'OK') {
-						console.log("Success!!!");
-					} else {
-						console.log("LOSER");	
-					}
-					$("#tag-login").addClass("selected");
-					$("#tag-signup").toggleClass("selected");
-					$("#cd-login").addClass("is-selected");
-					$("#cd-signup").toggleClass("is-selected");
-					$("#success").show();
-					// $("#login").replaceWith('<a class="cd-signin" href="#login" id="profile">Profile</a>')
-					// $("#signup").remove();
+						if (data == 'OK') {
+							console.log("Success!!!");
+						} else {
+							console.log("LOSER");	
+						}
+						$("#tag-login").addClass("selected");
+						$("#tag-signup").toggleClass("selected");
+						$("#cd-login").addClass("is-selected");
+						$("#cd-signup").toggleClass("is-selected");
+						$("#success").show();
 					},
 				});
 			}
@@ -137,34 +135,32 @@ License URL: http://creativecommons.org/licenses/by/3.0/
 			location.reload();
 		});
 
-			//submit sign in
-	$("#login").click(function(e) {
-		localStorage['password'] = $("#signin-password").val();
-		$.ajax({
-            url: "login/" + $("#signin-email").val(),
-            type: "GET",
-            dataType : "json", // this URL returns a plain text string, not JSON
-            success: function( data ) {
-                  console.log("success!!!!");
-                  console.log("DATA:email:" + data.email);
-                  if(localStorage['password'] == data.Password){
-                    localStorage['userid'] = data.ID;
-                    localStorage['age'] = data.Age;
-                    localStorage['gender'] = data.Gender;
-                    localStorage['nickname'] = data.Nickname;
-                    localStorage['email'] = data.Email;
-                    document.location.reload(true);
-                  }else{
-                    console.log("Password mismatch!!!!!!!!!!");
-                    localStorage.clear();
-                    alert("The username or password you entered is incorrect. Please try again.");
-                    document.location.reload(true);
-                  }
-              },
+		//submit sign in
+		$("#login").click(function(e) {
+			localStorage['password'] = $("#signin-password").val();
+			$.ajax({
+	            url: "login/" + $("#signin-email").val(),
+	            type: "GET",
+	            dataType : "json", // this URL returns a plain text string, not JSON
+	            success: function( data ) {
+	                  	console.log("success!!!!");
+	                  	console.log("DATA:email:" + data.email);
+                  	if(localStorage['password'] == data.Password){
+	                    localStorage['userid'] = data.ID;
+	                    localStorage['age'] = data.Age;
+	                    localStorage['gender'] = data.Gender;
+	                    localStorage['nickname'] = data.Nickname;
+	                    localStorage['email'] = data.Email;
+	                    document.location.reload(true);
+                  	}else{
+	                    console.log("Password mismatch!!!!!!!!!!");
+	                    localStorage.clear();
+	                    alert("The username or password you entered is incorrect. Please try again.");
+	                    document.location.reload(true);
+                  	}
+              	},
             });
-	});
-
-
+		});
 	});
 </script>
 
@@ -316,8 +312,8 @@ License URL: http://creativecommons.org/licenses/by/3.0/
 				<nav class="main-nav">
 					<ul id="nav-info">
 						<!-- inser more links here -->
-						<li><a class="cd-signin" href="#login" id="login">Sign in</a></li>
-						<li><a class="cd-signup" href="#signup" id="signup">Sign up</a></li>
+						<li><a class="cd-signin" href="#login" id="nav-login">Sign in</a></li>
+						<li><a class="cd-signup" href="#signup" id="nav-signup">Sign up</a></li>
 					</ul>
 				</nav>
 				<!-- social-icons
@@ -402,64 +398,63 @@ License URL: http://creativecommons.org/licenses/by/3.0/
 		 		</div>
 		 	</div>
 		 	<div class="bottom-grids">
-							<div class="wrap">
-								<div class="bottom-grid1">
-									<h3>POPULAR INFO</h3>
-									<span>Rochester Resturants ranking by Yelp®</span>
-									<p>American</p>
-									<ul>
-										<li><a href="http://www.yelp.com/biz/good-luck-restaurant-rochester">1. Good Luck Restaurant</a></li>
-										<li><a href="http://www.yelp.com/biz/orbs-restaurant-and-bar-rochester-2">2. ORBS Restaurant & Bar</a></li>
-										<li><a href="http://www.yelp.com/biz/the-owl-house-rochester">3. The Owl House</a></li>
-										
-									</ul>
-									<p>Chinese</p>
-									<ul>
-										<li><a href="http://www.yelp.com/biz/tsingtao-house-rochester">1. Tsingtao House</a></li>
-										<li><a href="http://www.yelp.com/biz/han-noodle-bar-rochester">2. Han Noodle Bars</a></li>
-										<li><a href="http://www.yelp.com/biz/chen-garden-restaurant-rochester">3.Chen Garden Restaurant</a></li>
-										
-									</ul>
-									<p>Mexican</p>
-									<ul>
-										<li><a href="http://www.yelp.com/biz/johns-tex-mex-rochester">1. John’s Tex-Mex</a></li>
-										<li><a href="http://www.yelp.com/biz/la-casa-restaurant-rochester">2. La Casa Restaurant</a></li>
-										<li><a href="http://www.yelp.com/biz/ox-and-stone-rochester-3">3.Ox and Stone</a></li>
-									</ul>
-									<a class="button" href="http://localhost:3000/contact">Read More</a>
-								</div>
-								<div class="bottom-grid2 bottom-mid">
-									<h3>Today Special</h3>
-									<span>consectetur adipisicing elit, sed do eiusmod tempor</span>
-									<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
-									<div class="gallery">
-										<ul>
-												<li><a href="images/slider1.jpg"><img src="images/slider1.jpg" alt=""></a></li>
-												<li><a href="images/slider2.jpg"><img src="images/slider2.jpg" alt=""></a></li>
-												<li><a href="images/slider3.jpg"><img src="images/slider3.jpg" alt=""></a></li>
-												<li><a href="images/slider4.jpg"><img src="images/slider4.jpg" alt=""></a></li>
-												<li><a href="images/slider1.jpg"><img src="images/slider1.jpg" alt=""></a></li>
-												<li><a href="images/slider2.jpg"><img src="images/slider2.jpg" alt=""></a></li>											
-											<div class="clear"> </div>
-										</ul>										
-								 </div>
-								 <a class="button" href="http://localhost:3000/discovery">Read More</a>
-							</div>
-							<div class="bottom-grid1 bottom-last">
-									<h3>Latest INFO</h3>
-									<span>consectetur adipisicing elit, sed do eiusmod tempor</span>
-									<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
-									<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
-									<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
-									<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
-									<a class="button" href="#">Read More</a>
-								</div>
+				<div class="wrap">
+					<div class="bottom-grid1">
+						<h3>POPULAR INFO</h3>
+						<span>Rochester Resturants ranking by Yelp®</span>
+						<p>American</p>
+						<ul>
+							<li><a href="http://www.yelp.com/biz/good-luck-restaurant-rochester">1. Good Luck Restaurant</a></li>
+							<li><a href="http://www.yelp.com/biz/orbs-restaurant-and-bar-rochester-2">2. ORBS Restaurant & Bar</a></li>
+							<li><a href="http://www.yelp.com/biz/the-owl-house-rochester">3. The Owl House</a></li>
+							
+						</ul>
+						<p>Chinese</p>
+						<ul>
+							<li><a href="http://www.yelp.com/biz/tsingtao-house-rochester">1. Tsingtao House</a></li>
+							<li><a href="http://www.yelp.com/biz/han-noodle-bar-rochester">2. Han Noodle Bars</a></li>
+							<li><a href="http://www.yelp.com/biz/chen-garden-restaurant-rochester">3.Chen Garden Restaurant</a></li>
+							
+						</ul>
+						<p>Mexican</p>
+						<ul>
+							<li><a href="http://www.yelp.com/biz/johns-tex-mex-rochester">1. John’s Tex-Mex</a></li>
+							<li><a href="http://www.yelp.com/biz/la-casa-restaurant-rochester">2. La Casa Restaurant</a></li>
+							<li><a href="http://www.yelp.com/biz/ox-and-stone-rochester-3">3.Ox and Stone</a></li>
+						</ul>
+						<a class="button" href="http://localhost:3000/contact">Read More</a>
+					</div>
+					<div class="bottom-grid2 bottom-mid">
+						<h3>Today Special</h3>
+						<span>consectetur adipisicing elit, sed do eiusmod tempor</span>
+						<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
+						<div class="gallery">
+							<ul>
+									<li><a href="images/slider1.jpg"><img src="images/slider1.jpg" alt=""></a></li>
+									<li><a href="images/slider2.jpg"><img src="images/slider2.jpg" alt=""></a></li>
+									<li><a href="images/slider3.jpg"><img src="images/slider3.jpg" alt=""></a></li>
+									<li><a href="images/slider4.jpg"><img src="images/slider4.jpg" alt=""></a></li>
+									<li><a href="images/slider1.jpg"><img src="images/slider1.jpg" alt=""></a></li>
+									<li><a href="images/slider2.jpg"><img src="images/slider2.jpg" alt=""></a></li>											
 								<div class="clear"> </div>
-							</div>
-							<div class="clear"> </div>
-	<!--end-wrap--->
-	 </div>
-		 </div>
+							</ul>										
+					 </div>
+					 <a class="button" href="http://localhost:3000/discovery">Read More</a>
+				</div>
+				<div class="bottom-grid1 bottom-last">
+						<h3>Latest INFO</h3>
+						<span>consectetur adipisicing elit, sed do eiusmod tempor</span>
+						<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
+						<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
+						<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
+						<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
+						<a class="button" href="#">Read More</a>
+					</div>
+					<div class="clear"> </div>
+				</div>
+				<div class="clear"> </div>
+	<!--end-wrap---->
+		 	</div>
 		 <!---End-content---->
 	
 	<div class="copy-right">

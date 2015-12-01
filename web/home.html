@@ -58,8 +58,7 @@ License URL: http://creativecommons.org/licenses/by/3.0/
         $("#update-success").hide();
 
 		if(localStorage.getItem('email')){
-			$("#login").replaceWith('<a class="cd-signin" href="#profile" id="profile">Profile</a>');
-			$("#signup").replaceWith('<a class="cd-signup" href="#logout" id="logout">Logout</a>');
+			$("#nav-info").html('<li style="color: white;">' + localStorage.getItem('nickname') + '</li><li><a class="cd-signin" href="#login" id="profile">Profile</a></li><li><a class="cd-signup" href="#signup" id="logout">Logout</a></li>');
 
 			$(".cd-switcher").replaceWith('<ul class="cd-switcher"><li style="width:100%;"><a style="border-radius: 0 12em 0 0;" href="#profile" id="tag-login">Profile</a></li></ul>');
 			$("#cd-login").html($("#cd-signup").html());
@@ -67,18 +66,18 @@ License URL: http://creativecommons.org/licenses/by/3.0/
 			$("#profile-detached-p").remove();
 			$("#profile-detached-r").remove();
 			$("#profile-detached-t").remove();
-			$("#signup-nickname").val(localStorage.getItem('nickname'));
+			$("#signup-nickname").val('Nickname: ' + localStorage.getItem('nickname'));
 			$("#signup-nickname").attr("readonly", "readonly");
-			$("#signup-age").val(localStorage.getItem('age'));
+			$("#signup-age").val('Age: ' + localStorage.getItem('age'));
 			$("#signup-age").attr("readonly", "readonly");
-			$("#signup-gender").val(localStorage.getItem('gender'));
+			$("#signup-gender").val('Gender: ' + localStorage.getItem('gender'));
 			$("#signup-gender").attr("readonly", "readonly");
 			$("#edit-profile").html('<input id="update" class="full-width has-padding" type="submit" value="Update Profile">');
 			$("#cd-signup").remove();
         };
 
 		$("#submit").click(function(e) {
-			//e.preventDefault();
+			e.preventDefault();
 			if ($("#signup-password").val() != $("#signup-repassword").val()){
 				alert("Password Not matching!");
 				var x = document.getElementById("signup-password");
@@ -117,13 +116,18 @@ License URL: http://creativecommons.org/licenses/by/3.0/
 		});
 
 		$("#update").click(function(e) {
+			e.preventDefault();
 			$("#signup-nickname").removeAttr("readonly");
+			$("#signup-nickname").val(localStorage.getItem('nickname'));
 			$("#signup-age").removeAttr("readonly");
+			$("#signup-age").val(localStorage.getItem('age'));
 			$("#signup-gender").removeAttr("readonly");
+			$("#signup-gender").val(localStorage.getItem('gender'));
 			$("#edit-profile").html('<input id="edit-submit" class="full-width has-padding" type="submit" value="Submit Change">');
+
 			$("#edit-submit").click(function(e) {
+				e.preventDefault();
 				$("#update-success").show();
-				console.log("123123");
 			});
 		});
 
@@ -282,7 +286,7 @@ License URL: http://creativecommons.org/licenses/by/3.0/
 					<a href="http://localhost:3000/"><img src="images/fmlogo1.png" title="logo" /></a>
 				</div>
 				<nav class="main-nav">
-					<ul>
+					<ul id="nav-info">
 						<!-- inser more links here -->
 						<li><a class="cd-signin" href="#login" id="login">Sign in</a></li>
 						<li><a class="cd-signup" href="#signup" id="signup">Sign up</a></li>

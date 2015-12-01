@@ -26,7 +26,6 @@ app.delete('/region/*', function (req, res) {
 	var postBody = req.body;
 	var email = req.params[0];
 	var userid = email.hashCode();
-
 	//database part
 	var fs = require('fs');
 	var sql = require('sql.js');
@@ -60,7 +59,6 @@ app.post('/region/*', function (req, res) {
 	var postBody = req.body;
 	var email = req.params[0];	
 	var userid = email.hashCode();
-
 
 	//database part
 	var fs = require('fs');

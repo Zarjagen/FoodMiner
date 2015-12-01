@@ -65,28 +65,29 @@ License URL: http://creativecommons.org/licenses/by/3.0/
 				});
 			}
 		});
-	
-	//check local storage
-	var arrayR = localStorage['region'].split(",");
-	for(var i = 0; i < arrayR.length; i++){
-		if(arrayR[i] == "American"){
-			document.getElementById('a1').innerHTML = "SELECTED!";
-		}
-		else if(arrayR[i] == "Chinese"){
-			document.getElementById('a2').innerHTML = "SELECTED!";
-		}
-		else if(arrayR[i] == "French"){
-			document.getElementById('a3').innerHTML = "SELECTED!";				
-		}
-		else if(arrayR[i] == "Japanese"){
-			document.getElementById('a4').innerHTML = "SELECTED!";
-		}
-		else if(arrayR[i] == "Thai"){
-			document.getElementById('a5').innerHTML = "SELECTED!";
-		}
-		else if(arrayR[i] == "Vietnamese"){
-			document.getElementById('a6').innerHTML = "SELECTED!";
+	if(localStorage['region'] !== undefined){
+		//check local storage
+		var arrayR = localStorage['region'].split(",");
+		for(var i = 0; i < arrayR.length; i++){
+			if(arrayR[i] == "American"){
+				document.getElementById('a1').innerHTML = "SELECTED!";
+			}
+			else if(arrayR[i] == "Chinese"){
+				document.getElementById('a2').innerHTML = "SELECTED!";
+			}
+			else if(arrayR[i] == "French"){
+				document.getElementById('a3').innerHTML = "SELECTED!";				
+			}
+			else if(arrayR[i] == "Japanese"){
+				document.getElementById('a4').innerHTML = "SELECTED!";
+			}
+			else if(arrayR[i] == "Thai"){
+				document.getElementById('a5').innerHTML = "SELECTED!";
+			}
+			else if(arrayR[i] == "Vietnamese"){
+				document.getElementById('a6').innerHTML = "SELECTED!";
 
+			}
 		}
 	}
 
@@ -117,7 +118,6 @@ License URL: http://creativecommons.org/licenses/by/3.0/
 			var food = "Vietnamese";
 			document.getElementById('a6').innerHTML = "SELECTED!";
 		}
-
 		if(e.target.text == 'SELECTED!'){
 			document.getElementById(e.target.id).innerHTML = "I want it!";
 			//delete from database
@@ -130,7 +130,7 @@ License URL: http://creativecommons.org/licenses/by/3.0/
  				},
 				success: function( data ) {
 				if (data) {
-					console.log("Success!!!");
+					console.log("SuccessD!!!");
 					localStorage['region'] = data;
 				} else {
 					console.log("LOSER");	

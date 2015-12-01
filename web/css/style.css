@@ -574,7 +574,7 @@ body{
 	padding:1em 0;
 }
 .gallery-grid{
-	width: 31.44%;
+	width: 30%;
 	float:left;
 }
 .gallery-grid p {
@@ -599,10 +599,12 @@ body{
 	color: #FFF;
 }
 .grid2{
-	margin: 0px 35px;
+	margin: 0px 5%;
 }
 .gallery-grids {
-	margin-bottom: 30px;
+	margin-bottom: 5%;
+	white-space: nowrap;
+	display: inline-block;
 }
 .gallery-grid a{
 	display:inline-block;
@@ -897,13 +899,13 @@ body{
 		line-height:3em;
 	}
 	.grid2 {
-		margin: 0px 34px;
+		margin: 0px 5%;
 	}
 	.gallery-grid {
-		width: 30.7%;
+		width: 30%;
 	}
 }
-@media only screen and (max-width: 800px) {
+@media only screen and (max-width: 100%) {
 	.wrap{
 		width:95%;
 	}
@@ -914,7 +916,7 @@ body{
 		width: 30%;
    }
 }
-@media only screen and (max-width: 640px) {
+@media only screen and (max-width: 100%) {
 	.wrap{
 		width:95%;
 	}

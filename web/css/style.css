@@ -574,7 +574,7 @@ body{
 	padding:1em 0;
 }
 .gallery-grid{
-	width: 31.44%;
+	width: 30%;
 	float:left;
 }
 .gallery-grid p {
@@ -603,6 +603,7 @@ body{
 }
 .gallery-grids {
 	margin-bottom: 30px;
+	text-align: center;
 }
 .gallery-grid a{
 	display:inline-block;
@@ -897,10 +898,10 @@ body{
 		line-height:3em;
 	}
 	.grid2 {
-		margin: 0px 34px;
+		margin: 0px 5%;
 	}
 	.gallery-grid {
-		width: 30.7%;
+		width: 30%;
 	}
 }
 @media only screen and (max-width: 800px) {

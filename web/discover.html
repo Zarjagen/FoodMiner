@@ -65,6 +65,34 @@ License URL: http://creativecommons.org/licenses/by/3.0/
 				});
 			}
 		});
+
+	//submit sign in
+	$("#login").click(function(e) {
+		localStorage['password'] = $("#signin-password").val();
+		$.ajax({
+            url: "login/" + $("#signin-email").val(),
+            type: "GET",
+            dataType : "json", // this URL returns a plain text string, not JSON
+            success: function( data ) {
+                  console.log("success!!!!");
+                  console.log("DATA:email:" + data.email);
+                  if(localStorage['password'] == data.Password){
+                    localStorage['userid'] = data.ID;
+                    localStorage['age'] = data.Age;
+                    localStorage['gender'] = data.Gender;
+                    localStorage['nickname'] = data.Nickname;
+                    localStorage['email'] = data.Email;
+                    document.location.reload(true);
+                  }else{
+                    console.log("Password mismatch!!!!!!!!!!");
+                    localStorage.clear();
+                    alert("The username or password you entered is incorrect. Please try again.");
+                    document.location.reload(true);
+                  }
+              },
+            });
+	});
+
 	});
 </script>
 
@@ -99,7 +127,7 @@ License URL: http://creativecommons.org/licenses/by/3.0/
 			</p>
 			<p class="fieldset">
 				<label class="image-replace cd-email" for="signin-email">E-mail</label>
-				<input class="full-width has-padding has-border" id="signin-email" type="email" placeholder="E-mail">
+				<input class="full-width has-padding has-border" id="signin-email" type="text" placeholder="E-mail">
 				<span class="cd-error-message">Error message here!</span>
 			</p>
 
@@ -116,7 +144,7 @@ License URL: http://creativecommons.org/licenses/by/3.0/
 			</p>
 
 			<p class="fieldset">
-				<input class="full-width" type="submit" value="Login">
+				<input id= "login" class="full-width" type="submit" value="Login">
 			</p>
 		</form>
 		

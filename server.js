@@ -39,13 +39,16 @@ app.delete('/region/*', function (req, res) {
 
 	var arrayR = result['Region'].split(",");
 	var foodregion = "";
-	for(var i = 0; i < arrayR.length; i++){
-		if(postBody.foodregion !== arrayR[i])
-			foodregion = foodregion + arrayR[i] + ',';
+	for(var i = 0; i < arrayR.length -1 ; i++){
+		console.log(arrayR[i]);
+		if(postBody.foodregion != arrayR[i])
+			foodregion = foodregion + arrayR[i] + ",";
 	}
-
+	if(foodregion == ",")
+		foodregion = "None";
+	console.log(foodregion);
 	db.run('UPDATE Preference SET Region=' 
-		+ '\'' + String(foodregion) +',\'' 
+		+ '\'' + String(foodregion) +'\'' 
 		+ 'WHERE ID = ' + '\'' + String(userid) +'\'');
 	var data = db.export();
 	var buffer = new Buffer(data);

@@ -26,7 +26,7 @@ License URL: http://creativecommons.org/licenses/by/3.0/
 		$.modal.close();
  	</script>
 
- <script type = "text/javascript"> 
+ 	<script type = "text/javascript"> 
 	$(document).ready(function() {
 		$("#success").hide();
 		$("#submit").click(function(e) {
@@ -70,22 +70,22 @@ License URL: http://creativecommons.org/licenses/by/3.0/
 		var arrayR = localStorage['region'].split(",");
 		for(var i = 0; i < arrayR.length; i++){
 			if(arrayR[i] == "American"){
-				document.getElementById('a1').innerHTML = "SELECTED!";
+				$("#a1").text("SELECTED!");
 			}
 			else if(arrayR[i] == "Chinese"){
-				document.getElementById('a2').innerHTML = "SELECTED!";
+				$("#a2").text("SELECTED!");
 			}
 			else if(arrayR[i] == "French"){
-				document.getElementById('a3').innerHTML = "SELECTED!";				
+				$("#a3").text("SELECTED!");
 			}
 			else if(arrayR[i] == "Japanese"){
-				document.getElementById('a4').innerHTML = "SELECTED!";
+				$("#a4").text("SELECTED!");
 			}
 			else if(arrayR[i] == "Thai"){
-				document.getElementById('a5').innerHTML = "SELECTED!";
+				$("#a5").text("SELECTED!");
 			}
 			else if(arrayR[i] == "Vietnamese"){
-				document.getElementById('a6').innerHTML = "SELECTED!";
+				$("#a6").text("SELECTED!");
 
 			}
 		}
@@ -95,31 +95,28 @@ License URL: http://creativecommons.org/licenses/by/3.0/
 	$("#a1, #a2, #a3, #a4, #a5, #a6").click(function(e) {
 		e.preventDefault();
 		if(e.target.id == 'a1'){
-			var food = "American";
-			document.getElementById('a1').innerHTML = "SELECTED!";
+				var food = "American";
+			}
+			else if(e.target.id == 'a2'){
+				var food = "Chinese";
+			}
+			else if(e.target.id == 'a3'){
+				var food = "French";
+			}
+			else if(e.target.id == 'a4'){
+				var food = "Japanese";
+			}
+			else if(e.target.id == 'a5'){
+				var food = "Thai";
+			}
+			else if(e.target.id == 'a6'){
+				var food = "Vietnamese";
+			}
+		if(localStorage.getItem('email') == undefined){
+			alert("Please Sign in First!");
 		}
-		else if(e.target.id == 'a2'){
-			var food = "Chinese";
-			document.getElementById('a2').innerHTML = "SELECTED!";
-		}
-		else if(e.target.id == 'a3'){
-			var food = "French";
-			document.getElementById('a3').innerHTML = "SELECTED!";				
-		}
-		else if(e.target.id == 'a4'){
-			var food = "Japanese";
-			document.getElementById('a4').innerHTML = "SELECTED!";
-		}
-		else if(e.target.id == 'a5'){
-			var food = "Thai";
-			document.getElementById('a5').innerHTML = "SELECTED!";
-		}
-		else if(e.target.id == 'a6'){
-			var food = "Vietnamese";
-			document.getElementById('a6').innerHTML = "SELECTED!";
-		}
-		if(e.target.text == 'SELECTED!'){
-			document.getElementById(e.target.id).innerHTML = "I want it!";
+		else if($("#" + e.target.id).text() == "SELECTED!"){
+			 $("#" + e.target.id).text("I want it!");
 			//delete from database
 			$.ajax({
 				url: "/region/" + localStorage['email'],
@@ -138,10 +135,32 @@ License URL: http://creativecommons.org/licenses/by/3.0/
 				},
 			});
 		}
-		else if(localStorage.getItem('email') == undefined){
-			alert("Please Sign in First!");
-		}
-		else{
+		else if($("#" + e.target.id).text() != "SELECTED!"){
+			if(e.target.id == 'a1'){
+				var food = "American";
+				$("#a1").text("SELECTED!");
+			}
+			else if(e.target.id == 'a2'){
+				var food = "Chinese";
+				$("#a2").text("SELECTED!");			
+			}
+			else if(e.target.id == 'a3'){
+				var food = "French";
+				$("#a3").text("SELECTED!");
+			}
+			else if(e.target.id == 'a4'){
+				var food = "Japanese";
+				$("#a4").text("SELECTED!");
+			}
+			else if(e.target.id == 'a5'){
+				var food = "Thai";
+				$("#a5").text("SELECTED!");
+			}
+			else if(e.target.id == 'a6'){
+				var food = "Vietnamese";
+				$("#a6").text("SELECTED!");
+			}
+
 			$.ajax({
 				url: "/region/" + localStorage['email'],
 				type: "POST",

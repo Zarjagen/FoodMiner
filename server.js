@@ -89,6 +89,75 @@ app.post('/region/*', function (req, res) {
 	res.send(foodregion);
 });
 
+//update preference for types of food
+//update pereference
+app.post('/type/*', function (req, res) {
+	var postBody = req.body;
+	var email = req.params[0];	
+	var userid = email.hashCode();
+
+	//database part
+	var fs = require('fs');
+	var sql = require('sql.js');
+
+	var filebuffer = fs.readFileSync('foodminer.db');
+	var db = new sql.Database(filebuffer);
+
+	//select user previous info
+	var stmt = db.prepare("SELECT * FROM Preference WHERE ID=:userid");
+	var result = stmt.getAsObject({':userid' : userid});
+
+	if(result['Type'] == "None")
+		var foodtype = postBody.foodtype;
+	else 
+		var foodtype = result['Type'] + postBody.foodtype;
+	//update
+	db.run('UPDATE Preference SET Type=' 
+		+ '\'' + String(foodtype) +',\'' 
+		+ 'WHERE ID = ' + '\'' + String(userid) +'\'');
+	var data = db.export();
+	var buffer = new Buffer(data);
+	fs.writeFileSync('foodminer.db', buffer);
+	db.close();
+	res.send(foodtype);
+});
+
+//delete from database
+app.delete('/type/*', function (req, res) {
+	var postBody = req.body;
+	var email = req.params[0];
+	var userid = email.hashCode();
+	//database part
+	var fs = require('fs');
+	var sql = require('sql.js');
+
+	var filebuffer = fs.readFileSync('foodminer.db');
+	var db = new sql.Database(filebuffer);
+
+	//select user previous info
+	var stmt = db.prepare("SELECT * FROM Preference WHERE ID=:userid");
+	var result = stmt.getAsObject({':userid' : userid});
+
+	var arrayR = result['Type'].split(",");
+	var foodtype = "";
+	for(var i = 0; i < arrayR.length -1 ; i++){
+		console.log(arrayR[i]);
+		if(postBody.foodtype != arrayR[i])
+			foodtype = foodtype + arrayR[i] + ",";
+	}
+	if(foodtype == ",")
+		foodtype = "None";
+	console.log(foodtype);
+	db.run('UPDATE Preference SET Type=' 
+		+ '\'' + String(foodtype) +'\'' 
+		+ 'WHERE ID = ' + '\'' + String(userid) +'\'');
+	var data = db.export();
+	var buffer = new Buffer(data);
+	fs.writeFileSync('foodminer.db', buffer);
+	db.close();
+	res.send(foodtype);
+});
+
 app.post('/users/', function (req, res) {
     var postBody = req.body;
     console.log(postBody);
@@ -127,6 +196,7 @@ app.post('/users/', function (req, res) {
 
 app.get('/login/*',function (req,res){
 	var email = req.params[0];
+	var userid = email.hashCode();
 	//database part
 	var fs = require('fs');
 	var sql = require('sql.js');
@@ -137,7 +207,13 @@ app.get('/login/*',function (req,res){
 	var stmt = db.prepare("SELECT * FROM Users WHERE email=:user");
 	var result = stmt.getAsObject({':user' : email});
 
-	console.log(result); //Will print the user colomn
+	var stmt2 = db.prepare("SELECT * FROM Preference WHERE ID=:userid");
+	var result2 = stmt2.getAsObject({':userid' : userid});
+
+	console.log(result);
+	console.log(result2); //Will print the user colomn
+	result['Region'] = result2.Region;
+	result['Type'] = result2.Type;
 
 	db.close();
 	res.send(result);

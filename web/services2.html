@@ -131,6 +131,8 @@ License URL: http://creativecommons.org/licenses/by/3.0/
 	                    localStorage['gender'] = data.Gender;
 	                    localStorage['nickname'] = data.Nickname;
 	                    localStorage['email'] = data.Email;
+	                    localStorage['region'] = data.Region;
+	                    localStorage['type'] = data.Type;
 	                    document.location.reload(true);
 	                  }else{
 	                    console.log("Password mismatch!!!!!!!!!!");
@@ -142,32 +144,123 @@ License URL: http://creativecommons.org/licenses/by/3.0/
 	            });
 		});
 
-		//submit sign in
-		$("#login").click(function(e) {
-			localStorage['password'] = $("#signin-password").val();
-			$.ajax({
-	            url: "login/" + $("#signin-email").val(),
-	            type: "GET",
-	            dataType : "json", // this URL returns a plain text string, not JSON
-	            success: function( data ) {
-	                  	console.log("success!!!!");
-	                  	console.log("DATA:email:" + data.email);
-	                  	if(localStorage['password'] == data.Password){
-		                   	localStorage['userid'] = data.ID;
-		                    localStorage['age'] = data.Age;
-		                    localStorage['gender'] = data.Gender;
-		                    localStorage['nickname'] = data.Nickname;
-		                    localStorage['email'] = data.Email;
-	                    	document.location.reload(true);
-	                  	}else{
-		                    console.log("Password mismatch!!!!!!!!!!");
-		                    localStorage.clear();
-		                    alert("The username or password you entered is incorrect. Please try again.");
-		                    document.location.reload(true);
-	                  	}
-	              	},
-	            });
-			});
+		//selection
+		if(localStorage['type'] !== undefined){
+			//check local storage
+			var arrayR = localStorage['type'].split(",");
+			for(var i = 0; i < arrayR.length; i++){
+				if(arrayR[i] == "Rice"){
+					$("#a1").text("SELECTED!");
+				}
+				else if(arrayR[i] == "Fastfood"){
+					$("#a2").text("SELECTED!");
+				}
+				else if(arrayR[i] == "Salad"){
+					$("#a3").text("SELECTED!");
+				}
+				else if(arrayR[i] == "Seafood"){
+					$("#a4").text("SELECTED!");
+				}
+				else if(arrayR[i] == "Steak"){
+					$("#a5").text("SELECTED!");
+				}
+				else if(arrayR[i] == "Noodles"){
+					$("#a6").text("SELECTED!");
+
+				}
+			}
+		}
+
+		//add to favorite
+		$("#a1, #a2, #a3, #a4, #a5, #a6").click(function(e) {
+			e.preventDefault();
+			if(e.target.id == 'a1'){
+					var food = "Rice";
+				}
+				else if(e.target.id == 'a2'){
+					var food = "Fastfood";
+				}
+				else if(e.target.id == 'a3'){
+					var food = "Salad";
+				}
+				else if(e.target.id == 'a4'){
+					var food = "Seafood";
+				}
+				else if(e.target.id == 'a5'){
+					var food = "Steak";
+				}
+				else if(e.target.id == 'a6'){
+					var food = "Noodles";
+				}
+			if(localStorage.getItem('email') == undefined){
+				alert("Please Sign in First!");
+			}
+			else if($("#" + e.target.id).text() == "SELECTED!"){
+				 $("#" + e.target.id).text("I want it!");
+				//delete from database
+				$.ajax({
+					url: "/type/" + localStorage['email'],
+					type: "DELETE",
+					dataType : "text", // this URL returns a plain text string, not JSON
+					data : { 
+						foodtype: food
+	 				},
+					success: function( data ) {
+					if (data) {
+						console.log("SuccessD!!!");
+						localStorage['type'] = data;
+					} else {
+						console.log("LOSER");	
+					}
+					},
+				});
+			}
+			else if($("#" + e.target.id).text() != "SELECTED!"){
+				if(e.target.id == 'a1'){
+					var food = "Rice";
+					$("#a1").text("SELECTED!");
+				}
+				else if(e.target.id == 'a2'){
+					var food = "Fastfood";
+					$("#a2").text("SELECTED!");			
+				}
+				else if(e.target.id == 'a3'){
+					var food = "Salad";
+					$("#a3").text("SELECTED!");
+				}
+				else if(e.target.id == 'a4'){
+					var food = "Seafood";
+					$("#a4").text("SELECTED!");
+				}
+				else if(e.target.id == 'a5'){
+					var food = "Steak";
+					$("#a5").text("SELECTED!");
+				}
+				else if(e.target.id == 'a6'){
+					var food = "Noodles";
+					$("#a6").text("SELECTED!");
+				}
+
+				$.ajax({
+					url: "/type/" + localStorage['email'],
+					type: "POST",
+					dataType : "text", // this URL returns a plain text string, not JSON
+					data : { 
+						foodtype: food
+	 				},
+					success: function( data ) {
+						if (data) {
+							console.log("Success!!!");
+							localStorage['type'] = data;
+						} else {
+							console.log("LOSER");	
+						}
+					},
+				});
+			
+			}
+		});
+
 		});
 	</script>
 
@@ -366,19 +459,19 @@ License URL: http://creativecommons.org/licenses/by/3.0/
 							<a href="#"><img src="images/rice2.jpg" alt=""><span style="padding-right:3px; padding-top: 3px; display:inline-block;"><img src="images/rice.jpg"></img></span></a>
 							<h4>Rice</h4>
 							<p></p>
-							<div class="gallery-button"><a href="#">I want it!</a></div>
+							<div class="gallery-button"><a id="a1" href="#">I want it!</a></div>
 						</div>
 						<div class="gallery-grid grid2">
 							<a href="#"><img src="images/fastfood2.jpg" alt=""><span style="padding-right:3px; padding-top: 3px; display:inline-block;"><img src="images/fastfood.jpg"></img></span></a>
 							<h4>fastfood</h4>
 							<p></p>
-							<div class="gallery-button"><a href="#">I want it!</a></div>
+							<div class="gallery-button"><a id="a2" href="#">I want it!</a></div>
 						</div>
 						<div class="gallery-grid">
 							<a href="#"><img src="images/salad2.jpg" alt=""><span style="padding-right:3px; padding-top: 3px; display:inline-block;"><img src="images/salad.jpg"></img></span></a>
 							<h4>salad</h4>
 							<p></p>
-							<div class="gallery-button"><a href="#">I want it!</a></div>
+							<div class="gallery-button"><a id="a3" href="#">I want it!</a></div>
 						</div>
 						<div class="clear"> </div>
 					</div>
@@ -387,19 +480,19 @@ License URL: http://creativecommons.org/licenses/by/3.0/
 							<a href="#"><img src="images/seafood2.jpg" alt=""><span style="padding-right:3px; padding-top: 3px; display:inline-block;"><img src="images/seafood.jpg"></img></span></a>
 							<h4>seafood</h4>
 							<p></p>
-							<div class="gallery-button"><a href="#">I want it!</a></div>
+							<div class="gallery-button"><a id="a4" href="#">I want it!</a></div>
 						</div>
 						<div class="gallery-grid grid2">
 							<a href="#"><img src="images/steak2.jpg" alt=""><span style="padding-right:3px; padding-top: 3px; display:inline-block;"><img src="images/steak1.jpg"></img></span></a>
 							<h4>Steak</h4>
 							<p></p>
-							<div class="gallery-button"><a href="#">I want it!</a></div>
+							<div class="gallery-button"><a id="a5" href="#">I want it!</a></div>
 						</div>
 						<div class="gallery-grid">
 							<a href="#"><img src="images/pho.jpg" alt=""><span style="padding-right:3px; padding-top: 3px; display:inline-block;"><img src="images/noodles.jpg"></img></span></a>
 							<h4> noodles</h4>
 							<p></p>
-							<div class="gallery-button"><a href="#">I want it!</a></div>
+							<div class="gallery-button"><a id="a6" href="#">I want it!</a></div>
 						</div>
 					</div>					
 				    <div class="clear"> </div>

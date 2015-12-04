@@ -220,7 +220,47 @@ app.get('/login/*',function (req,res){
 	return;
 });
 
+app.put('/users/*', function (req, res){
+	var postBody = req.body;
+    console.log(postBody);
 
+	var userid = postBody.userid;
+	var nickname = postBody.nickname;
+	var age = postBody.age;
+	var gender = postBody.gender;
+	
+	//try to look up in database
+	var fs = require('fs');
+	var sql = require('sql.js');
+
+	var filebuffer = fs.readFileSync('foodminer.db');
+	var db = new sql.Database(filebuffer);
+
+	var stmt = db.prepare("SELECT * FROM Users WHERE ID=:userid");
+	var result = stmt.getAsObject({':user' : userid});
+	if (result == '{}'){
+		res.send(JSON.stringify(result)=='{}');
+	} else {
+		db.run("UPDATE Users SET Nickname=\'" + String(nickname) + "\', Age=\'" + String(age) + "\', Gender=\'" + String(gender) + "\' WHERE ID=\'" + String(userid) + "\'");
+		//var result2 = stmt.getAsObject({':nickname': nickname, ':age': age, ':gender': gender, ':userid': userid});
+		if (result.length == 0){
+			res.send(JSON.stringify(result)=='{}');
+		}
+		else {
+			res.send('OK');
+		}
+	}
+
+//	console.log(result2);
+
+	
+	var data = db.export();
+	var buffer = new Buffer(data);
+	fs.writeFileSync('foodminer.db', buffer);
+
+	db.close();
+	return;
+});
 //send home page
 app.get('/', function (req, res) {
 	res.sendFile(__dirname + '/web/home.html');

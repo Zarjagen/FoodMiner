@@ -105,7 +105,29 @@ License URL: http://creativecommons.org/licenses/by/3.0/
 
 			$("#edit-submit").click(function(e) {
 				e.preventDefault();
-				$("#update-success").show();
+				$.ajax({
+					url: "users/" + localStorage.getItem('userid'),
+					type: "PUT",
+					dataType : "text", // this URL returns a plain text string, not JSON
+					data : { 
+						userid: localStorage.getItem('userid'),
+	   					nickname: $("#signup-nickname").val(),
+	   					age: $("#signup-age").val(),
+	   					gender: $("#signup-gender").val(),
+     				},
+					success: function( data ) {
+						if (data == 'OK') {
+							$("#update-success").show();
+							localStorage['nickname'] = $("#signup-nickname").val();
+							localStorage['age'] = $("#signup-age").val();
+							localStorage['gender'] = $("#signup-gender").val();
+							setTimeout(function(){ location.reload(); }, 1000);
+						} else {
+							console.log("LOSER");	
+						}
+					},
+				});
+				
 			});
 		});
 

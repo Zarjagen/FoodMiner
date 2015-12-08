@@ -171,27 +171,36 @@ app.post('/users/', function (req, res) {
 	//database part
 	var fs = require('fs');
 	var sql = require('sql.js');
-
 	var filebuffer = fs.readFileSync('foodminer.db');
 	var db = new sql.Database(filebuffer);
 
-	db.run('INSERT INTO Users VALUES (\'' + 
-		String(userid)   + '\',\'' + String(email) + '\',\'' + 
-  		String(nickname) + '\',\'' + String(password) + '\',\'' + 
-  		String(age)      + '\',\'' + String(gender) + '\')');
+	var stmt = db.prepare("SELECT * FROM Users WHERE email=:email");
+	var result = stmt.getAsObject({':email' : email});
 
-	db.run('INSERT INTO Preference VALUES (\'' + 
-		String(userid) + '\',\'' + "None" + '\',\'' + "None" +'\')');
+	if (JSON.stringify(result) != '{}'){
+		res.send("This email has already been registered!");
+	}
+	else{
+		db.run('INSERT INTO Users VALUES (\'' + 
+			String(userid)   + '\',\'' + String(email) + '\',\'' + 
+	  		String(nickname) + '\',\'' + String(password) + '\',\'' + 
+	  		String(age)      + '\',\'' + String(gender) + '\')');
 
-	//var stmt = db.prepare("SELECT * FROM Users WHERE Email=:email-adress");
-	//var result = stmt.getAsObject({':email-adress' : email});
-	//console.log(result);
-	
-	var data = db.export();
-	var buffer = new Buffer(data);
-	fs.writeFileSync('foodminer.db', buffer);
+		db.run('INSERT INTO Preference VALUES (\'' + 
+			String(userid) + '\',\'' + "None" + '\',\'' + "None" +'\')');
+
+		//var stmt = db.prepare("SELECT * FROM Users WHERE Email=:email-adress");
+		//var result = stmt.getAsObject({':email-adress' : email});
+		//console.log(result);
+		
+		var data = db.export();
+		var buffer = new Buffer(data);
+		fs.writeFileSync('foodminer.db', buffer);
+		res.send('OK');
+	}
+
 	db.close();
-	res.send('OK');
+	return;
 });
 
 app.get('/login/*',function (req,res){
@@ -204,8 +213,8 @@ app.get('/login/*',function (req,res){
 	var filebuffer = fs.readFileSync('foodminer.db');
 	var db = new sql.Database(filebuffer);
 
-	var stmt = db.prepare("SELECT * FROM Users WHERE email=:user");
-	var result = stmt.getAsObject({':user' : email});
+	var stmt = db.prepare("SELECT * FROM Users WHERE email=:email");
+	var result = stmt.getAsObject({':email' : email});
 
 	var stmt2 = db.prepare("SELECT * FROM Preference WHERE ID=:userid");
 	var result2 = stmt2.getAsObject({':userid' : userid});
@@ -237,18 +246,13 @@ app.put('/users/*', function (req, res){
 	var db = new sql.Database(filebuffer);
 
 	var stmt = db.prepare("SELECT * FROM Users WHERE ID=:userid");
-	var result = stmt.getAsObject({':user' : userid});
-	if (result == '{}'){
-		res.send(JSON.stringify(result)=='{}');
+	var result = stmt.getAsObject({':userid' : userid});
+
+	if (JSON.stringify(result) == '{}'){
+		res.send("There is no such account!");
 	} else {
 		db.run("UPDATE Users SET Nickname=\'" + String(nickname) + "\', Age=\'" + String(age) + "\', Gender=\'" + String(gender) + "\' WHERE ID=\'" + String(userid) + "\'");
-		//var result2 = stmt.getAsObject({':nickname': nickname, ':age': age, ':gender': gender, ':userid': userid});
-		if (result.length == 0){
-			res.send(JSON.stringify(result)=='{}');
-		}
-		else {
-			res.send('OK');
-		}
+		res.send('OK');
 	}
 
 //	console.log(result2);

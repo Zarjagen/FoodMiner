@@ -170,23 +170,36 @@ License URL: http://creativecommons.org/licenses/by/3.0/
 	//comments system
 	$("#MingNoodle, #DinosaurBBQ, #YummyGarden, #RedLobster, #Shiki, #comment6").click(function(e) {
 	e.preventDefault();
+	if(localStorage['userid'] == undefined)
+		sweetAlert("Oops...", "Please Log in first!", "error");
+
+	else{
 	swal({   
-  		title: "<img src = 'images/RedLobster.png'></img>",   
-  		text: "What do you say about Red Lobster?",   
+  		title: "<img src = 'images/"+ String(e.target.id) +".png'></img>",   
+  		text: "What do you say about " + String(e.target.id) + " ?",   
   		type: "input", 
   		html: true,
   		showCancelButton: true,   
   		closeOnConfirm: false,
   		confirmButtonText: "Submit",
 	}, 
-	function(){   
+	function(inputValue){   
+		  if(inputValue === false) 
+		  	return false;      
+		  if(inputValue === "") {     
+		  	swal.showInputError("You need to write something!");
+		  }
 		$.ajax({
 	        url: "comment/" + String(e.target.id),
 	        type: "POST",
+	        data : { 
+	        		userid: localStorage['userid'],
+	  	 			comment: inputValue
+     				},
 	        dataType : "text", // this URL returns a plain text string, not JSON
 	        success: function(data) {
 	        	if(data)
-	        		swal("Success!", "You clicked the button!", "success");
+	        		swal("Success!", "You have submitted the comment!", "success");
 	      	},
 	    });
 	},
@@ -194,6 +207,7 @@ License URL: http://creativecommons.org/licenses/by/3.0/
 
 	}
 	);
+}
 });
 });
 </script>

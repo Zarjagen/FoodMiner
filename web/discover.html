@@ -168,6 +168,47 @@ License URL: http://creativecommons.org/licenses/by/3.0/
 		});
 
 	//comments system
+	$("#cMingNoodle, #cDinosaurBBQ, #cYummyGarden, #cRedLobster, #cShiki, #ccomment6").click(function(e) {
+	e.preventDefault();
+	if(localStorage['userid'] == undefined)
+		sweetAlert("Oops...", "Please Log in first!", "error");
+
+	else{
+	swal({   
+  		title: "<img src = 'images/"+ String(e.target.id) +".png'></img>",   
+  		text: "What do you say about " + String(e.target.id) + " ?",   
+  		type: "input", 
+  		html: true,
+  		showCancelButton: true,   
+  		closeOnConfirm: false,
+  		confirmButtonText: "Submit",
+	}, 
+	function(inputValue){   
+		  if(inputValue === false) 
+		  	return false;      
+		  if(inputValue === "") {     
+		  	swal.showInputError("You need to write something!");
+		  }
+		$.ajax({
+	        url: "comment/" + String(e.target.id),
+	        type: "GET",
+	        data : { 
+	        		userid: localStorage['userid'],
+	  	 			comment: inputValue,
+	  	 			email: localStorage['email']
+     				},
+	        dataType : "text", // this URL returns a plain text string, not JSON
+	        success: function(data) {
+	        	if(data)
+	        		swal("Success!", "You have submitted the comment!", "success");
+	      	},
+	    });
+	});
+}
+});
+
+
+	//comments system
 	$("#MingNoodle, #DinosaurBBQ, #YummyGarden, #RedLobster, #Shiki, #comment6").click(function(e) {
 	e.preventDefault();
 	if(localStorage['userid'] == undefined)
@@ -202,9 +243,6 @@ License URL: http://creativecommons.org/licenses/by/3.0/
 	        		swal("Success!", "You have submitted the comment!", "success");
 	      	},
 	    });
-	},
-	function(){
-
 	}
 	);
 }
@@ -412,19 +450,19 @@ License URL: http://creativecommons.org/licenses/by/3.0/
 							<a href="#"><img src="images/redl.jpg" alt=""><span>$33</span></a>
 							<h4>Red Lobster</h4>
 							<p>Crab leg and shrimp with potato only at Red Lobster!</p>
-							<div class="gallery-button"><a id="RedLobster" href="#">comments</a></div>
+							<div class="gallery-button"><a id="RedLobster" href="#">Write comments</a><a id="cRedLobster" href="#">Read comments</a></div>
 						</div>
 						<div class="gallery-grid grid2">
 							<a href="#"><img src="images/yummy.jpg" alt=""><span>$43</span></a>
 							<h4>Yummy Garden Hot Pot</h4>
 							<p>Spicy soup with rice noodles, beef rolls, vegetable combo,and dumplings</p>
-							<div class="gallery-button"><a id="YummyGarden" href="#">comments</a></div>
+							<div class="gallery-button"><a id="YummyGarden" href="#">Write comments</a><a id="cYummyGarden" href="#">Read comments</a></div>
 						</div>
 						<div class="gallery-grid">
 							<a href="#"><img src="images/dibbq.jpg" alt=""><span>$18.99</span></a>
 							<h4>Dinosaur Bar-B-Que</h4>
 							<p>1/2 chicken with brisket and a double side of mac and cheese</p>
-							<div class="gallery-button"><a id="DinosaurBBQ" href="#">comments</a></div>
+							<div class="gallery-button"><a id="DinosaurBBQ" href="#">Write comments</a><a id="cDinosaurBBQ" href="#">Read comments</a></div>
 						</div>
 						<div class="clear"> </div>
 					</div>
@@ -433,19 +471,19 @@ License URL: http://creativecommons.org/licenses/by/3.0/
 							<a href="#"><img src="images/shiki.jpg" alt=""><span>$16</span></a>
 							<h4>Shiki Japanese Restaurant</h4>
 							<p>Sushi and Sashimi lunch combo sell for $16 at Shiki</p>
-							<div class="gallery-button"><a id="Shiki" href="#">comments</a></div>
+							<div class="gallery-button"><a id="Shiki" href="#">Write comments</a><a id="cShiki" href="#">Read comments</a></div>
 						</div>
 						<div class="gallery-grid grid2">
 							<a href="#"><img src="images/noodle.jpg" alt=""><span>$10.35</span></a>
 							<h4>Ming's Noodle</h4>
 							<p>Miso Ramen noodle Soup! Only at Shiki Japanese Restaurant</p>
-							<div class="gallery-button"><a id="MingNoodle" href="#">comments</a></div>
+							<div class="gallery-button"><a id="MingNoodle" href="#">Write comments</a><a id="cMingNoodle" href="#">Read comments</a></div>
 						</div>
 						<div class="gallery-grid">
 							<a href="#"><img src="images/slider2.jpg" alt=""><span>$42</span></a>
 							<h4>hendrerit mauris. Phasellus</h4>
 							<p>Praesent vestibulum molestie lacus. Aenean nonummy hendrerit mauris. Phasellus porta.</p>
-							<div class="gallery-button"><a id="comment6" href="#">comments</a></div>
+							<div class="gallery-button"><a id="comment6" href="#">Write comments</a><a id="ccomment6" href="#">Read comments</a></div>
 						</div>
 					</div>					
 				    <div class="clear"> </div>

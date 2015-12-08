@@ -168,9 +168,12 @@ app.post('/comment/*', function (req, res) {
 	var sql = require('sql.js');
 	var filebuffer = fs.readFileSync('foodminer.db');
 	var db = new sql.Database(filebuffer);
-	db.run('INSERT INTO Comments VALUES (\'' + 
+	console.log('INSERT INTO Comments VALUES (\'' + 
 			String(rest)   + '\',\'' + String(postBody.userid) + '\',\'' + 
-	  		String(postBody.comment) +'\')');
+	  		String(postBody.email) + '\',\'' + String(postBody.comment) + '\')');
+	db.run('INSERT INTO Comments VALUES ("' + 
+			String(rest)   + '","' + String(postBody.userid) + '","' + 
+	  		String(postBody.email) + '","' + String(postBody.comment) + '")');
 	var data = db.export();
 	var buffer = new Buffer(data);
 	fs.writeFileSync('foodminer.db', buffer);

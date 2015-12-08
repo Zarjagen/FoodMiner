@@ -1,0 +1,88 @@
+div.left-arrow, div.right-arrow {
+	float: initial;
+	cursor: pointer;
+}
+
+.right-arrow ul {
+    list-style: none;
+    font-size: 100%;
+}
+
+.right-arrow li::before {
+    position: relative;
+    top: -10pt;
+    content: "";
+    display: inline-block;
+    /* By using an em scale, the arrows will size with the font */
+    width: 5em;
+    height: 5em;
+    border-right: 1em solid black;
+    border-top: 1em solid black;
+    transform: rotate(45deg);
+    margin-right: -3em;
+}
+
+/* Change color */
+.right-arrow li:hover::before {
+  	position: relative;
+    top: -10pt;
+    content: "";
+    display: inline-block;
+    /* By using an em scale, the arrows will size with the font */
+    width: 5em;
+    height: 5em;
+    border-right: 1em solid red;
+    border-top: 1em solid red;
+    transform: rotate(45deg);
+    margin-right: -3em;
+}
+
+.left-arrow ul {
+    list-style: none;
+    font-size: 100%;
+}
+
+.left-arrow li::before {
+    position: relative;
+    top: -10pt;
+    content: "";
+    display: inline-block;
+    /* By using an em scale, the arrows will size with the font */
+    width: 5em;
+    height: 5em;
+    border-left: 1em solid black;
+    border-bottom: 1em solid black;
+    transform: rotate(45deg);
+    margin-left: -3em;
+}
+
+/* Change color */
+.left-arrow li:hover::before {
+  	position: relative;
+    top: -10pt;
+    content: "";
+    display: inline-block;
+    /* By using an em scale, the arrows will size with the font */
+    width: 5em;
+    height: 5em;
+    border-left: 1em solid red;
+    border-bottom: 1em solid red;
+    transform: rotate(45deg);
+    margin-left: -3em;
+}
+
+.swal-row {
+	display: table;
+    width: 100%; /*Optional*/
+    table-layout: fixed; /*Optional*/
+    border-spacing: 10px; /*Optional*/
+}
+
+.swal-column {
+	display: table-cell;
+}
+
+.text {
+	position: relative;
+	top: -30pt;
+}

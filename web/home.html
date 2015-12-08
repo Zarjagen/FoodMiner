@@ -19,6 +19,8 @@ License URL: http://creativecommons.org/licenses/by/3.0/
   	<link href="css/slider.css" rel="stylesheet" type="text/css"  media="all" />
   	<link rel="stylesheet" type="text/css" href="css/jquery.modal.css" media="screen" />
   	<link rel="stylesheet" type="text/css" href="css/success.css">
+	<link rel="stylesheet" type="text/css" href="css/lightbox.css" media="screen" />
+
 
   	<script src="js/sweetalert.min.js"></script>
   	<script src="http://code.jquery.com/jquery-1.11.3.min.js"></script>
@@ -29,7 +31,6 @@ License URL: http://creativecommons.org/licenses/by/3.0/
   	<script type="text/javascript" src="js/jquery.easing.1.3.js"></script> 
   	<script type="text/javascript" src="js/camera.min.js"></script>
   	<script type="text/javascript" src="js/jquery.lightbox.js"></script> 
-  	<link rel="stylesheet" type="text/css" href="css/lightbox.css" media="screen" />
   	<script type="text/javascript">
 	 	$(function() {
 			$('.gallery a').lightBox();
@@ -42,136 +43,76 @@ License URL: http://creativecommons.org/licenses/by/3.0/
 			});
 		});
  	</script>
-<script type = "text/javascript"> 
-	$(document).ready(function() {
+	<script type = "text/javascript"> 
+		$(document).ready(function() {
 
-		$(document).ajaxError(function() {
-			swal({
-				title: "Error!",
-				text: "Sorry, there was a problem!",
-				type: "error",
-			});
-		});
-
-        $("a[name=\"preventDefault\"]").click(function(e) {
-        	e.preventDefault();
-        });
-
-		if(localStorage.getItem('email')){
-			$("#nav-info").html('<li style="color: white;">' + localStorage.getItem('nickname') + '</li><li><a class="cd-signin" href="#login" id="nav-profile">Profile</a></li><li><a class="cd-signup" href="#signup" id="nav-logout">Logout</a></li>');
-
-			$(".cd-switcher").replaceWith('<ul class="cd-switcher"><li style="width:100%;"><a style="border-radius: 0 12em 0 0;" href="#profile" id="tag-login">Profile</a></li></ul>');
-			$("#cd-login").html($("#cd-signup").html());
-			$("#profile-detached-e").remove();
-			$("#profile-detached-p").remove();
-			$("#profile-detached-r").remove();
-			$("#profile-detached-t").remove();
-			$("#signup-nickname").val('Nickname: ' + localStorage.getItem('nickname'));
-			$("#signup-nickname").attr("readonly", "readonly");
-			$("#signup-age").val('Age: ' + localStorage.getItem('age'));
-			$("#signup-age").attr("readonly", "readonly");
-			$("#signup-gender").val('Gender: ' + localStorage.getItem('gender'));
-			$("#signup-gender").attr("readonly", "readonly");
-			$("#edit-profile").html('<input id="update" class="full-width has-padding" type="submit" value="Update Profile">');
-			$("#cd-signup").remove();
-        };
-
-		$("#submit").click(function(e) {
-			e.preventDefault();
-			if ($("#signup-password").val() != $("#signup-repassword").val()){
-				alert("Password Not matching!");
-				var x = document.getElementById("signup-password");
-				var y = document.getElementById("signup-repassword");
-				x.value = "";
-				y.value = "";
-			}
-			else{
-				$.ajax({
-					url: "users/",
-					type: "POST",
-					dataType : "text", // this URL returns a plain text string, not JSON
-					data : { 
-	  	 				password: $("#signup-password").val(),
-	   					nickname: $("#signup-nickname").val(),
-	   					age: $("#signup-age").val(),
-	   					gender: $("#signup-gender").val(),
-	   					email: $("#signup-email").val()
-     				},
-					success: function( data ) {
-						if (data == 'OK') {
-							console.log("Success!!!");
-							swal({
-								title: "Success!",   
-								text: "You have successfully create an account!",   
-								type: "success",   
-								showCancelButton: false,   
-								closeOnConfirm: true,   
-								showLoaderOnConfirm: false, 
-							}, function(){   
-								$("#tag-login").addClass("selected");
-								$("#tag-signup").toggleClass("selected");
-								$("#cd-login").addClass("is-selected");
-								$("#cd-signup").toggleClass("is-selected");
-							});
-						} else {
-							console.log("LOSER");
-							swal({
-								title: "Error!",
-								text: data,
-								type: "error", 
-							});
-						}
-						
-					},
+			$(document).ajaxError(function() {
+				swal({
+					title: "Error!",
+					text: "Sorry, there was a problem!",
+					type: "error",
 				});
-			}
-		});
+			});
 
-		$("#update").click(function(e) {
-			e.preventDefault();
-			$("#signup-nickname").removeAttr("readonly");
-			$("#signup-nickname").val(localStorage.getItem('nickname'));
-			$("#signup-age").removeAttr("readonly");
-			$("#signup-age").val(localStorage.getItem('age'));
-			$("#signup-gender").removeAttr("readonly");
-			$("#signup-gender").val(localStorage.getItem('gender'));
-			$("#edit-profile").html('<input id="edit-submit" class="full-width has-padding" type="submit" value="Submit Change">');
+	        $("a[name=\"preventDefault\"]").click(function(e) {
+	        	e.preventDefault();
+	        });
 
-			$("#edit-submit").click(function(e) {
+			if(localStorage.getItem('email')){
+				$("#nav-info").html('<li style="color: white;">' + localStorage.getItem('nickname') + '</li><li><a class="cd-signin" href="#login" id="nav-profile">Profile</a></li><li><a class="cd-signup" href="#signup" id="nav-logout">Logout</a></li>');
+
+				$(".cd-switcher").replaceWith('<ul class="cd-switcher"><li style="width:100%;"><a style="border-radius: 0 12em 0 0;" href="#profile" id="tag-login">Profile</a></li></ul>');
+				$("#cd-login").html($("#cd-signup").html());
+				$("#profile-detached-e").remove();
+				$("#profile-detached-p").remove();
+				$("#profile-detached-r").remove();
+				$("#profile-detached-t").remove();
+				$("#signup-nickname").val('Nickname: ' + localStorage.getItem('nickname'));
+				$("#signup-nickname").attr("readonly", "readonly");
+				$("#signup-age").val('Age: ' + localStorage.getItem('age'));
+				$("#signup-age").attr("readonly", "readonly");
+				$("#signup-gender").val('Gender: ' + localStorage.getItem('gender'));
+				$("#signup-gender").attr("readonly", "readonly");
+				$("#edit-profile").html('<input id="update" class="full-width has-padding" type="submit" value="Update Profile">');
+				$("#cd-signup").remove();
+	        };
+
+			$("#submit").click(function(e) {
 				e.preventDefault();
-				if(localStorage.getItem('nickname') == $("#signup-nickname").val() && localStorage.getItem('age') == $("#signup-age").val() && localStorage.getItem('gender') == $("#signup-gender").val()){
-					swal({
-						title: "Warning!",   
-						text: "You haven't made any changes yet!",   
-						type: "warning", 
-					});
+				if ($("#signup-password").val() != $("#signup-repassword").val()){
+					alert("Password Not matching!");
+					var x = document.getElementById("signup-password");
+					var y = document.getElementById("signup-repassword");
+					x.value = "";
+					y.value = "";
 				}
 				else{
 					$.ajax({
-						url: "users/" + localStorage.getItem('userid'),
-						type: "PUT",
+						url: "users/",
+						type: "POST",
 						dataType : "text", // this URL returns a plain text string, not JSON
 						data : { 
-							userid: localStorage.getItem('userid'),
+		  	 				password: $("#signup-password").val(),
 		   					nickname: $("#signup-nickname").val(),
 		   					age: $("#signup-age").val(),
 		   					gender: $("#signup-gender").val(),
+		   					email: $("#signup-email").val()
 	     				},
 						success: function( data ) {
 							if (data == 'OK') {
-								console.log("Success!");
+								console.log("Success!!!");
 								swal({
 									title: "Success!",   
-									text: "You have successfully update your account!",   
+									text: "You have successfully create an account!",   
 									type: "success",   
 									showCancelButton: false,   
 									closeOnConfirm: true,   
 									showLoaderOnConfirm: false, 
-								}, function(){
-									localStorage['nickname'] = $("#signup-nickname").val();
-									localStorage['age'] = $("#signup-age").val();
-									localStorage['gender'] = $("#signup-gender").val();
-									location.reload();
+								}, function(){   
+									$("#tag-login").addClass("selected");
+									$("#tag-signup").toggleClass("selected");
+									$("#cd-login").addClass("is-selected");
+									$("#cd-signup").toggleClass("is-selected");
 								});
 							} else {
 								console.log("LOSER");
@@ -181,82 +122,142 @@ License URL: http://creativecommons.org/licenses/by/3.0/
 									type: "error", 
 								});
 							}
+							
 						},
 					});
 				}
 			});
-		});
 
-		$("#nav-logout").click(function(e) {
-			e.preventDefault();
-			$("#cd-user-modal").css({'visibility': 'hidden'});
-			swal({
-				title: "Are you sure?",
-				text: "Everything that is unsaved will not be recovered!",
-				type: "warning",
-				showCancelButton: true,
-				confirmButtonColor: "#DD6B55",
-				confirmButtonText: "Yes, let me log out!",
-				cancelButtonText: "No, cancel plx!",
-				closeOnConfirm: true,
-				closeOnCancel: true
-			}, function(isConfirm){
-				if (isConfirm) {
-					localStorage.clear();
-					$("#cd-user-modal").removeClass("is-visible");
-					$("#cd-user-modal").css({'visibility': ''});
-					location.reload();
-				}
-				else{
-					$("#cd-user-modal").removeClass("is-visible");
-					$("#cd-user-modal").css({'visibility': ''});
-				}
-			});
-		});
+			$("#update").click(function(e) {
+				e.preventDefault();
+				$("#signup-nickname").removeAttr("readonly");
+				$("#signup-nickname").val(localStorage.getItem('nickname'));
+				$("#signup-age").removeAttr("readonly");
+				$("#signup-age").val(localStorage.getItem('age'));
+				$("#signup-gender").removeAttr("readonly");
+				$("#signup-gender").val(localStorage.getItem('gender'));
+				$("#edit-profile").html('<input id="edit-submit" class="full-width has-padding" type="submit" value="Submit Change">');
 
-		//submit sign in
-		$("#login").click(function(e) {
-			console.log("123");
-			localStorage['password'] = $("#signin-password").val();
-			$.ajax({
-	            url: "login/" + $("#signin-email").val(),
-	            type: "GET",
-	            dataType : "json", // this URL returns a plain text string, not JSON
-	            success: function( data ) {
-	                  	console.log("success!!!!");
-	                  	console.log("DATA:email:" + data.email);
-                  	if(localStorage['password'] == data.Password){
-						localStorage['userid'] = data.ID;
-						localStorage['age'] = data.Age;
-						localStorage['gender'] = data.Gender;
-						localStorage['nickname'] = data.Nickname;
-						localStorage['email'] = data.Email;
-						localStorage['region'] = data.Region;
-						localStorage['type'] = data.Type;
-	                    swal({
-								title: "Success!",   
-								text: "You have successfully logged in!",   
-								type: "success",   
-								showCancelButton: false,   
-								closeOnConfirm: true,   
-								showLoaderOnConfirm: false, 
-							}, function(){
-								location.reload();
-						});
-                  	}else{
-	                    console.log("Password mismatch!!!!!!!!!!");
-	                    localStorage.clear();
-	                    swal({
-								title: "Error!",   
-								text: "The username or password you entered is incorrect. Please try again.",   
-								type: "error",   
+				$("#edit-submit").click(function(e) {
+					e.preventDefault();
+					if(localStorage.getItem('nickname') == $("#signup-nickname").val() && localStorage.getItem('age') == $("#signup-age").val() && localStorage.getItem('gender') == $("#signup-gender").val()){
+						swal({
+							title: "Warning!",   
+							text: "You haven't made any changes yet!",   
+							type: "warning", 
 						});
 					}
-              	},
-            });
+					else{
+						$.ajax({
+							url: "users/" + localStorage.getItem('userid'),
+							type: "PUT",
+							dataType : "text", // this URL returns a plain text string, not JSON
+							data : { 
+								userid: localStorage.getItem('userid'),
+			   					nickname: $("#signup-nickname").val(),
+			   					age: $("#signup-age").val(),
+			   					gender: $("#signup-gender").val(),
+		     				},
+							success: function( data ) {
+								if (data == 'OK') {
+									console.log("Success!");
+									swal({
+										title: "Success!",   
+										text: "You have successfully update your account!",   
+										type: "success",   
+										showCancelButton: false,   
+										closeOnConfirm: true,   
+										showLoaderOnConfirm: false, 
+									}, function(){
+										localStorage['nickname'] = $("#signup-nickname").val();
+										localStorage['age'] = $("#signup-age").val();
+										localStorage['gender'] = $("#signup-gender").val();
+										location.reload();
+									});
+								} else {
+									console.log("LOSER");
+									swal({
+										title: "Error!",
+										text: data,
+										type: "error", 
+									});
+								}
+							},
+						});
+					}
+				});
+			});
+
+			$("#nav-logout").click(function(e) {
+				e.preventDefault();
+				$("#cd-user-modal").css({'visibility': 'hidden'});
+				swal({
+					title: "Are you sure?",
+					text: "Everything that is unsaved will not be recovered!",
+					type: "warning",
+					showCancelButton: true,
+					confirmButtonColor: "#DD6B55",
+					confirmButtonText: "Yes, let me log out!",
+					cancelButtonText: "No, cancel plx!",
+					closeOnConfirm: true,
+					closeOnCancel: true
+				}, function(isConfirm){
+					if (isConfirm) {
+						localStorage.clear();
+						$("#cd-user-modal").removeClass("is-visible");
+						$("#cd-user-modal").css({'visibility': ''});
+						location.reload();
+					}
+					else{
+						$("#cd-user-modal").removeClass("is-visible");
+						$("#cd-user-modal").css({'visibility': ''});
+					}
+				});
+			});
+
+			//submit sign in
+			$("#login").click(function(e) {
+				console.log("123");
+				localStorage['password'] = $("#signin-password").val();
+				$.ajax({
+		            url: "login/" + $("#signin-email").val(),
+		            type: "GET",
+		            dataType : "json", // this URL returns a plain text string, not JSON
+		            success: function( data ) {
+		                  	console.log("success!!!!");
+		                  	console.log("DATA:email:" + data.email);
+	                  	if(localStorage['password'] == data.Password){
+							localStorage['userid'] = data.ID;
+							localStorage['age'] = data.Age;
+							localStorage['gender'] = data.Gender;
+							localStorage['nickname'] = data.Nickname;
+							localStorage['email'] = data.Email;
+							localStorage['region'] = data.Region;
+							localStorage['type'] = data.Type;
+		                    swal({
+									title: "Success!",   
+									text: "You have successfully logged in!",   
+									type: "success",   
+									showCancelButton: false,   
+									closeOnConfirm: true,   
+									showLoaderOnConfirm: false, 
+								}, function(){
+									location.reload();
+							});
+	                  	}else{
+		                    console.log("Password mismatch!!!!!!!!!!");
+		                    localStorage.clear();
+		                    swal({
+									title: "Error!",   
+									text: "The username or password you entered is incorrect. Please try again.",   
+									type: "error",   
+							});
+						}
+	              	},
+	            });
+			});
 		});
-	});
-</script>
+	</script>
 
 
 	</head>

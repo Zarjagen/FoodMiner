@@ -158,6 +158,25 @@ app.delete('/type/*', function (req, res) {
 	res.send(foodtype);
 });
 
+//get comments
+app.get('/fcomment/*', function (req, res) {
+	var postBody = req.body;
+	var rest = req.params[0];
+
+	var fs = require('fs');
+	var sql = require('sql.js');
+
+	var filebuffer = fs.readFileSync('foodminer.db');
+	var db = new sql.Database(filebuffer);
+
+	var result = db.exec("SELECT * FROM Comments WHERE Name=" + "\'"+rest + "\';");
+	
+	db.close();
+	console.log(result);
+	res.send(result);
+	return;
+});
+
 //write user comments
 app.post('/comment/*', function (req, res) {
 	var postBody = req.body;

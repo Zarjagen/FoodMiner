@@ -172,21 +172,28 @@ License URL: http://creativecommons.org/licenses/by/3.0/
 			for(var i = 0; i < arrayR.length; i++){
 				if(arrayR[i] == "Rice"){
 					$("#a1").text("SELECTED!");
+					$("#a1").attr("style","background:#4DA014");
+
 				}
 				else if(arrayR[i] == "Fastfood"){
 					$("#a2").text("SELECTED!");
+					$("#a2").attr("style","background:#4DA014");
 				}
 				else if(arrayR[i] == "Salad"){
 					$("#a3").text("SELECTED!");
+					$("#a3").attr("style","background:#4DA014");
 				}
 				else if(arrayR[i] == "Seafood"){
 					$("#a4").text("SELECTED!");
+					$("#a4").attr("style","background:#4DA014");
 				}
 				else if(arrayR[i] == "Steak"){
 					$("#a5").text("SELECTED!");
+					$("#a5").attr("style","background:#4DA014");
 				}
 				else if(arrayR[i] == "Noodles"){
 					$("#a6").text("SELECTED!");
+					$("#a6").attr("style","background:#4DA014");
 
 				}
 			}
@@ -218,6 +225,8 @@ License URL: http://creativecommons.org/licenses/by/3.0/
 			}
 			else if($("#" + e.target.id).text() == "SELECTED!"){
 				 $("#" + e.target.id).text("I want it!");
+				 $("#" + e.target.id).attr("style","background:#BD7F1C");
+
 				//delete from database
 				$.ajax({
 					url: "/type/" + localStorage['email'],
@@ -240,26 +249,32 @@ License URL: http://creativecommons.org/licenses/by/3.0/
 				if(e.target.id == 'a1'){
 					var food = "Rice";
 					$("#a1").text("SELECTED!");
+					$("#a1").attr("style","background:#4DA014");
 				}
 				else if(e.target.id == 'a2'){
 					var food = "Fastfood";
-					$("#a2").text("SELECTED!");			
+					$("#a2").text("SELECTED!");	
+					$("#a2").attr("style","background:#4DA014");		
 				}
 				else if(e.target.id == 'a3'){
 					var food = "Salad";
 					$("#a3").text("SELECTED!");
+					$("#a3").attr("style","background:#4DA014");
 				}
 				else if(e.target.id == 'a4'){
 					var food = "Seafood";
 					$("#a4").text("SELECTED!");
+					$("#a4").attr("style","background:#4DA014");
 				}
 				else if(e.target.id == 'a5'){
 					var food = "Steak";
 					$("#a5").text("SELECTED!");
+					$("#a5").attr("style","background:#4DA014");
 				}
 				else if(e.target.id == 'a6'){
 					var food = "Noodles";
 					$("#a6").text("SELECTED!");
+					$("#a6").attr("style","background:#4DA014");
 				}
 
 				$.ajax({

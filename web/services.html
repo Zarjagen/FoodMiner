@@ -270,22 +270,28 @@ License URL: http://creativecommons.org/licenses/by/3.0/
 			for(var i = 0; i < arrayR.length; i++){
 				if(arrayR[i] == "American"){
 					$("#a1").text("SELECTED!");
+					$("#a1").attr("style","background:#4DA014");
 				}
 				else if(arrayR[i] == "Chinese"){
 					$("#a2").text("SELECTED!");
+					$("#a2").attr("style","background:#4DA014");
+
 				}
 				else if(arrayR[i] == "French"){
 					$("#a3").text("SELECTED!");
+					$("#a3").attr("style","background:#4DA014");
 				}
 				else if(arrayR[i] == "Japanese"){
 					$("#a4").text("SELECTED!");
+					$("#a4").attr("style","background:#4DA014");
 				}
 				else if(arrayR[i] == "Thai"){
 					$("#a5").text("SELECTED!");
+					$("#a5").attr("style","background:#4DA014");
 				}
 				else if(arrayR[i] == "Vietnamese"){
 					$("#a6").text("SELECTED!");
-
+					$("#a6").attr("style","background:#4DA014");
 				}
 			}
 		}
@@ -316,6 +322,7 @@ License URL: http://creativecommons.org/licenses/by/3.0/
 			}
 			else if($("#" + e.target.id).text() == "SELECTED!"){
 				 $("#" + e.target.id).text("I want it!");
+				 $("#" + e.target.id).attr("style","background:#BD7F1C");
 				//delete from database
 				$.ajax({
 					url: "/region/" + localStorage['email'],
@@ -338,26 +345,34 @@ License URL: http://creativecommons.org/licenses/by/3.0/
 				if(e.target.id == 'a1'){
 					var food = "American";
 					$("#a1").text("SELECTED!");
+					$("#a1").attr("style","background:#4DA014");
+
 				}
 				else if(e.target.id == 'a2'){
 					var food = "Chinese";
-					$("#a2").text("SELECTED!");			
+					$("#a2").text("SELECTED!");
+					$("#a2").attr("style","background:#4DA014");
+			
 				}
 				else if(e.target.id == 'a3'){
 					var food = "French";
 					$("#a3").text("SELECTED!");
+					$("#a3").attr("style","background:#4DA014");
 				}
 				else if(e.target.id == 'a4'){
 					var food = "Japanese";
 					$("#a4").text("SELECTED!");
+					$("#a4").attr("style","background:#4DA014");
 				}
 				else if(e.target.id == 'a5'){
 					var food = "Thai";
 					$("#a5").text("SELECTED!");
+					$("#a5").attr("style","background:#4DA014");
 				}
 				else if(e.target.id == 'a6'){
 					var food = "Vietnamese";
 					$("#a6").text("SELECTED!");
+					$("#a6").attr("style","background:#4DA014");
 				}
 
 				$.ajax({

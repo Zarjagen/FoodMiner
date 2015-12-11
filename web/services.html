@@ -169,20 +169,26 @@ License URL: http://creativecommons.org/licenses/by/3.0/
 				}
 			});
 		});
+
+//WOKRKINGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGG
 		
 		$("#nav-rec").click(function(e) {
 			e.preventDefault();
 			$("#cd-user-modal").css({'visibility': 'hidden'});
-			swal({
+			if(localStorage['region'] == 'None' || localStorage['region'] == '')
+				sweetAlert("Oops...", "Please Go to 'Service' and select your prefered food!", "error");
+			else {
+				swal({
 				title: '<img src="images/Italy.jpg"></img>',
-				text: '<div class="swal-row"><div class="left-arrow swal-column"><ul><li></li></ul></div><div class="text swal-column">Name:<br>Place:<br>Tel:<br></div><div class="right-arrow swal-column"><ul><li></li></ul></div>',
+				text: '<div class="swal-row"><div id="left" class="left-arrow swal-column"><ul><li></li></ul></div><div class="text swal-column">Name:<br>Place:<br>Tel:<br></div><div id="right" class="right-arrow swal-column"><ul><li></li></ul></div>',
 				html: true,
 				showCancelButton: false,
 				confirmButtonText: "This is the one!",
 				closeOnConfirm: true,
-			}, function(isConfirm){
+			},
+			function(isConfirm){
 				if (isConfirm) {
-					localStorage.clear();
+					//localStorage.clear();
 					$("#cd-user-modal").removeClass("is-visible");
 					$("#cd-user-modal").css({'visibility': ''});
 					location.reload();
@@ -192,7 +198,17 @@ License URL: http://creativecommons.org/licenses/by/3.0/
 					$("#cd-user-modal").css({'visibility': ''});
 				}
 			});
+			}
 		});
+
+		var dummy = document.createElement("div"); 
+		dummy.setAttribute('id','right');
+		$("#right").onclick = function() {
+			console.log("aidjaiowjd");
+		}
+
+		//WOKRKINGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGG
+
 
 		$("#nav-logout").click(function(e) {
 			e.preventDefault();

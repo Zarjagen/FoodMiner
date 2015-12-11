@@ -168,52 +168,59 @@ License URL: http://creativecommons.org/licenses/by/3.0/
 				});
 			});
 
-			$("#nav-rec").click(function(e) {
-				e.preventDefault();
-				$("#cd-user-modal").css({'visibility': 'hidden'});
-				if(localStorage['region'] == 'None' || localStorage['region'] == '')
-					sweetAlert("Oops...", "Please Go to 'Service' and select your prefered food!", "error");
-				else {
-						//fetching data from data base
-					var text = "Here's the Suggestions For you!";
-					$.ajax({
-						url: "/rec/" + localStorage['email'],
-						type: "POST",
-						dataType : "json", // this URL returns a plain text string, not JSON
-						data : { 
-							region: localStorage['region'],
-							type: localStorage['type']
-		 				},
-						success: function( data ) {
-							console.log(data);
-							if (data) {
-								for(var i = 0; i < data.length; i++){
-									text = text + '<div><img src="images/Italy.jpg"></img><br>Name:'+data[i][1]+'<br>Place:'+data[i][2]+'<br>Tel:'+data[i][3]+'<br>ChefRecommendation:'+data[i][4]+'<br></div><br><br>';
-								}
-							} else {
-								console.log("LOSER");	
-							}
+//WOKRKINGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGG
+	
+
+		$("#nav-rec").click(function(e) {
+			e.preventDefault();
+			$("#cd-user-modal").css({'visibility': 'hidden'});
+			if(localStorage['region'] == 'None' || localStorage['region'] == '')
+				sweetAlert("Oops...", "Please Go to 'Service' and select your prefered food!", "error");
+			else {
+							//fetching data from data base
+			var text = "Here's the Suggestions For you!";
+			$.ajax({
+				url: "/rec/" + localStorage['email'],
+				type: "POST",
+				dataType : "json", // this URL returns a plain text string, not JSON
+				data : { 
+					region: localStorage['region'],
+					type: localStorage['type']
+ 				},
+				success: function( data ) {
+					console.log(data);
+				if (data) {
+					for(var i = 0; i < data.length; i++){
+						text = text + '<div><img src="images/'+data[i][1]+'.jpg"></img><br>Name:'+data[i][1]+'<br>Place:'+data[i][2]+'<br>Tel:'+data[i][3]+'<br>ChefRecommendation:'+data[i][4]+'<br></div><br><br>';
+					}
+				} else {
+					console.log("LOSER");	
+				}
 							swal({
-								html:text,
-								showCancelButton: false,
-								confirmButtonText: "This is the one!",
-							},
-							function(isConfirm){
-								if (isConfirm) {
-									//localStorage.clear();
-									$("#cd-user-modal").removeClass("is-visible");
-									$("#cd-user-modal").css({'visibility': ''});
-									//location.reload();
-								}
-								else{
-									$("#cd-user-modal").removeClass("is-visible");
-									$("#cd-user-modal").css({'visibility': ''});
-								}
-							});
-						},
-					});
+				html:text,
+				showCancelButton: false,
+				confirmButtonText: "This is the one!",
+			},
+			function(isConfirm){
+				$("#right").click(function()
+					{console.log("awd")});
+				if (isConfirm) {
+					//localStorage.clear();
+					$("#cd-user-modal").removeClass("is-visible");
+					$("#cd-user-modal").css({'visibility': ''});
+					//location.reload();
+				}
+				else{
+					$("#cd-user-modal").removeClass("is-visible");
+					$("#cd-user-modal").css({'visibility': ''});
 				}
 			});
+
+				},
+			});			
+			}
+		});
+		//WOKRKINGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGG
 
 			$("#nav-logout").click(function(e) {
 				e.preventDefault();

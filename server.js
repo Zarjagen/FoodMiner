@@ -208,7 +208,7 @@ app.post('/rec/*', function (req, res){
 				console.log(tags.indexOf(regions[j]));
 				resultlist[index] = results[i];
 				index++;
-				results[i][0] = "-1";
+				tags = "-1";
 			}
 		}
 		console.log(types);
@@ -217,7 +217,7 @@ app.post('/rec/*', function (req, res){
 				console.log(tags.indexOf(types[k]));
 				resultlist[index] = results[i];
 				index++;
-				results[i][0] = "-1";
+				tags = "-1";
 			}
 		}
 	}

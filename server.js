@@ -44,8 +44,12 @@ app.delete('/region/*', function (req, res) {
 		if(postBody.foodregion != arrayR[i])
 			foodregion = foodregion + arrayR[i] + ",";
 	}
+
 	if(foodregion == ",")
 		foodregion = "None";
+	else if(foodregion =="")
+		foodregion ="None";
+
 	console.log(foodregion);
 	db.run('UPDATE Preference SET Region=' 
 		+ '\'' + String(foodregion) +'\'' 
@@ -147,6 +151,8 @@ app.delete('/type/*', function (req, res) {
 	}
 	if(foodtype == ",")
 		foodtype = "None";
+	else if(foodtype =="")
+		foodtype ="None";
 	console.log(foodtype);
 	db.run('UPDATE Preference SET Type=' 
 		+ '\'' + String(foodtype) +'\'' 

@@ -170,11 +170,53 @@ app.get('/fcomment/*', function (req, res) {
 	var db = new sql.Database(filebuffer);
 
 	var result = db.exec("SELECT * FROM Comments WHERE Name=" + "\'"+rest + "\';");
-	
+
 	db.close();
 	console.log(result);
 	res.send(result);
 	return;
+});
+
+//get user info
+app.post('/rec/*', function (req, res){
+	var email = req.params[0];
+	var userid = email.hashCode();
+	var postBody = req.body;
+	var resultlist = [];
+	console.log(postBody);
+	var regions = postBody.region.split(',');
+	var types = postBody.type.split(',');
+	var index = 0;
+	//database part
+	var fs = require('fs');
+	var sql = require('sql.js');
+	var filebuffer = fs.readFileSync('foodminer.db');
+	var db = new sql.Database(filebuffer);
+	var results = db.exec("SELECT * FROM Restaurant;");
+	console.log(results);
+	results = results[0]['values'];
+	for(var i = 0; i < results.length; i++){
+		var tags = results[i][0];
+		for(var j = 0; j < regions.length;j++){
+			if(regions[j] != ""&&tags.indexOf(regions[j]) > -1){
+				console.log(tags.indexOf(regions[j]));
+				resultlist[index] = results[i];
+				index++;
+				results[i][0] = "-1";
+			}
+		}
+		console.log(types);
+		for(var k = 0; k < types.length; k++){
+			if(types[k] != "" && tags.indexOf(types[k]) > -1){
+				console.log(tags.indexOf(types[k]));
+				resultlist[index] = results[i];
+				index++;
+				results[i][0] = "-1";
+			}
+		}
+	}
+	res.send(resultlist);
+
 });
 
 //write user comments

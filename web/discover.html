@@ -17,155 +17,295 @@ License URL: http://creativecommons.org/licenses/by/3.0/
 	<link rel="stylesheet" href="css/login-signup/style.css"> <!-- Gem style -->
 	<link href="css/style.css" rel="stylesheet" type="text/css"  media="all" />
 	<link href='http://fonts.googleapis.com/css?family=Open+Sans' rel='stylesheet' type='text/css'>
-	<link rel="stylesheet" type="text/css" href="css/success.css">
-	<script src="js/sweetalert.min.js"></script> 
-	<link rel="stylesheet" type="text/css" href="css/sweetalert.css">
+	<link rel="stylesheet" type="text/css" href="css/sweetalert2.css">
+
 	<script src="http://code.jquery.com/jquery-1.11.3.min.js"></script>
   	<script src="js/login-signup/modernizr.js"></script> <!-- Modernizr -->
   	<script src="js/login-signup/main.js"></script> <!-- Gem jQuery -->
- 	<script type="text/javascript">
-		$.modal.close();
- 	</script>
+ 	<script src="js/sweetalert2.min.js"></script> 
 
  <script type = "text/javascript"> 
 	$(document).ready(function() {
 		$(document).ajaxError(function() {
-	          alert("Sorry, there was a problem!");
-		});
-        $("a[name=\"preventDefault\"]").click(function(e) {
-        	e.preventDefault();
-        });
-        $("#success").hide();
-        $("#update-success").hide();
-
-		if(localStorage.getItem('email')){
-			$("#nav-info").html('<li style="color: white;">' + localStorage.getItem('nickname') + '</li><li><a class="cd-signin" href="#login" id="nav-profile">Profile</a></li><li><a class="cd-signup" href="#signup" id="nav-logout">Logout</a></li>');
-
-			$(".cd-switcher").replaceWith('<ul class="cd-switcher"><li style="width:100%;"><a style="border-radius: 0 12em 0 0;" href="#profile" id="tag-login">Profile</a></li></ul>');
-			$("#cd-login").html($("#cd-signup").html());
-			$("#profile-detached-e").remove();
-			$("#profile-detached-p").remove();
-			$("#profile-detached-r").remove();
-			$("#profile-detached-t").remove();
-			$("#signup-nickname").val('Nickname: ' + localStorage.getItem('nickname'));
-			$("#signup-nickname").attr("readonly", "readonly");
-			$("#signup-age").val('Age: ' + localStorage.getItem('age'));
-			$("#signup-age").attr("readonly", "readonly");
-			$("#signup-gender").val('Gender: ' + localStorage.getItem('gender'));
-			$("#signup-gender").attr("readonly", "readonly");
-			$("#edit-profile").html('<input id="update" class="full-width has-padding" type="submit" value="Update Profile">');
-			$("#cd-signup").remove();
-        };
-
-		$("#submit").click(function(e) {
-			e.preventDefault();
-			if ($("#signup-password").val() != $("#signup-repassword").val()){
-				alert("Password Not matching!");
-				var x = document.getElementById("signup-password");
-				var y = document.getElementById("signup-repassword");
-				x.value = "";
-				y.value = "";
-			}
-			else{
-				$.ajax({
-					url: "users/",
-					type: "POST",
-					dataType : "text", // this URL returns a plain text string, not JSON
-					data : { 
-	  	 				password: $("#signup-password").val(),
-	   					nickname: $("#signup-nickname").val(),
-	   					age: $("#signup-age").val(),
-	   					gender: $("#signup-gender").val(),
-	   					email: $("#signup-email").val()
-     				},
-					success: function( data ) {
-						if (data == 'OK') {
-							console.log("Success!!!");
-						} else {
-							console.log("LOSER");	
-						}
-						$("#tag-login").addClass("selected");
-						$("#tag-signup").toggleClass("selected");
-						$("#cd-login").addClass("is-selected");
-						$("#cd-signup").toggleClass("is-selected");
-						$("#success").show();
-					},
+				swal({
+					title: "Error!",
+					text: "Sorry, there was a problem!",
+					type: "error",
 				});
-			}
-		});
-
-		$("#update").click(function(e) {
-			e.preventDefault();
-			$("#signup-nickname").removeAttr("readonly");
-			$("#signup-nickname").val(localStorage.getItem('nickname'));
-			$("#signup-age").removeAttr("readonly");
-			$("#signup-age").val(localStorage.getItem('age'));
-			$("#signup-gender").removeAttr("readonly");
-			$("#signup-gender").val(localStorage.getItem('gender'));
-			$("#edit-profile").html('<input id="edit-submit" class="full-width has-padding" type="submit" value="Submit Change">');
-
-			$("#edit-submit").click(function(e) {
-				e.preventDefault();
-				$.ajax({
-					url: "users/" + localStorage.getItem('userid'),
-					type: "PUT",
-					dataType : "text", // this URL returns a plain text string, not JSON
-					data : { 
-						userid: localStorage.getItem('userid'),
-	   					nickname: $("#signup-nickname").val(),
-	   					age: $("#signup-age").val(),
-	   					gender: $("#signup-gender").val(),
-     				},
-					success: function( data ) {
-						if (data == 'OK') {
-							$("#update-success").show();
-							localStorage['nickname'] = $("#signup-nickname").val();
-							localStorage['age'] = $("#signup-age").val();
-							localStorage['gender'] = $("#signup-gender").val();
-							setTimeout(function(){ location.reload(); }, 1000);
-						} else {
-							console.log("LOSER");	
-						}
-					},
-				});
-				
 			});
-		});
 
-		$("#nav-logout").click(function(e) {
+	        $("a[name=\"preventDefault\"]").click(function(e) {
+	        	e.preventDefault();
+	        });
+
+			if(localStorage.getItem('email')){
+				$("#nav-info").html('<li style="color: white;">' + localStorage.getItem('nickname') + '</li><li><a class="cd-signin" href="#login" id="nav-rec">Recommend for You!</a></li><li><a class="cd-signin" href="#login" id="nav-profile">Profile</a></li><li><a class="cd-signup" href="#signup" id="nav-logout">Logout</a></li>');
+
+				$(".cd-switcher").replaceWith('<ul class="cd-switcher"><li style="width:100%;"><a style="border-radius: 0 12em 0 0;" href="#profile" id="tag-login">Profile</a></li></ul>');
+				$("#cd-login").html($("#cd-signup").html());
+				$("#profile-detached-e").remove();
+				$("#profile-detached-p").remove();
+				$("#profile-detached-r").remove();
+				$("#profile-detached-t").remove();
+				$("#signup-nickname").val('Nickname: ' + localStorage.getItem('nickname'));
+				$("#signup-nickname").attr("readonly", "readonly");
+				$("#signup-age").val('Age: ' + localStorage.getItem('age'));
+				$("#signup-age").attr("readonly", "readonly");
+				$("#signup-gender").val('Gender: ' + localStorage.getItem('gender'));
+				$("#signup-gender").attr("readonly", "readonly");
+				$("#edit-profile").html('<input id="update" class="full-width has-padding" type="submit" value="Update Profile">');
+				$("#cd-signup").remove();
+	        };
+
+			$("#submit").click(function(e) {
+				e.preventDefault();
+				if ($("#signup-password").val() != $("#signup-repassword").val()){
+					alert("Password Not matching!");
+					var x = document.getElementById("signup-password");
+					var y = document.getElementById("signup-repassword");
+					x.value = "";
+					y.value = "";
+				}
+				else{
+					$.ajax({
+						url: "users/",
+						type: "POST",
+						dataType : "text", // this URL returns a plain text string, not JSON
+						data : { 
+		  	 				password: $("#signup-password").val(),
+		   					nickname: $("#signup-nickname").val(),
+		   					age: $("#signup-age").val(),
+		   					gender: $("#signup-gender").val(),
+		   					email: $("#signup-email").val()
+	     				},
+						success: function( data ) {
+							if (data == 'OK') {
+								console.log("Success!!!");
+								swal({
+									title: "Success!",   
+									text: "You have successfully create an account!",   
+									type: "success",   
+									showCancelButton: false,   
+									closeOnConfirm: true,   
+									showLoaderOnConfirm: false, 
+								}, function(){   
+									$("#tag-login").addClass("selected");
+									$("#tag-signup").toggleClass("selected");
+									$("#cd-login").addClass("is-selected");
+									$("#cd-signup").toggleClass("is-selected");
+								});
+							} else {
+								console.log("LOSER");
+								swal({
+									title: "Error!",
+									text: data,
+									type: "error", 
+								});
+							}
+							
+						},
+					});
+				}
+			});
+
+			$("#update").click(function(e) {
+				e.preventDefault();
+				$("#signup-nickname").removeAttr("readonly");
+				$("#signup-nickname").val(localStorage.getItem('nickname'));
+				$("#signup-age").removeAttr("readonly");
+				$("#signup-age").val(localStorage.getItem('age'));
+				$("#signup-gender").removeAttr("readonly");
+				$("#signup-gender").val(localStorage.getItem('gender'));
+				$("#edit-profile").html('<input id="edit-submit" class="full-width has-padding" type="submit" value="Submit Change">');
+
+				$("#edit-submit").click(function(e) {
+					e.preventDefault();
+					if(localStorage.getItem('nickname') == $("#signup-nickname").val() && localStorage.getItem('age') == $("#signup-age").val() && localStorage.getItem('gender') == $("#signup-gender").val()){
+						swal({
+							title: "Warning!",   
+							text: "You haven't made any changes yet!",   
+							type: "warning", 
+						});
+					}
+					else{
+						$.ajax({
+							url: "users/" + localStorage.getItem('userid'),
+							type: "PUT",
+							dataType : "text", // this URL returns a plain text string, not JSON
+							data : { 
+								userid: localStorage.getItem('userid'),
+			   					nickname: $("#signup-nickname").val(),
+			   					age: $("#signup-age").val(),
+			   					gender: $("#signup-gender").val(),
+		     				},
+							success: function( data ) {
+								if (data == 'OK') {
+									console.log("Success!");
+									swal({
+										title: "Success!",   
+										text: "You have successfully update your account!",   
+										type: "success",   
+										showCancelButton: false,   
+										closeOnConfirm: true,   
+										showLoaderOnConfirm: false, 
+									}, function(){
+										localStorage['nickname'] = $("#signup-nickname").val();
+										localStorage['age'] = $("#signup-age").val();
+										localStorage['gender'] = $("#signup-gender").val();
+										location.reload();
+									});
+								} else {
+									console.log("LOSER");
+									swal({
+										title: "Error!",
+										text: data,
+										type: "error", 
+									});
+								}
+							},
+						});
+					}
+				});
+			});
+			
+			
+//WOKRKINGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGG
+	
+
+		$("#nav-rec").click(function(e) {
+			console.log("??");
 			e.preventDefault();
-			localStorage.clear();
-			location.reload();
-		});
-
-		//submit sign in
-		$("#login").click(function(e) {
-			localStorage['password'] = $("#signin-password").val();
+			$("#cd-user-modal").css({'visibility': 'hidden'});
+			if(localStorage['region'] == 'None' || localStorage['region'] == '')
+				swal({
+					title: "Oops...", 
+					text: "Please Go to 'Service' and select your prefered food!", 
+					type: "error",
+					showCancelButton: false
+				}, function(isConfirm){
+					if (isConfirm) {
+					$("#cd-user-modal").removeClass("is-visible");
+					$("#cd-user-modal").css({'visibility': ''});
+				}
+				else{
+					$("#cd-user-modal").removeClass("is-visible");
+					$("#cd-user-modal").css({'visibility': ''});
+				}
+				});
+			else {
+							//fetching data from data base
+			var text = "Here's the Suggestions For you!";
 			$.ajax({
-	            url: "login/" + $("#signin-email").val(),
-	            type: "GET",
-	            dataType : "json", // this URL returns a plain text string, not JSON
-	            success: function( data ) {
-	                  	console.log("success!!!!");
-	                  	console.log("DATA:email:" + data.email);
-                  	if(localStorage['password'] == data.Password){
-	                    localStorage['userid'] = data.ID;
-	                    localStorage['age'] = data.Age;
-	                    localStorage['gender'] = data.Gender;
-	                    localStorage['nickname'] = data.Nickname;
-	                    localStorage['email'] = data.Email;
-	                    localStorage['region'] = data.Region;
-	                    localStorage['type'] = data.Type;
-	                    document.location.reload(true);
-                  	}else{
-	                    console.log("Password mismatch!!!!!!!!!!");
-	                    localStorage.clear();
-	                    alert("The username or password you entered is incorrect. Please try again.");
-	                    document.location.reload(true);
-                  	}
-              	},
-            });
+				url: "/rec/" + localStorage['email'],
+				type: "POST",
+				dataType : "json", // this URL returns a plain text string, not JSON
+				data : { 
+					region: localStorage['region'],
+					type: localStorage['type']
+ 				},
+				success: function( data ) {
+					console.log(data);
+				if (data) {
+					for(var i = 0; i < data.length; i++){
+						text = text + '<div><img src="images/'+data[i][1]+'.jpg"></img><br>Name:'+data[i][1]+'<br>Place:'+data[i][2]+'<br>Tel:'+data[i][3]+'<br>ChefRecommendation:'+data[i][4]+'<br></div><br><br>';
+					}
+				} else {
+					console.log("LOSER");	
+				}
+							swal({
+				html:text,
+				showCancelButton: false,
+				confirmButtonText: "This is the one!",
+			},
+			function(isConfirm){
+				$("#right").click(function()
+					{console.log("awd")});
+				if (isConfirm) {
+					//localStorage.clear();
+					$("#cd-user-modal").removeClass("is-visible");
+					$("#cd-user-modal").css({'visibility': ''});
+					//location.reload();
+				}
+				else{
+					$("#cd-user-modal").removeClass("is-visible");
+					$("#cd-user-modal").css({'visibility': ''});
+				}
+			});
+
+				},
+			});			
+			}
 		});
+		//WOKRKINGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGG
+
+			$("#nav-logout").click(function(e) {
+				e.preventDefault();
+				$("#cd-user-modal").css({'visibility': 'hidden'});
+				swal({
+					title: "Are you sure?",
+					text: "Everything that is unsaved will not be recovered!",
+					type: "warning",
+					showCancelButton: true,
+					confirmButtonColor: "#DD6B55",
+					confirmButtonText: "Yes, let me log out!",
+					cancelButtonText: "No, cancel plx!",
+					closeOnConfirm: true,
+					closeOnCancel: true
+				}, function(isConfirm){
+					if (isConfirm) {
+						localStorage.clear();
+						$("#cd-user-modal").removeClass("is-visible");
+						$("#cd-user-modal").css({'visibility': ''});
+						location.reload();
+					}
+					else{
+						$("#cd-user-modal").removeClass("is-visible");
+						$("#cd-user-modal").css({'visibility': ''});
+					}
+				});
+			});
+
+			//submit sign in
+			$("#login").click(function(e) {
+				console.log("123");
+				localStorage['password'] = $("#signin-password").val();
+				$.ajax({
+		            url: "login/" + $("#signin-email").val(),
+		            type: "GET",
+		            dataType : "json", // this URL returns a plain text string, not JSON
+		            success: function( data ) {
+		                  	console.log("success!!!!");
+		                  	console.log("DATA:email:" + data.email);
+	                  	if(localStorage['password'] == data.Password){
+							localStorage['userid'] = data.ID;
+							localStorage['age'] = data.Age;
+							localStorage['gender'] = data.Gender;
+							localStorage['nickname'] = data.Nickname;
+							localStorage['email'] = data.Email;
+							localStorage['region'] = data.Region;
+							localStorage['type'] = data.Type;
+		                    swal({
+									title: "Success!",   
+									text: "You have successfully logged in!",   
+									type: "success",   
+									showCancelButton: false,   
+									closeOnConfirm: true,   
+									showLoaderOnConfirm: false, 
+								}, function(){
+									location.reload();
+							});
+	                  	}else{
+		                    console.log("Password mismatch!!!!!!!!!!");
+		                    localStorage.clear();
+		                    swal({
+									title: "Error!",   
+									text: "The username or password you entered is incorrect. Please try again.",   
+									type: "error",   
+							});
+						}
+	              	},
+	            });
+			});
 
 	//comments system
 	$("#cMingNoodle, #cDinosaurBBQ, #cYummyGarden, #cRedLobster, #cShiki, #ccomment6").click(function(e) {
@@ -269,138 +409,117 @@ License URL: http://creativecommons.org/licenses/by/3.0/
 	<!----start-header---->
 	<div class="header">
 		<!---- start of signup ---->
-		<div class="cd-user-modal"> <!-- this is the entire modal form, including the background -->
-<div class="cd-user-modal-container"> <!-- this is the container wrapper -->
-	<ul class="cd-switcher">
-		<li><a href="#login" id="tag-login">Login</a></li>
-		<li><a href="#new" id="tag-signup">New account</a></li>
-	</ul>
+		<div class="cd-user-modal" id="cd-user-modal"> <!-- this is the entire modal form, including the background -->
+			<div class="cd-user-modal-container"> <!-- this is the container wrapper -->
+				<ul class="cd-switcher">
+					<li><a href="#login" id="tag-login">Login</a></li>
+					<li><a href="#new" id="tag-signup">New account</a></li>
+				</ul>
 
-	<div id="cd-login"> <!-- log in form -->
-		<div id="success" class="a-box a-alert a-alert-success a-spacing-medium"> <!-- success -->
-			<div class="a-box-inner a-alert-container">
-				<h4 class="a-alert-heading">Success!</h4>
-				<div class="a-alert-content">
-					<div class="a-row">
-						Welcome!
-						<span class="a-text-bold"> Please sign in!</span>
-		    		</div> 
-				</div>
-			</div>
-		</div>
-		<form id="login-form" class="cd-form">
-			<p class="fieldset">
-				<label class="image-replace cd-email" for="signin-email">E-mail</label>
-				<input class="full-width has-padding has-border" id="signin-email" type="text" placeholder="E-mail">
-				<span class="cd-error-message">Error message here!</span>
-			</p>
+				<div id="cd-login"> <!-- log in form -->
+					<form id="login-form" class="cd-form">
+						<p class="fieldset">
+							<label class="image-replace cd-email" for="signin-email">E-mail</label>
+							<input class="full-width has-padding has-border" id="signin-email" type="text" placeholder="E-mail">
+							<span class="cd-error-message">Error message here!</span>
+						</p>
 
-			<p class="fieldset">
-				<label class="image-replace cd-password" for="signin-password">Password</label>
-				<input class="full-width has-padding has-border" id="signin-password" type="text"  placeholder="Password">
-				<a href="#" class="hide-password" name="preventDefault">Hide</a>
-				<span class="cd-error-message">Error message here!</span>
-			</p>
+						<p class="fieldset">
+							<label class="image-replace cd-password" for="signin-password">Password</label>
+							<input class="full-width has-padding has-border" id="signin-password" type="password"  placeholder="Password">
+							<a href="#" class="hide-password" name="preventDefault">Show</a>
+							<span class="cd-error-message">Error message here!</span>
+						</p>
 
-			<p class="fieldset">
-				<input type="checkbox" id="remember-me" checked>
-				<label for="remember-me">Remember me</label>
-			</p>
+						<p class="fieldset">
+							<input type="checkbox" id="remember-me" checked>
+							<label for="remember-me">Remember me</label>
+						</p>
 
-			<p class="fieldset">
-				<input id="login" class="full-width" type="submit" value="Login">
-			</p>
-		</form>
-		
-		<p class="cd-form-bottom-message"><a href="#" name="preventDefault">Forgot your password?</a></p>
-		<!-- <a href="#0" class="cd-close-form">Close</a> -->
-	</div> <!-- cd-login -->
+						<p class="fieldset">
+							<input id="login" class="full-width" type="submit" value="Login">
+						</p>
+					</form>
+					
+					<p class="cd-form-bottom-message"><a href="#" name="preventDefault">Forgot your password?</a></p>
+					<!-- <a href="#0" class="cd-close-form">Close</a> -->
+				</div> <!-- cd-login -->
 
-	<div id="cd-signup"> <!-- sign up form -->
-		<div id="update-success" class="a-box a-alert a-alert-success a-spacing-medium"> <!-- success -->
-			<div class="a-box-inner a-alert-container">
-				<h4 class="a-alert-heading">Success!</h4>
-				<div class="a-alert-content">
-					<div class="a-row">
-						<span class="a-text-bold">Your information has already been updated!</span>
-		    		</div> 
-				</div>
-			</div>
-		</div>
-		<form id="form" class="cd-form">
+				<div id="cd-signup"> <!-- sign up form -->
+					<form id="form" class="cd-form">
 
-			<p class="fieldset">
-				<label class="image-replace cd-username" for="signup-username">Username</label>
-				<input class="full-width has-padding has-border" id="signup-nickname" type="text" placeholder="Nickname">
-				<span class="cd-error-message">Error message here!</span>
-			</p>
+						<p class="fieldset">
+							<label class="image-replace cd-username" for="signup-username">Username</label>
+							<input class="full-width has-padding has-border" id="signup-nickname" type="text" placeholder="Nickname">
+							<span class="cd-error-message">Error message here!</span>
+						</p>
 
-			<p class="fieldset">
-				<label class="image-replace cd-username" for="signup-username">Username</label>
-				<input class="full-width has-padding has-border" id="signup-age" type="text" placeholder="Age">
-				<span class="cd-error-message">Error message here!</span>
-			</p>
+						<p class="fieldset">
+							<label class="image-replace cd-username" for="signup-username">Username</label>
+							<input class="full-width has-padding has-border" id="signup-age" type="text" placeholder="Age">
+							<span class="cd-error-message">Error message here!</span>
+						</p>
 
-			<p class="fieldset" id="profile-detached-e">
-				<label class="image-replace cd-email" for="signup-email">E-mail</label>
-				<input class="full-width has-padding has-border" id="signup-email" type="text" placeholder="E-mail">
-				<span class="cd-error-message">Error message here!</span>
-			</p>
+						<p class="fieldset" id="profile-detached-e">
+							<label class="image-replace cd-email" for="signup-email">E-mail</label>
+							<input class="full-width has-padding has-border" id="signup-email" type="text" placeholder="E-mail">
+							<span class="cd-error-message">Error message here!</span>
+						</p>
 
-			<p class="fieldset" id="profile-detached-p">
-				<label class="image-replace cd-password" for="signup-password">Password</label>
-				<input class="full-width has-padding has-border" id="signup-password" type="text"  placeholder="Password">
-				<a href="#" class="hide-password" name="preventDefault">Hide</a>
-				<span class="cd-error-message">Error message here!</span>
-			</p>
+						<p class="fieldset" id="profile-detached-p">
+							<label class="image-replace cd-password" for="signup-password">Password</label>
+							<input class="full-width has-padding has-border" id="signup-password" type="password"  placeholder="Password">
+							<a href="#" class="hide-password" name="preventDefault">Show</a>
+							<span class="cd-error-message">Error message here!</span>
+						</p>
 
-			<p class="fieldset" id="profile-detached-r">
-				<label class="image-replace cd-password" for="signup-password">Password</label>
-				<input class="full-width has-padding has-border" id="signup-repassword" type="text"  placeholder="Re-Password">
-				<a href="#" class="hide-password" name="preventDefault">Hide</a>
-				<span class="cd-error-message">Error message here!</span>
-			</p>
+						<p class="fieldset" id="profile-detached-r">
+							<label class="image-replace cd-password" for="signup-password">Password</label>
+							<input class="full-width has-padding has-border" id="signup-repassword" type="password"  placeholder="Re-Password">
+							<a href="#" class="hide-password" name="preventDefault">Show</a>
+							<span class="cd-error-message">Error message here!</span>
+						</p>
 
-			<p class="fieldset">
-				<label class="image-replace cd-username" for="signup-username">Username</label>
-				<input class="full-width has-padding has-border" id="signup-gender" type="text" placeholder="Gender">
-				<span class="cd-error-message">Error message here!</span>
-			</p>
+						<p class="fieldset">
+							<label class="image-replace cd-username" for="signup-username">Username</label>
+							<input class="full-width has-padding has-border" id="signup-gender" type="text" placeholder="Gender">
+							<span class="cd-error-message">Error message here!</span>
+						</p>
 
-			<p class="fieldset" id="profile-detached-t">
-				<input type="checkbox" id="accept-terms">
-				<label for="accept-terms">I agree to the <a href="#Terms">Terms</a></label>
-			</p>
+						<p class="fieldset" id="profile-detached-t">
+							<input type="checkbox" id="accept-terms">
+							<label for="accept-terms">I agree to the <a href="#Terms">Terms</a></label>
+						</p>
 
-			<p class="fieldset" id="edit-profile">
-				<input id="submit" class="full-width has-padding" type="submit" value="Create account">
-			</p>
+						<p class="fieldset" id="edit-profile">
+							<input id="submit" class="full-width has-padding" type="submit" value="Create account">
+						</p>
 
-		</form>
+					</form>
 
-		<!-- <a href="#0" class="cd-close-form">Close</a> -->
-	</div> <!-- cd-signup -->
+					<!-- <a href="#0" class="cd-close-form">Close</a> -->
+				</div> <!-- cd-signup -->
 
-	<div id="cd-reset-password"> <!-- reset password form -->
-		<p class="cd-form-message">Lost your password? Please enter your email address. You will receive a link to create a new password.</p>
+				<div id="cd-reset-password"> <!-- reset password form -->
+					<p class="cd-form-message">Lost your password? Please enter your email address. You will receive a link to create a new password.</p>
 
-		<form class="cd-form">
-			<p class="fieldset">
-				<label class="image-replace cd-email" for="reset-email">E-mail</label>
-				<input class="full-width has-padding has-border" id="reset-email" type="email" placeholder="E-mail">
-				<span class="cd-error-message">Error message here!</span>
-			</p>
+					<form class="cd-form">
+						<p class="fieldset">
+							<label class="image-replace cd-email" for="reset-email">E-mail</label>
+							<input class="full-width has-padding has-border" id="reset-email" type="email" placeholder="E-mail">
+							<span class="cd-error-message">Error message here!</span>
+						</p>
 
-			<p class="fieldset">
-				<input class="full-width has-padding" type="submit" value="Reset password">
-			</p>
-		</form>
+						<p class="fieldset">
+							<input class="full-width has-padding" type="submit" value="Reset password">
+						</p>
+					</form>
 
-		<p class="cd-form-bottom-message"><a href="#back">Back to log-in</a></p>
-	</div> <!-- cd-reset-password -->
-	<a href="#" class="cd-close-form" name="preventDefault">Close</a>
-</div> <!-- cd-user-modal-container -->
-	</div> <!-- cd-user-modal -->
+					<p class="cd-form-bottom-message"><a href="#back">Back to log-in</a></p>
+				</div> <!-- cd-reset-password -->
+				<a href="#" class="cd-close-form" name="preventDefault">Close</a>
+			</div> <!-- cd-user-modal-container -->
+		</div> <!-- cd-user-modal -->
 		<!---- end of Signup ---->
 
 	    <div class="wrap">

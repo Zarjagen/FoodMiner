@@ -13,14 +13,14 @@ License URL: http://creativecommons.org/licenses/by/3.0/
 	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 
-	<link rel="stylesheet" type="text/css" href="css/sweetalert.css">
+	<link rel="stylesheet" type="text/css" href="css/sweetalert2.css">
 	<link rel="stylesheet" type="text/css" href="css/arrow.css">
 	<link rel="stylesheet" href="css/login-signup/reset.css"> <!-- CSS reset -->
 	<link rel="stylesheet" href="css/login-signup/style.css"> <!-- Gem style -->
 	<link href="css/style.css" rel="stylesheet" type="text/css"  media="all" />
 	<link href='http://fonts.googleapis.com/css?family=Open+Sans' rel='stylesheet' type='text/css'>
 
-  	<script src="js/sweetalert.min.js"></script>
+  	<script src="js/sweetalert2.min.js"></script>
 	<script src="http://code.jquery.com/jquery-1.11.3.min.js"></script>
   	<script src="js/login-signup/modernizr.js"></script> <!-- Modernizr -->
   	<script src="js/login-signup/main.js"></script> <!-- Gem jQuery -->
@@ -172,26 +172,31 @@ License URL: http://creativecommons.org/licenses/by/3.0/
 
 //WOKRKINGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGG
 		
+		//pre define
+		var img = document.createElement("img");
+		img.setAttribute("src","images/Italy.jpg");
+
 		$("#nav-rec").click(function(e) {
 			e.preventDefault();
+
 			$("#cd-user-modal").css({'visibility': 'hidden'});
 			if(localStorage['region'] == 'None' || localStorage['region'] == '')
 				sweetAlert("Oops...", "Please Go to 'Service' and select your prefered food!", "error");
 			else {
 				swal({
-				title: '<img src="images/Italy.jpg"></img>',
-				text: '<div class="swal-row"><div id="left" class="left-arrow swal-column"><ul><li></li></ul></div><div class="text swal-column">Name:<br>Place:<br>Tel:<br></div><div id="right" class="right-arrow swal-column"><ul><li></li></ul></div>',
-				html: true,
+				html:'<img src="images/Italy.jpg"></img><br><br><br>'+'<div class="swal-row"><div id="left" class="left-arrow swal-column"><ul><li></li></ul></div><div class="text swal-column">Name:<br>Place:<br>Tel:<br></div><div id="right" class="right-arrow swal-column"><ul><li></li></ul></div>',
 				showCancelButton: false,
 				confirmButtonText: "This is the one!",
-				closeOnConfirm: true,
+				closeOnConfirm: false,
 			},
 			function(isConfirm){
+				$("#right").click(function()
+					{console.log("awd")});
 				if (isConfirm) {
 					//localStorage.clear();
 					$("#cd-user-modal").removeClass("is-visible");
 					$("#cd-user-modal").css({'visibility': ''});
-					location.reload();
+					//location.reload();
 				}
 				else{
 					$("#cd-user-modal").removeClass("is-visible");
@@ -236,6 +241,8 @@ License URL: http://creativecommons.org/licenses/by/3.0/
 				}
 			});
 		});
+
+		
 
 		//submit sign in
 		$("#login").click(function(e) {

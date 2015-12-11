@@ -59,7 +59,7 @@ License URL: http://creativecommons.org/licenses/by/3.0/
 	        });
 
 			if(localStorage.getItem('email')){
-				$("#nav-info").html('<li style="color: white;">' + localStorage.getItem('nickname') + '</li><li><a class="cd-signin" href="#login" id="nav-profile">Profile</a></li><li><a class="cd-signup" href="#signup" id="nav-logout">Logout</a></li>');
+				$("#nav-info").html('<li style="color: white;">' + localStorage.getItem('nickname') + '</li><li><a class="cd-signin" href="#login" id="nav-rec">Recommend for You!</a></li><li><a class="cd-signin" href="#login" id="nav-profile">Profile</a></li><li><a class="cd-signup" href="#signup" id="nav-logout">Logout</a></li>');
 
 				$(".cd-switcher").replaceWith('<ul class="cd-switcher"><li style="width:100%;"><a style="border-radius: 0 12em 0 0;" href="#profile" id="tag-login">Profile</a></li></ul>');
 				$("#cd-login").html($("#cd-signup").html());
@@ -186,6 +186,54 @@ License URL: http://creativecommons.org/licenses/by/3.0/
 						});
 					}
 				});
+			});
+			
+			
+			$("#nav-rec").click(function(e) {
+				e.preventDefault();
+				$("#cd-user-modal").css({'visibility': 'hidden'});
+				if(localStorage['region'] == 'None' || localStorage['region'] == '')
+					sweetAlert("Oops...", "Please Go to 'Service' and select your prefered food!", "error");
+				else {
+						//fetching data from data base
+					var text = "Here's the Suggestions For you!";
+					$.ajax({
+						url: "/rec/" + localStorage['email'],
+						type: "POST",
+						dataType : "json", // this URL returns a plain text string, not JSON
+						data : { 
+							region: localStorage['region'],
+							type: localStorage['type']
+		 				},
+						success: function( data ) {
+							console.log(data);
+							if (data) {
+								for(var i = 0; i < data.length; i++){
+									text = text + '<div><img src="images/Italy.jpg"></img><br>Name:'+data[i][1]+'<br>Place:'+data[i][2]+'<br>Tel:'+data[i][3]+'<br>ChefRecommendation:'+data[i][4]+'<br></div><br><br>';
+								}
+							} else {
+								console.log("LOSER");	
+							}
+							swal({
+								html:text,
+								showCancelButton: false,
+								confirmButtonText: "This is the one!",
+							},
+							function(isConfirm){
+								if (isConfirm) {
+									//localStorage.clear();
+									$("#cd-user-modal").removeClass("is-visible");
+									$("#cd-user-modal").css({'visibility': ''});
+									//location.reload();
+								}
+								else{
+									$("#cd-user-modal").removeClass("is-visible");
+									$("#cd-user-modal").css({'visibility': ''});
+								}
+							});
+						},
+					});
+				}
 			});
 
 			$("#nav-logout").click(function(e) {
@@ -471,6 +519,7 @@ License URL: http://creativecommons.org/licenses/by/3.0/
 			 		<a href="http://rocwiki.org/Restaurants"><font face="Bradley Hand"> - Rochester Wiki</a>
 		 		</div>
 		 	</div>
+		 	<!---- bottom grids
 		 	<div class="bottom-grids">
 				<div class="wrap">
 					<div class="bottom-grid1">
@@ -527,8 +576,12 @@ License URL: http://creativecommons.org/licenses/by/3.0/
 					<div class="clear"> </div>
 				</div>
 				<div class="clear"> </div>
+				---->
 	<!--end-wrap---->
+		 	<!---- bottom grid ends
 		 	</div>
+		 	---->
+		 	
 		 <!---End-content---->
 	
 	<div class="copy-right">

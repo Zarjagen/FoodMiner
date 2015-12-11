@@ -1,0 +1,706 @@
+<!--
+Author: W3layouts
+Author URL: http://w3layouts.com
+License: Creative Commons Attribution 3.0 Unported
+License URL: http://creativecommons.org/licenses/by/3.0/
+-->
+<!DOCTYPE HTML>
+<html>
+<head>
+
+	<title>Food Miner!</title>
+	<title>Food Miner--Service</title>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+	<link rel="stylesheet" type="text/css" href="css/sweetalert2.css">
+	<link rel="stylesheet" type="text/css" href="css/arrow.css">
+	<link rel="stylesheet" href="css/login-signup/reset.css"> <!-- CSS reset -->
+	<link rel="stylesheet" href="css/login-signup/style.css"> <!-- Gem style -->
+	<link href="css/style.css" rel="stylesheet" type="text/css"  media="all" />
+	<link href='http://fonts.googleapis.com/css?family=Open+Sans' rel='stylesheet' type='text/css'>
+
+  	<script src="js/sweetalert2.min.js"></script>
+	<script src="http://code.jquery.com/jquery-1.11.3.min.js"></script>
+  	<script src="js/login-signup/modernizr.js"></script> <!-- Modernizr -->
+  	<script src="js/login-signup/main.js"></script> <!-- Gem jQuery -->
+
+ 	<script type = "text/javascript"> 
+	$(document).ready(function() {
+		$(document).ajaxError(function() {
+	       	swal({
+				title: "Error!",
+				text: "Sorry, there was a problem!",
+				type: "error",
+			});
+		});
+        $("a[name=\"preventDefault\"]").click(function(e) {
+        	e.preventDefault();
+        });
+        $("#success").hide();
+        $("#update-success").hide();
+
+		if(localStorage.getItem('email')){
+			$("#nav-info").html('<li style="color: white;">' + localStorage.getItem('nickname') + '</li><li><a class="cd-signin" href="#login" id="nav-rec">Recommend for You!</a></li><li><a class="cd-signin" href="#login" id="nav-profile">Profile</a></li><li><a class="cd-signup" href="#signup" id="nav-logout">Logout</a></li>');
+
+			$(".cd-switcher").replaceWith('<ul class="cd-switcher"><li style="width:100%;"><a style="border-radius: 0 12em 0 0;" href="#profile" id="tag-login">Profile</a></li></ul>');
+			$("#cd-login").html($("#cd-signup").html());
+			$("#profile-detached-e").remove();
+			$("#profile-detached-p").remove();
+			$("#profile-detached-r").remove();
+			$("#profile-detached-t").remove();
+			$("#signup-nickname").val('Nickname: ' + localStorage.getItem('nickname'));
+			$("#signup-nickname").attr("readonly", "readonly");
+			$("#signup-age").val('Age: ' + localStorage.getItem('age'));
+			$("#signup-age").attr("readonly", "readonly");
+			$("#signup-gender").val('Gender: ' + localStorage.getItem('gender'));
+			$("#signup-gender").attr("readonly", "readonly");
+			$("#edit-profile").html('<input id="update" class="full-width has-padding" type="submit" value="Update Profile">');
+			$("#cd-signup").remove();
+        };
+
+		$("#submit").click(function(e) {
+			e.preventDefault();
+			if ($("#signup-password").val() != $("#signup-repassword").val()){
+				alert("Password Not matching!");
+				var x = document.getElementById("signup-password");
+				var y = document.getElementById("signup-repassword");
+				x.value = "";
+				y.value = "";
+			}
+			else{
+				$.ajax({
+					url: "users/",
+					type: "POST",
+					dataType : "text", // this URL returns a plain text string, not JSON
+					data : { 
+	  	 				password: $("#signup-password").val(),
+	   					nickname: $("#signup-nickname").val(),
+	   					age: $("#signup-age").val(),
+	   					gender: $("#signup-gender").val(),
+	   					email: $("#signup-email").val()
+     				},
+					success: function( data ) {
+						if (data == 'OK') {
+							console.log("Success!!!");
+							swal({
+								title: "Success!",   
+								text: "You have successfully create an account!",   
+								type: "success",   
+								showCancelButton: false,   
+								closeOnConfirm: true,   
+								showLoaderOnConfirm: false, 
+							}, function(){   
+								$("#tag-login").addClass("selected");
+								$("#tag-signup").toggleClass("selected");
+								$("#cd-login").addClass("is-selected");
+								$("#cd-signup").toggleClass("is-selected");
+							});
+						} else {
+							console.log("LOSER");
+							swal({
+								title: "Error!",
+								text: data,
+								type: "error", 
+							});
+						}
+						
+					},
+				});
+			}
+		});
+
+		$("#update").click(function(e) {
+			e.preventDefault();
+			$("#signup-nickname").removeAttr("readonly");
+			$("#signup-nickname").val(localStorage.getItem('nickname'));
+			$("#signup-age").removeAttr("readonly");
+			$("#signup-age").val(localStorage.getItem('age'));
+			$("#signup-gender").removeAttr("readonly");
+			$("#signup-gender").val(localStorage.getItem('gender'));
+			$("#edit-profile").html('<input id="edit-submit" class="full-width has-padding" type="submit" value="Submit Change">');
+
+			$("#edit-submit").click(function(e) {
+				e.preventDefault();
+				if(localStorage.getItem('nickname') == $("#signup-nickname").val() && localStorage.getItem('age') == $("#signup-age").val() && localStorage.getItem('gender') == $("#signup-gender").val()){
+					swal({
+						title: "Warning!",   
+						text: "You haven't made any changes yet!",   
+						type: "warning", 
+					});
+				}
+				else{
+					$.ajax({
+						url: "users/" + localStorage.getItem('userid'),
+						type: "PUT",
+						dataType : "text", // this URL returns a plain text string, not JSON
+						data : { 
+							userid: localStorage.getItem('userid'),
+		   					nickname: $("#signup-nickname").val(),
+		   					age: $("#signup-age").val(),
+		   					gender: $("#signup-gender").val(),
+	     				},
+						success: function( data ) {
+							if (data == 'OK') {
+								console.log("Success!");
+								swal({
+									title: "Success!",   
+									text: "You have successfully update your account!",   
+									type: "success",   
+									showCancelButton: false,   
+									closeOnConfirm: true,   
+									showLoaderOnConfirm: false, 
+								}, function(){
+									localStorage['nickname'] = $("#signup-nickname").val();
+									localStorage['age'] = $("#signup-age").val();
+									localStorage['gender'] = $("#signup-gender").val();
+									location.reload();
+								});
+							} else {
+								console.log("LOSER");
+								swal({
+									title: "Error!",
+									text: data,
+									type: "error", 
+								});
+							}
+						},
+					});
+				}
+			});
+		});
+
+//WOKRKINGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGG
+	
+
+		$("#nav-rec").click(function(e) {
+			e.preventDefault();
+			$("#cd-user-modal").css({'visibility': 'hidden'});
+			if(localStorage['region'] == 'None' || localStorage['region'] == '')
+				sweetAlert("Oops...", "Please Go to 'Service' and select your prefered food!", "error");
+			else {
+							//fetching data from data base
+			var text = "Here's the Suggestions For you!";
+			$.ajax({
+				url: "/rec/" + localStorage['email'],
+				type: "POST",
+				dataType : "json", // this URL returns a plain text string, not JSON
+				data : { 
+					region: localStorage['region'],
+					type: localStorage['type']
+ 				},
+				success: function( data ) {
+					console.log(data);
+				if (data) {
+					for(var i = 0; i < data.length; i++){
+						text = text + '<div><img src="images/'+data[i][1]+'.jpg"></img><br>Name:'+data[i][1]+'<br>Place:'+data[i][2]+'<br>Tel:'+data[i][3]+'<br>ChefRecommendation:'+data[i][4]+'<br></div><br><br>';
+					}
+				} else {
+					console.log("LOSER");	
+				}
+							swal({
+				html:text,
+				showCancelButton: false,
+				confirmButtonText: "This is the one!",
+			},
+			function(isConfirm){
+				$("#right").click(function()
+					{console.log("awd")});
+				if (isConfirm) {
+					//localStorage.clear();
+					$("#cd-user-modal").removeClass("is-visible");
+					$("#cd-user-modal").css({'visibility': ''});
+					//location.reload();
+				}
+				else{
+					$("#cd-user-modal").removeClass("is-visible");
+					$("#cd-user-modal").css({'visibility': ''});
+				}
+			});
+
+				},
+			});			
+			}
+		});
+		//WOKRKINGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGG
+
+
+		$("#nav-logout").click(function(e) {
+			e.preventDefault();
+			$("#cd-user-modal").css({'visibility': 'hidden'});
+			swal({
+				title: "Are you sure?",
+				text: "Everything that is unsaved will not be recovered!",
+				type: "warning",
+				showCancelButton: true,
+				confirmButtonColor: "#DD6B55",
+				confirmButtonText: "Yes, let me log out!",
+				cancelButtonText: "No, cancel plx!",
+				closeOnConfirm: true,
+				closeOnCancel: true
+			}, function(isConfirm){
+				if (isConfirm) {
+					localStorage.clear();
+					$("#cd-user-modal").removeClass("is-visible");
+					$("#cd-user-modal").css({'visibility': ''});
+					location.reload();
+				}
+				else{
+					$("#cd-user-modal").removeClass("is-visible");
+					$("#cd-user-modal").css({'visibility': ''});
+				}
+			});
+		});
+
+
+
+		//submit sign in
+		$("#login").click(function(e) {
+			console.log("123");
+			localStorage['password'] = $("#signin-password").val();
+			$.ajax({
+	            url: "login/" + $("#signin-email").val(),
+	            type: "GET",
+	            dataType : "json", // this URL returns a plain text string, not JSON
+	            success: function( data ) {
+	                  	console.log("success!!!!");
+	                  	console.log("DATA:email:" + data.email);
+                  	if(localStorage['password'] == data.Password){
+						localStorage['userid'] = data.ID;
+						localStorage['age'] = data.Age;
+						localStorage['gender'] = data.Gender;
+						localStorage['nickname'] = data.Nickname;
+						localStorage['email'] = data.Email;
+						localStorage['region'] = data.Region;
+						localStorage['type'] = data.Type;
+	                    swal({
+								title: "Success!",   
+								text: "You have successfully logged in!",   
+								type: "success",   
+								showCancelButton: false,   
+								closeOnConfirm: true,   
+								showLoaderOnConfirm: false, 
+							}, function(){
+								location.reload();
+						});
+                  	}else{
+	                    console.log("Password mismatch!!!!!!!!!!");
+	                    localStorage.clear();
+	                    swal({
+								title: "Error!",   
+								text: "The username or password you entered is incorrect. Please try again.",   
+								type: "error",   
+						});
+					}
+              	},
+            });
+		});
+		console.log("I am outside the loop~");
+		if(localStorage['region'] !== undefined){
+			//check local storage
+					console.log("I am inside the loop~");
+			var arrayR = localStorage['region'].split(",");
+			for(var i = 0; i < arrayR.length; i++){
+				if(arrayR[i] == "American"){
+					$("#a1").text("SELECTED!");
+					$("#a1").attr("style","background:#4DA014");
+				}
+				else if(arrayR[i] == "Chinese"){
+					$("#a2").text("SELECTED!");
+					$("#a2").attr("style","background:#4DA014");
+
+				}
+				else if(arrayR[i] == "French"){
+					$("#a3").text("SELECTED!");
+					$("#a3").attr("style","background:#4DA014");
+				}
+				else if(arrayR[i] == "Japanese"){
+					$("#a4").text("SELECTED!");
+					$("#a4").attr("style","background:#4DA014");
+				}
+				else if(arrayR[i] == "Thai"){
+					$("#a5").text("SELECTED!");
+					$("#a5").attr("style","background:#4DA014");
+				}
+				else if(arrayR[i] == "Vietnamese"){
+					$("#a6").text("SELECTED!");
+					$("#a6").attr("style","background:#4DA014");
+				}
+			}
+		}
+
+		//add to favorite
+		$("#a1, #a2, #a3, #a4, #a5, #a6").click(function(e) {
+			e.preventDefault();
+			if(e.target.id == 'a1'){
+					var food = "American";
+				}
+				else if(e.target.id == 'a2'){
+					var food = "Chinese";
+				}
+				else if(e.target.id == 'a3'){
+					var food = "French";
+				}
+				else if(e.target.id == 'a4'){
+					var food = "Japanese";
+				}
+				else if(e.target.id == 'a5'){
+					var food = "Thai";
+				}
+				else if(e.target.id == 'a6'){
+					var food = "Vietnamese";
+				}
+			if(localStorage.getItem('email') == undefined){
+				alert("Please Sign in First!");
+			}
+			else if($("#" + e.target.id).text() == "SELECTED!"){
+				 $("#" + e.target.id).text("I want it!");
+				 $("#" + e.target.id).attr("style","background:#BD7F1C");
+				//delete from database
+				$.ajax({
+					url: "/region/" + localStorage['email'],
+					type: "DELETE",
+					dataType : "text", // this URL returns a plain text string, not JSON
+					data : { 
+						foodregion: food
+	 				},
+					success: function( data ) {
+					if (data) {
+						console.log("SuccessD!!!");
+						localStorage['region'] = data;
+					} else {
+						console.log("LOSER");	
+					}
+					},
+				});
+			}
+			else if($("#" + e.target.id).text() != "SELECTED!"){
+				if(e.target.id == 'a1'){
+					var food = "American";
+					$("#a1").text("SELECTED!");
+					$("#a1").attr("style","background:#4DA014");
+
+				}
+				else if(e.target.id == 'a2'){
+					var food = "Chinese";
+					$("#a2").text("SELECTED!");
+					$("#a2").attr("style","background:#4DA014");
+			
+				}
+				else if(e.target.id == 'a3'){
+					var food = "French";
+					$("#a3").text("SELECTED!");
+					$("#a3").attr("style","background:#4DA014");
+				}
+				else if(e.target.id == 'a4'){
+					var food = "Japanese";
+					$("#a4").text("SELECTED!");
+					$("#a4").attr("style","background:#4DA014");
+				}
+				else if(e.target.id == 'a5'){
+					var food = "Thai";
+					$("#a5").text("SELECTED!");
+					$("#a5").attr("style","background:#4DA014");
+				}
+				else if(e.target.id == 'a6'){
+					var food = "Vietnamese";
+					$("#a6").text("SELECTED!");
+					$("#a6").attr("style","background:#4DA014");
+				}
+
+				$.ajax({
+					url: "/region/" + localStorage['email'],
+					type: "POST",
+					dataType : "text", // this URL returns a plain text string, not JSON
+					data : { 
+						foodregion: food
+	 				},
+					success: function( data ) {
+						if (data) {
+							console.log("Success!!!");
+							localStorage['region'] = data;
+						} else {
+							console.log("LOSER");	
+						}
+					},
+				});
+			
+			}
+		});
+	});
+
+	</script>
+
+
+ 	
+</head>
+	<body>
+	<!----start-header---->
+	<div class="header">
+		<!---- start of signup ---->
+		<div class="cd-user-modal" id="cd-user-modal"> <!-- this is the entire modal form, including the background -->
+			<div class="cd-user-modal-container"> <!-- this is the container wrapper -->
+				<ul class="cd-switcher">
+					<li><a href="#login" id="tag-login">Login</a></li>
+					<li><a href="#new" id="tag-signup">New account</a></li>
+				</ul>
+
+				<div id="cd-login"> <!-- log in form -->
+					<form id="login-form" class="cd-form">
+						<p class="fieldset">
+							<label class="image-replace cd-email" for="signin-email">E-mail</label>
+							<input class="full-width has-padding has-border" id="signin-email" type="text" placeholder="E-mail">
+							<span class="cd-error-message">Error message here!</span>
+						</p>
+
+						<p class="fieldset">
+							<label class="image-replace cd-password" for="signin-password">Password</label>
+							<input class="full-width has-padding has-border" id="signin-password" type="text"  placeholder="Password">
+							<a href="#" class="hide-password" name="preventDefault">Hide</a>
+							<span class="cd-error-message">Error message here!</span>
+						</p>
+
+						<p class="fieldset">
+							<input type="checkbox" id="remember-me" checked>
+							<label for="remember-me">Remember me</label>
+						</p>
+
+						<p class="fieldset">
+							<input id="login" class="full-width" type="submit" value="Login">
+						</p>
+					</form>
+					
+					<p class="cd-form-bottom-message"><a href="#" name="preventDefault">Forgot your password?</a></p>
+					<!-- <a href="#0" class="cd-close-form">Close</a> -->
+				</div> <!-- cd-login -->
+
+				<div id="cd-signup"> <!-- sign up form -->
+					<form id="form" class="cd-form">
+
+						<p class="fieldset">
+							<label class="image-replace cd-username" for="signup-username">Username</label>
+							<input class="full-width has-padding has-border" id="signup-nickname" type="text" placeholder="Nickname">
+							<span class="cd-error-message">Error message here!</span>
+						</p>
+
+						<p class="fieldset">
+							<label class="image-replace cd-username" for="signup-username">Username</label>
+							<input class="full-width has-padding has-border" id="signup-age" type="text" placeholder="Age">
+							<span class="cd-error-message">Error message here!</span>
+						</p>
+
+						<p class="fieldset" id="profile-detached-e">
+							<label class="image-replace cd-email" for="signup-email">E-mail</label>
+							<input class="full-width has-padding has-border" id="signup-email" type="text" placeholder="E-mail">
+							<span class="cd-error-message">Error message here!</span>
+						</p>
+
+						<p class="fieldset" id="profile-detached-p">
+							<label class="image-replace cd-password" for="signup-password">Password</label>
+							<input class="full-width has-padding has-border" id="signup-password" type="text"  placeholder="Password">
+							<a href="#" class="hide-password" name="preventDefault">Hide</a>
+							<span class="cd-error-message">Error message here!</span>
+						</p>
+
+						<p class="fieldset" id="profile-detached-r">
+							<label class="image-replace cd-password" for="signup-password">Password</label>
+							<input class="full-width has-padding has-border" id="signup-repassword" type="text"  placeholder="Re-Password">
+							<a href="#" class="hide-password" name="preventDefault">Hide</a>
+							<span class="cd-error-message">Error message here!</span>
+						</p>
+
+						<p class="fieldset">
+							<label class="image-replace cd-username" for="signup-username">Username</label>
+							<input class="full-width has-padding has-border" id="signup-gender" type="text" placeholder="Gender">
+							<span class="cd-error-message">Error message here!</span>
+						</p>
+
+						<p class="fieldset" id="profile-detached-t">
+							<input type="checkbox" id="accept-terms">
+							<label for="accept-terms">I agree to the <a href="#Terms">Terms</a></label>
+						</p>
+
+						<p class="fieldset" id="edit-profile">
+							<input id="submit" class="full-width has-padding" type="submit" value="Create account">
+						</p>
+
+					</form>
+
+					<!-- <a href="#0" class="cd-close-form">Close</a> -->
+				</div> <!-- cd-signup -->
+
+				<div id="cd-reset-password"> <!-- reset password form -->
+					<p class="cd-form-message">Lost your password? Please enter your email address. You will receive a link to create a new password.</p>
+
+					<form class="cd-form">
+						<p class="fieldset">
+							<label class="image-replace cd-email" for="reset-email">E-mail</label>
+							<input class="full-width has-padding has-border" id="reset-email" type="email" placeholder="E-mail">
+							<span class="cd-error-message">Error message here!</span>
+						</p>
+
+						<p class="fieldset">
+							<input class="full-width has-padding" type="submit" value="Reset password">
+						</p>
+					</form>
+
+					<p class="cd-form-bottom-message"><a href="#back">Back to log-in</a></p>
+				</div> <!-- cd-reset-password -->
+				<a href="#" class="cd-close-form" name="preventDefault">Close</a>
+			</div> <!-- cd-user-modal-container -->
+		</div> <!-- cd-user-modal -->
+		<!---- end of Signup ---->
+
+	    <div class="wrap">
+			<div class="top-header" style="display: block;">
+				<div class="logo">
+					<a href="http://localhost:3000/"><img src="images/fmlogo1.png" title="logo" /></a>
+				</div>
+				<nav class="main-nav">
+					<ul id="nav-info">
+						<!-- inser more links here -->
+						<li><a class="cd-signin" href="#login" id="nav-login">Sign in</a></li>
+						<li><a class="cd-signup" href="#signup" id="nav-signup">Sign up</a></li>
+					</ul>
+				</nav>
+				<!-- social-icons
+				<div class="social-icons">
+					<ul>
+						<a class="cd-signin" href="#0">Signup</a>
+
+						<li><a href="#"><img src="images/facebook.png" title="facebook" /></a></li>
+						<li><a href="#"><img src="images/twitter.png" title="twitter" /></a></li>
+						<li><a href="#"><img src="images/google.png" title="google pluse" /></a></li>
+					</ul>
+				</div>
+				-->
+
+				<div class="clear"> </div>
+			</div>
+			<!---start-top-nav---->
+			<div class="top-nav">
+				<div class="top-nav-left">
+					<ul>
+						<li><a href="http://localhost:3000/">Home</a></li>
+						<li><a href="http://localhost:3000/about">About</a></li>
+						<li class="active"><a href="http://localhost:3000/services">Services</a></li>
+						<li><a href="http://localhost:3000/discover">Discover</a></li>
+						<li><a href="http://localhost:3000/contact">Contact</a></li>
+						<div class="clear"> </div>
+					</ul>
+				</div>
+				<div class="top-nav-right">
+					<form>
+						<input type="text"><input type="submit" value="" />
+					</form>
+				</div>
+				<div class="clear"> </div>
+			</div>
+			<!---End-top-nav---->
+		</div>
+	</div>
+   <!----End-header----->
+		 <!---start-content---->
+		 <div class="content">
+		 	<!---start-gallery---->
+		 	<div class="gallerys">
+		 		<div class="wrap">
+					<h3>You choose, we recommend</h3>
+					<div class="gallery-grids">
+						<div class="gallery-grid">
+							<a href="#"><img src="images/redl.jpg" alt=""><span style="padding-right:3px; padding-top: 3px; display:inline-block;"><img src="images/us-t.gif"></img></span></a>
+							<h4>American Food</h4>
+							<p>Usually fastfood like burger but they have seafood cuisine too!</p>
+							<div class="gallery-button"><a id="a1" href="#">I want it!</a></div>
+						</div>
+						<div class="gallery-grid grid2">
+							<a href="#"><img src="images/yummy.jpg" alt=""><span style="padding-right:3px; padding-top: 3px; display:inline-block;"><img src="images/ch-t.gif"></img></span></a>
+							<h4>Chinese Food</h4>
+							<p>Noodles, Rice, and Hot Pot are the common Chinese Food!</p>
+							<div class="gallery-button"><a id="a2" href="#">I want it!</a></div>
+						</div>
+						<div class="gallery-grid">
+							<a href="#"><img src="images/dibbq.jpg" alt=""><span style="padding-right:3px; padding-top: 3px; display:inline-block;"><img src="images/fr.gif"></img></span></a>
+							<h4>French Food</h4>
+							<p>A meal often consists of three courses,introductory,main and dessert</p>
+							<div class="gallery-button"><a id="a3" href="#">I want it!</a></div>
+						</div>
+						<div class="clear"> </div>
+					</div>
+					<div class="gallery-grids">
+						<div class="gallery-grid">
+							<a href="#"><img src="images/shiki.jpg" alt=""><span style="padding-right:3px; padding-top: 3px; display:inline-block;"><img src="images/japan-t.gif"></img></span></a>
+							<h4>Japanese Food</h4>
+							<p>Sushi and Sashimi along with Ramen are classic combination!</p>
+							<div class="gallery-button"><a id="a4" href="#">I want it!</a></div>
+						</div>
+						<div class="gallery-grid grid2">
+							<a href="#"><img src="images/thai.jpg" alt=""><span style="padding-right:3px; padding-top: 3px; display:inline-block;"><img src="images/thailand-t.gif"></img></span></a>
+							<h4>Thai Food</h4>
+							<p>Balance, detail, and variety are of paramount significance to Thai chefs</p>
+							<div class="gallery-button"><a id="a5" href="#">I want it!</a></div>
+						</div>
+						<div class="gallery-grid">
+							<a href="#"><img src="images/pho.jpg" alt=""><span style="padding-right:3px; padding-top: 3px; display:inline-block;"><img src="images/vm-t.gif"></img></span></a>
+							<h4> Vietnamese Food</h4>
+							<p>Vietnamese dish has a distinctive flavor which reflects one or more of these elements. </p>
+							<div class="gallery-button"><a id="a6" href="#">I want it!</a></div>
+						</div>
+					</div>					
+				    <div class="clear"> </div>
+				    </div>
+				    <div class="projects-bottom-paination">
+						<ul>
+							<li id = "region" class="active"><a href="http://localhost:3000/services">REGION</a></li>
+							<li id = "type"><a class="button" href="http://localhost:3000/services2.html">Types</a></li>
+						</ul>
+					</div>
+					</div>
+				</div>
+		 	<!---End-gallery---->
+		 <!---End-content---->
+		 <!---start-footer
+		 <div class="footer">
+		<div class="wrap">
+			<div class="footer-grid">
+				<h3>About us</h3>
+				<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,  consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam</p>
+				<a href="#">ReadMore</a>
+			</div>
+			<div class="footer-grid center-grid">
+				<h3>Recent posts</h3>
+				<ul>
+					<li><a href="#">eiusmod tempor incididunt</a></li>
+					<li><a href="#">adipisicing elit, sed</a></li>
+					<li><a href="#">mod tempor incididunt ut</a></li>
+					<li><a href="#">dipisicing elit, sed do</a></li>
+					<li><a href="#">econsectetur adipisicing</a></li>
+				</ul>
+			</div>
+			<div class="footer-grid twitts">
+				<h3>Latest Tweets</h3>
+				<p><label>@Lorem ipsum</label>dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
+				<span>10 minutes ago</span>
+				<p><label>@consectetur</label>dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
+				<span>15 minutes ago</span>
+			</div>
+			<div class="footer-grid">
+				<h3>DID YOU KNOW?</h3>
+				<p>Lorem ipsum dolor sit amet consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam</p>
+				<a href="#">ReadMore</a>
+			</div>
+			<div class="clear"> </div>
+		</div>
+		<div class="clear"> </div>
+	</div>
+	<div class="copy-right">
+		<div class="top-to-page">
+						<a href="#top" class="scroll"> </a>
+						<div class="clear"> </div>
+					</div>
+		<p>Design by <a href="http://w3layouts.com/"> W3layouts</a></p>
+	</div>
+		 End-footer---->
+	</body>
+</html>
+
